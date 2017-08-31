@@ -1,0 +1,521 @@
+<!--This is from https://github.com/rantonels/schwarzschild , with slight modifications -->
+
+<!-- Licensed under a BSD license. See license.html for license -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+.button {
+  display: inline-block;
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: orange;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: darkorange}
+
+.button:active {
+  background-color: darkorange;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+<meta charset="utf-8">
+<title>Schwarzschild Black Hole</title>
+
+<!-- using a couple functions from these guys, yes I'm a WebGL noob -->
+<script type="text/javascript" src="resources/webgl-utils.js"></script>
+
+<!--Fullscreen query-->
+<script>
+
+var saveWidth = 0.;
+var saveHeight = 0.;
+
+function fullscreen(){
+    var elem = document.getElementById('WebGL-canvas');
+    saveWidth = elem.width;
+    saveHeight = elem.height;
+    elem.width = screen.width;
+    elem.height = screen.height;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    }
+}
+
+if (document.addEventListener)
+{
+    document.addEventListener('webkitfullscreenchange', exitHandler, false);
+    document.addEventListener('mozfullscreenchange', exitHandler, false);
+    document.addEventListener('fullscreenchange', exitHandler, false);
+    document.addEventListener('MSFullscreenChange', exitHandler, false);
+}
+
+function exitHandler()
+{
+    var elem = document.getElementById('WebGL-canvas');
+
+    if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement != null){
+        console.log("fullscreen");
+        console.log(saveWidth, saveHeight);
+    } else {
+        console.log("NOT fullscreen");
+        elem.width = saveWidth;
+        elem.height = saveHeight;
+    }
+}
+
+</script>
+
+<!--The real magic-->
+<script>
+
+var gl;
+var shaderProgram;
+var canvas;
+
+//textures
+var neheTexture;
+var bgTexture;
+var haTexture;
+var curtex;
+
+//for mouse events
+var mouseDown = false;
+var lastMouseX = null;
+var lastMouseY = null;
+var dLong = 0.;
+var dLat = 0.;
+var dR = 0.;
+var friction = 1.;
+var df = 0.0003;
+var maxRad = 999.;
+var minRad = 10.;
+
+//handle Mouse events
+function handleMouseDown(event) {
+    mouseDown = true;
+    lastMouseX = event.clientX;
+    lastMouseY = event.clientY;
+}
+
+function handleMouseUp(event) {
+    mouseDown = false;
+}
+
+function handleMouseMove(event) {    
+    if (!mouseDown) {
+        return;
+    }
+    var newX = event.clientX;
+    var newY = event.clientY;
+
+    var deltaX = newX - lastMouseX
+    var deltaY = newY - lastMouseY;
+
+    lastMouseX = newX
+    lastMouseY = newY;
+    if (event.which == 1){
+        dLong = deltaX / canvas.width;
+        dLat = deltaY / canvas.height;
+    } else {
+        dR = deltaY;
+    }
+}
+
+
+//functions called on settings form click events
+function checkres(value)
+{
+    if (value == "240p"){
+        canvas.width=320;
+        canvas.height=240;
+    }
+    else if (value == "480p"){
+        canvas.width=640;
+        canvas.height=480;
+    }
+    else if (value == "786p"){
+        canvas.width=1024;
+        canvas.height=786;
+    }
+    else if (value =="1080p"){
+        canvas.width=1920;
+        canvas.height=1080;
+    }
+}
+
+function checktex(value)
+{
+    if (value == "bg"){
+        curtex = bgTexture;
+    }
+    else if (value == "ha"){
+        curtex = haTexture;
+    }
+    else if (value == "lp"){
+        curtex = lpTexture;
+    }
+    else if (value == "uv"){
+        curtex = uvTexture;
+    }
+    else{
+        curtex = Null;
+    }
+}
+
+
+//initialize the shaders
+function initShaders() {
+
+    //Shader compilation
+    vertexShader = createShaderFromScriptElement(gl, "2d-vertex-shader");
+    fragmentShader = createShaderFromScriptElement(gl, "2d-fragment-shader");
+    shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+        alert("Could not initialise shaders");
+    }
+
+    gl.useProgram(shaderProgram);
+
+    //Uniform location
+    shaderProgram.positionLocation = gl.getAttribLocation(shaderProgram, "a_position");
+
+    shaderProgram.rUniform = gl.getUniformLocation(shaderProgram, "R"); // Getting location
+    shaderProgram.betaUniform = gl.getUniformLocation(shaderProgram, "beta"); // Getting location
+    shaderProgram.gammaUniform = gl.getUniformLocation(shaderProgram, "gamma"); // Getting location
+    shaderProgram.resUniform = gl.getUniformLocation(shaderProgram, "resolution");
+    shaderProgram.lookUniform = gl.getUniformLocation(shaderProgram, "viewrot");
+    shaderProgram.addLongUniform = gl.getUniformLocation(shaderProgram, "addLong"); //to move around on the background image
+    shaderProgram.addLatUniform = gl.getUniformLocation(shaderProgram, "addLat"); //to move around on the background image
+    shaderProgram.u_defLocation = gl.getUniformLocation(shaderProgram, "defSampler"); //deflection lookup tex
+    shaderProgram.u_bgLocation = gl.getUniformLocation(shaderProgram, "bgSampler");   //lat long sky sphere
+
+}    
+
+//initialize the buffers, which contain all the verticies to draw (this is a billboard)
+function initBuffers(){
+   //Geometry (just a quad)
+    var buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1.0, -1.0,
+         1.0, -1.0,
+        -1.0,  1.0,
+        -1.0,  1.0,
+         1.0, -1.0,
+         1.0,  1.0]), gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(shaderProgram.positionLocation);
+    gl.vertexAttribPointer(shaderProgram.positionLocation, 2, gl.FLOAT, false, 0, 0);
+}
+
+//functions to load and bind textures
+function initTexture() {
+    neheTexture = gl.createTexture();
+    neheTexture.image = new Image();
+    neheTexture.image.onload = function() {
+        handleLoadedTexture(neheTexture)
+    }
+
+    neheTexture.image.src = "resources/deflections_tex_100Rs_2048.png";
+
+    bgTexture = gl.createTexture();
+    bgTexture.image = new Image();
+    bgTexture.image.onload = function() {
+        handleLoadedTexture(bgTexture)
+    }
+
+    bgTexture.image.src = "resources/textures/bg1024.png";
+
+    haTexture = gl.createTexture();
+    haTexture.image = new Image();
+    haTexture.image.onload = function() {
+        handleLoadedTexture(haTexture)
+    }
+
+    haTexture.image.src = "resources/textures/ha1024.jpg";
+
+    lpTexture = gl.createTexture();
+    lpTexture.image = new Image();
+    lpTexture.image.onload = function() {
+        handleLoadedTexture(lpTexture)
+    }
+
+    lpTexture.image.src = "resources/textures/lp1024.jpg";
+
+    uvTexture = gl.createTexture();
+    uvTexture.image = new Image();
+    uvTexture.image.onload = function() {
+        handleLoadedTexture(uvTexture)
+    }
+
+    uvTexture.image.src = "resources/textures/uv1024.jpg";
+
+    curtex = bgTexture;
+
+    //binding
+    gl.uniform1i(shaderProgram.u_defLocation, 2);
+    gl.uniform1i(shaderProgram.u_bgLocation, 3);
+  
+
+}
+
+function handleLoadedTexture(texture) {
+    window.console.log("handleLoadedTexture " + texture.image.src);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.bindTexture(gl.TEXTURE_2D, null);
+  }
+
+
+//main function to draw the scene
+function drawScene() {
+
+    //Radius/velocity display ID
+    var radiusP = document.getElementById("radiusP");
+
+    var R = 100.0;
+    var beta = 0.;
+    var gamma = (1.0 - beta*beta)**0.5;
+    var addLong = 0.0;
+    var addLat = 0.0;
+
+    //MAIN LOOP
+    setInterval(function () {
+
+        //handle movement from mouse events
+        if (!mouseDown){
+            dLong = dLong * friction;
+            dLat = dLat * friction;
+            if (friction > 0){
+                friction = friction - df;
+            }
+            if (friction <= 0){
+                dLong = 0.;
+                dLat = 0.;
+                friction = 1.;
+            }
+        }
+        addLong = addLong + dLong;
+        addLat = addLat + dLat;
+        var Rtest = R + dR;
+        R = Math.min(Math.max(Rtest, minRad), maxRad);
+        dR = 0.;
+
+	//updating info div
+        radiusP.innerHTML = "Distance: " + R.toFixed(2)
+
+        //we must rebind textures every frame
+        gl.activeTexture(gl.TEXTURE2);
+        gl.bindTexture(gl.TEXTURE_2D, neheTexture);
+        gl.activeTexture(gl.TEXTURE3);
+        gl.bindTexture(gl.TEXTURE_2D, curtex);
+
+        // updating uniforms
+        gl.uniform1f(shaderProgram.rUniform, R);
+        gl.uniform1f(shaderProgram.betaUniform, beta);
+        gl.uniform1f(shaderProgram.gammaUniform, gamma);
+        gl.uniform2f(shaderProgram.resUniform, canvas.width, canvas.height);
+        gl.uniform1f(shaderProgram.addLongUniform, addLong);
+        gl.uniform1f(shaderProgram.addLatUniform, addLat);
+
+        // draw
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      
+    },10);
+}
+
+//initialize the canvas			    
+function initGL()		   
+{
+    try{
+        gl = getWebGLContext(canvas);
+        canvas.width = 1024;
+        canvas.height = 786;
+    } catch (e) {
+    }
+    if (!gl) {
+        alert("Could not initialise WebGL, sorry :-(");
+    }
+}
+
+//initialize and start all processes (called on window load)
+function webGLStart()
+{
+    canvas = document.getElementById("WebGL-canvas");
+    initGL();
+    initShaders();
+    initBuffers();
+    initTexture();
+
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.enable(gl.DEPTH_TEST);
+
+    canvas.onmousedown = handleMouseDown;
+    document.onmouseup = handleMouseUp;
+    document.onmousemove = handleMouseMove;
+    drawScene();
+}
+
+</script>
+
+<!-- vertex shader -->
+<script id="2d-vertex-shader" type="x-shader/x-vertex">
+attribute vec2 a_position;
+void main() {
+   gl_Position = vec4(a_position, 0, 1);
+}
+</script>
+
+<!-- fragment shader -->
+<script id="2d-fragment-shader" type="x-shader/x-fragment">
+
+//This shader is part magic, part luck
+//so it stays uncommented for now
+
+precision mediump float;
+
+#define M_PI 3.1415926535897932384626433832795 
+
+
+uniform sampler2D defSampler;
+uniform sampler2D bgSampler;
+
+uniform vec2 resolution;
+uniform float R;
+uniform float beta;
+uniform float gamma;
+uniform float viewrot;
+uniform float addLong;
+uniform float addLat;
+
+const float tanfov = 3.;
+const float maxRad = 1000.; //maximum radius that the deflection map is calculated for
+const float textureSize = 512.0; //pixel size in the deflection map
+const float texelSize = 1.0 / textureSize;
+
+
+vec3 rotate(const vec3 v, float theta, const vec3 axis) {
+//see here: https://en.wikipedia.org/wiki/Axis-angle_representation (rotating a vector)
+    float cosTheta = cos(theta);
+    return  v * cosTheta + cross(axis, v) * sin(theta) + axis * dot(v, axis) * (1.0 - cosTheta);
+}
+
+
+vec4 starfield_noBH(vec3 view){
+    //latitude and longitude control where we are in the background image
+    //addLat and addLong moves us around on the background image (but keeps the BH centered)
+    float latitude = acos(view.y)/M_PI + addLat;
+    float longitude = atan(view.z ,view.x)/(2.0*M_PI) + addLong;
+    return texture2D( bgSampler, vec2(longitude,latitude));
+}
+
+
+vec4 starfield(vec3 view, float horizonflag) {
+    //latitude and longitude control where we are in the background image
+    //addLat and addLong moves us around on the background image (but keeps the BH centered)
+    float latitude = acos(view.y)/M_PI + addLat;
+    float longitude = atan(view.z ,view.x)/(2.0*M_PI) + addLong;
+
+    //the horizonflag ensures a black center
+    return min(
+            texture2D( bgSampler, vec2(longitude,latitude)),
+            vec4(horizonflag*vec3(1.,1.,1.),1.)
+            );
+}
+
+void main() {
+    //get screen coords	(uvscr goes from 0 to 1, uv goes from -0.5 to 0.5 times tanfov)
+    float scale_res = 1.;
+    vec2 uvscr = gl_FragCoord.xy / resolution;
+    vec2 uv = (uvscr - 0.5) * vec2(1.,resolution.y/resolution.x);
+    
+    uv *= tanfov;
+
+    vec3 uv3 = normalize(vec3(uv, -1));
+
+    //this will sample from the deflection map
+    float theta = acos(dot(uv3,vec3(0,0,-1)));
+    vec2 params = vec2( (R-1.0)/(maxRad - 1.),  1. - theta /M_PI );
+    vec4 distcolor = texture2D(defSampler,params);
+
+    // and convert the color into a deflection angle
+    // why we should have a .98 here will forever be a mistery
+    float Phi =  2.* M_PI  * (0.98*distcolor.r + 0.1*(distcolor.g));
+
+    vec3 v3 = -normalize(cross(vec3(0,0,-1),uv3));
+    
+    uv3 = rotate(vec3(0.,0.,R), Phi, v3);
+
+    //this will ensure that we get a black center
+    float nothorizon =  max(
+   	smoothstep(0., 0.05, texture2D(defSampler,params).r) * (1.-step(theta,0.01)) ,
+	(1. - step(theta,1.57))
+    );
+    
+    vec4 color = starfield(normalize(uv3), nothorizon);
+    //vec4 color = starfield_noBH(normalize(vec3(uv,2.)));
+    gl_FragColor = color;
+}
+
+</script>
+</head>
+
+<body onload="webGLStart();">
+  <div class="container">
+    <p> The shaders and <a target="_blank" href="http://spiro.fisica.unipd.it/~antonell/schwarzschild/">method</a> are borrowed from <a target="_blank" href="https://github.com/rantonels/schwarzschild">Riccardo Antonelli</a>, with my own cleaned up WebGL and HTML/CSS code.</p>
+<table style="width:100%">
+  <tr>
+    <td valign="top" style="width:120px">
+      <p id="radiusP">Radius</p>
+      
+      <h4>Resolution</h4>
+      <form>
+	<input type="radio" name="resradio" onclick="checkres(this.value)" value="240p">320x240<br>
+	<input type="radio" name="resradio" onclick="checkres(this.value)" value="480p">640x480<br>
+	<input checked type="radio" name="resradio" onclick="checkres(this.value)" value="786p">1024x786<br>
+	<input type="radio" name="resradio" onclick="checkres(this.value)" value="1080p">1920x1080<br>
+	<br>
+      </form>
+
+      <h4>Texture</h4>
+      <form>
+	<input checked type="radio" name="texradio" onclick="checktex(this.value)" value="bg">Milky Way<br>
+	<input type="radio" name="texradio" onclick="checktex(this.value)" value="ha">H-alpha<br>
+	<input type="radio" name="texradio" onclick="checktex(this.value)" value="uv">lat-long grid<br>
+	<input type="radio" name="texradio" onclick="checktex(this.value)" value="lp">Image from <a href="http://paulbourke.net/miscellaneous/littleplanet/">"Little Planet"</a><br>
+	<br>
+      </form>
+      <button class="button" onclick="fullscreen();"> Go Fullscreen</button>
+    </td>
+    <td>
+      <canvas id="WebGL-canvas" width="1920" height="1080" style="margin-left: auto; margin-right: auto; display: block; padding: 0px;" ></canvas>
+    </td>
+</tr>
+</table>
+</div>
+
+
+</body>
+</html>
