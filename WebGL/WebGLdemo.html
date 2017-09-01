@@ -27,6 +27,29 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+#texError {
+  font-size:16pt;
+  background-color:white;
+
+  -webkit-transition: flash 3s ease-out;
+  -moz-transition: flash 3s ease-out;
+  -o-transition: flash 3s ease-out;
+  transition: flash 3s ease-out;
+  animation: flash 3s forwards linear normal;
+  animation-iteration-count:infinite;
+
+}
+@keyframes flash {
+  0% {
+    background-color:white;
+  }
+  50% {
+    background-color:yellow;
+  }
+  100% {
+    background-color:white;
+  }
+}
 </style>
 <meta charset="utf-8">
 <title>Schwarzschild Black Hole</title>
@@ -93,6 +116,7 @@ var neheTexture;
 var bgTexture;
 var haTexture;
 var curtex;
+var textureError;
 
 //for mouse events
 var mouseDown = false;
@@ -282,7 +306,14 @@ function handleLoadedTexture(texture) {
     window.console.log("handleLoadedTexture " + texture.image.src);
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+    try {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+    } catch(err) {
+        //document.getElementById("texError").innerHTML = err.message;
+        document.getElementById("texError").style.padding = "15pt";
+        document.getElementById("texError").innerHTML =  "For this demo to work in your browser, you need to run this through your own local web server.  Open a terminal and execute this command: <font color='red'>python -m SimpleHTTPServer</font>. Then point the browser to: <font color='red'>http://localhost:8000</font> and open this file from there.";
+        textureError = true;
+    }
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.bindTexture(gl.TEXTURE_2D, null);
@@ -368,14 +399,15 @@ function webGLStart()
     initShaders();
     initBuffers();
     initTexture();
+    if (!textureError){
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.enable(gl.DEPTH_TEST);
 
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    gl.enable(gl.DEPTH_TEST);
-
-    canvas.onmousedown = handleMouseDown;
-    document.onmouseup = handleMouseUp;
-    document.onmousemove = handleMouseMove;
-    drawScene();
+        canvas.onmousedown = handleMouseDown;
+        document.onmouseup = handleMouseUp;
+        document.onmousemove = handleMouseMove;
+        drawScene();
+    }
 }
 
 </script>
@@ -484,6 +516,7 @@ void main() {
 
 <body onload="webGLStart();">
   <div class="container">
+    <div id="texError"></div>
     <p> The shaders and <a target="_blank" href="http://spiro.fisica.unipd.it/~antonell/schwarzschild/">method</a> are borrowed from <a target="_blank" href="https://github.com/rantonels/schwarzschild">Riccardo Antonelli</a>, with my own cleaned up WebGL and HTML/CSS code.</p>
 <table style="width:100%">
   <tr>
