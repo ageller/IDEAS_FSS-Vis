@@ -1,4 +1,4 @@
-<!--This is from https://github.com/rantonels/schwarzschild , with slight modifications -->
+<!--This is from https://github.com/rantonels/schwarzschild , with modifications -->
 
 <!-- Licensed under a BSD license. See license.html for license -->
 <!DOCTYPE html>
@@ -27,6 +27,7 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
 #texError {
   font-size:16pt;
   background-color:white;
@@ -49,6 +50,8 @@
   100% {
     background-color:white;
   }
+}
+
 }
 </style>
 <meta charset="utf-8">
@@ -104,7 +107,7 @@ function exitHandler()
 
 </script>
 
-<!--The real magic-->
+<!-- The main attraction -->
 <script>
 
 var gl;
@@ -114,9 +117,11 @@ var canvas;
 //textures
 var neheTexture;
 var bgTexture;
+var alTexture;
 var haTexture;
 var curtex;
-var textureError;
+var textureError = false;
+var addBH = 1;
 
 //for mouse events
 var mouseDown = false;
@@ -127,8 +132,11 @@ var dLat = 0.;
 var dR = 0.;
 var friction = 1.;
 var df = 0.0003;
-var maxRad = 999.;
-var minRad = 10.;
+var maxRad = 99.9;
+var minRad = 2.
+var dmovex = 0.0;
+var dmovey = 0.0;
+var moveTex = false;
 
 //handle Mouse events
 function handleMouseDown(event) {
@@ -145,6 +153,8 @@ function handleMouseMove(event) {
     if (!mouseDown) {
         return;
     }
+    moveTex = false;
+
     var newX = event.clientX;
     var newY = event.clientY;
 
@@ -153,14 +163,28 @@ function handleMouseMove(event) {
 
     lastMouseX = newX
     lastMouseY = newY;
-    if (event.which == 1){
+    if (event.which == 3){
         dLong = deltaX / canvas.width;
         dLat = deltaY / canvas.height;
-    } else {
+    } 
+    if (event.which == 2) {
         dR = deltaY;
+    }
+    if (event.which == 1) {
+        moveTex = true;
+        dLong = deltaX / canvas.width;
+        dLat = deltaY / canvas.height;
     }
 }
 
+//https://stackoverflow.com/questions/25204282/mousewheel-wheel-and-dommousescroll-in-javascript
+function handleMouseWheel(event) 
+{
+    // Determine the direction of the scroll (< 0 = up, > 0 = down).
+    var delta = ((event.deltaY || -event.wheelDelta || event.detail) >> 10) || 1;
+    dR = delta;
+
+}
 
 //functions called on settings form click events
 function checkres(value)
@@ -183,10 +207,21 @@ function checkres(value)
     }
 }
 
+function checkBH(checkbox)
+{
+    addBH = 0.;
+    if (checkbox.checked){
+        addBH = 1.;
+    }
+}
+
 function checktex(value)
 {
     if (value == "bg"){
         curtex = bgTexture;
+    }
+    if (value == "al"){
+        curtex = alTexture;
     }
     else if (value == "ha"){
         curtex = haTexture;
@@ -227,11 +262,13 @@ function initShaders() {
     shaderProgram.betaUniform = gl.getUniformLocation(shaderProgram, "beta"); // Getting location
     shaderProgram.gammaUniform = gl.getUniformLocation(shaderProgram, "gamma"); // Getting location
     shaderProgram.resUniform = gl.getUniformLocation(shaderProgram, "resolution");
-    shaderProgram.lookUniform = gl.getUniformLocation(shaderProgram, "viewrot");
     shaderProgram.addLongUniform = gl.getUniformLocation(shaderProgram, "addLong"); //to move around on the background image
     shaderProgram.addLatUniform = gl.getUniformLocation(shaderProgram, "addLat"); //to move around on the background image
+    shaderProgram.movexUniform = gl.getUniformLocation(shaderProgram, "movex"); //to move the BH around
+    shaderProgram.moveyUniform = gl.getUniformLocation(shaderProgram, "movey"); //to move the BH around
     shaderProgram.u_defLocation = gl.getUniformLocation(shaderProgram, "defSampler"); //deflection lookup tex
     shaderProgram.u_bgLocation = gl.getUniformLocation(shaderProgram, "bgSampler");   //lat long sky sphere
+    shaderProgram.bhUniform = gl.getUniformLocation(shaderProgram, "addBH");   //check if showing BH
 
 }    
 
@@ -258,23 +295,29 @@ function initTexture() {
     neheTexture.image.onload = function() {
         handleLoadedTexture(neheTexture)
     }
-
     neheTexture.image.src = "resources/deflections_tex_100Rs_2048.png";
+
+    alTexture = gl.createTexture();
+    alTexture.image = new Image();
+    alTexture.image.onload = function() {
+        handleLoadedTexture(alTexture)
+    }
+    alTexture.image.src = "resources/textures/water.jpg";
 
     bgTexture = gl.createTexture();
     bgTexture.image = new Image();
     bgTexture.image.onload = function() {
         handleLoadedTexture(bgTexture)
     }
+//    bgTexture.image.src = "resources/textures/bg1024.png";
+    bgTexture.image.src = "resources/textures/esomilkyway.jpg";
 
-    bgTexture.image.src = "resources/textures/bg1024.png";
 
     haTexture = gl.createTexture();
     haTexture.image = new Image();
     haTexture.image.onload = function() {
         handleLoadedTexture(haTexture)
     }
-
     haTexture.image.src = "resources/textures/ha1024.jpg";
 
     lpTexture = gl.createTexture();
@@ -282,15 +325,14 @@ function initTexture() {
     lpTexture.image.onload = function() {
         handleLoadedTexture(lpTexture)
     }
-
     lpTexture.image.src = "resources/textures/lp1024.jpg";
+//    lpTexture.image.src = "resources/textures/ds4096.jpg";
 
     uvTexture = gl.createTexture();
     uvTexture.image = new Image();
     uvTexture.image.onload = function() {
         handleLoadedTexture(uvTexture)
     }
-
     uvTexture.image.src = "resources/textures/uv1024.jpg";
 
     curtex = bgTexture;
@@ -301,6 +343,7 @@ function initTexture() {
   
 
 }
+
 
 function handleLoadedTexture(texture) {
     window.console.log("handleLoadedTexture " + texture.image.src);
@@ -316,6 +359,8 @@ function handleLoadedTexture(texture) {
     }
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
     gl.bindTexture(gl.TEXTURE_2D, null);
   }
 
@@ -328,9 +373,16 @@ function drawScene() {
 
     var R = 100.0;
     var beta = 0.;
-    var gamma = (1.0 - beta*beta)**0.5;
+    var gamma = (1.0 - beta*beta)**(-0.5);
     var addLong = 0.0;
     var addLat = 0.0;
+    var movex = 0.0;
+    var movey = 0.0;
+    var aspect = canvas.width / canvas.height;
+    var maxMovex = 0.5 * aspect;
+    var maxMovey = 0.5;
+    //This requires some factor to keep the scene looking in the same direction;  6.3 seems OK (though not perfect); not sure how to calculate it!
+    var lfac = 6.3;
 
     //MAIN LOOP
     setInterval(function () {
@@ -345,17 +397,41 @@ function drawScene() {
             if (friction <= 0){
                 dLong = 0.;
                 dLat = 0.;
+                dmovex = 0.;
+                dmovey = 0.;
                 friction = 1.;
             }
         }
-        addLong = addLong + dLong;
-        addLat = addLat + dLat;
+        if (moveTex){
+            addLong = (addLong + dLong) % 1.;
+            addLat = (addLat + dLat) % 1.;
+        }
+        if (!moveTex){
+            //dmovex = Math.min(Math.max(lfac*dLong, addLong - maxMovex), addLong + maxMovex);
+            dmovex = lfac*dLong;
+            dmovey = lfac*dLat;
+            movex = (movex + dmovex) % 1.;
+            movey = (movey + dmovey) % 1.;
+            if (Math.abs(movex) > maxMovex){
+                movex = Math.sign(movex)*maxMovex;
+                dLong = 0.;
+                dmovex = 0.;
+            }
+            if (Math.abs(movey) > maxMovey){
+                movey = Math.sign(movey)*maxMovey;
+                dLat = 0.;
+                dmovey = 0.;
+            }
+            addLong = (addLong + dmovex/lfac) % 1.;
+            addLat = (addLat + dmovey/lfac) %1.;
+        }
         var Rtest = R + dR;
         R = Math.min(Math.max(Rtest, minRad), maxRad);
         dR = 0.;
 
-	//updating info div
-        radiusP.innerHTML = "Distance: " + R.toFixed(2)
+
+        //updating info div
+        radiusP.innerHTML = "Distance: " + R.toFixed(0) + " Radii"
 
         //we must rebind textures every frame
         gl.activeTexture(gl.TEXTURE2);
@@ -370,7 +446,9 @@ function drawScene() {
         gl.uniform2f(shaderProgram.resUniform, canvas.width, canvas.height);
         gl.uniform1f(shaderProgram.addLongUniform, addLong);
         gl.uniform1f(shaderProgram.addLatUniform, addLat);
-
+	gl.uniform1f(shaderProgram.movexUniform, movex); 
+        gl.uniform1f(shaderProgram.moveyUniform, movey);
+        gl.uniform1f(shaderProgram.bhUniform, addBH);
         // draw
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       
@@ -406,8 +484,16 @@ function webGLStart()
         canvas.onmousedown = handleMouseDown;
         document.onmouseup = handleMouseUp;
         document.onmousemove = handleMouseMove;
+	//document.wheel = handleMouseWheel;
+	//document.mousewheel = handleMouseWheel;
+	//document.DOMMouseScroll = handleMouseWheel;
+	canvas.addEventListener('wheel', handleMouseWheel);
+	canvas.addEventListener('mousewheel', handleMouseWheel)
+	canvas.addEventListener('DOMMouseScroll', handleMouseWheel);
+        canvas.onwheel = function(event){ event.preventDefault(); };
+        canvas.onmousewheel = function(event){ event.preventDefault(); };
         drawScene();
-    }
+    }		    
 }
 
 </script>
@@ -438,15 +524,20 @@ uniform vec2 resolution;
 uniform float R;
 uniform float beta;
 uniform float gamma;
-uniform float viewrot;
 uniform float addLong;
 uniform float addLat;
+uniform float movex;
+uniform float movey;
+uniform float addBH;
 
-const float tanfov = 3.;
-const float maxRad = 1000.; //maximum radius that the deflection map is calculated for
-const float textureSize = 512.0; //pixel size in the deflection map
-const float texelSize = 1.0 / textureSize;
+const float tanfov = 1.;
+const float maxRad = 100.; //maximum radius that the deflection map is calculated for
+const float xfac = 1.;
+float yfac = xfac;
 
+vec3 aberrate(vec3 original){
+    return vec3(-beta * length(original) + gamma * original.x, original.yz );
+}
 
 vec3 rotate(const vec3 v, float theta, const vec3 axis) {
 //see here: https://en.wikipedia.org/wiki/Axis-angle_representation (rotating a vector)
@@ -467,8 +558,8 @@ vec4 starfield_noBH(vec3 view){
 vec4 starfield(vec3 view, float horizonflag) {
     //latitude and longitude control where we are in the background image
     //addLat and addLong moves us around on the background image (but keeps the BH centered)
-    float latitude = acos(view.y)/M_PI + addLat;
-    float longitude = atan(view.z ,view.x)/(2.0*M_PI) + addLong;
+    float latitude = acos(view.y)/M_PI + addLat*yfac;
+    float longitude = atan(view.z ,view.x)/(2.0*M_PI) + addLong*xfac;
 
     //the horizonflag ensures a black center
     return min(
@@ -477,28 +568,33 @@ vec4 starfield(vec3 view, float horizonflag) {
             );
 }
 
-void main() {
+void main() {     
     //get screen coords	(uvscr goes from 0 to 1, uv goes from -0.5 to 0.5 times tanfov)
     float scale_res = 1.;
     vec2 uvscr = gl_FragCoord.xy / resolution;
     vec2 uv = (uvscr - 0.5) * vec2(1.,resolution.y/resolution.x);
-    
+    yfac += resolution.x/resolution.y;
+
     uv *= tanfov;
 
     vec3 uv3 = normalize(vec3(uv, -1));
 
     //this will sample from the deflection map
-    float theta = acos(dot(uv3,vec3(0,0,-1)));
+    float theta = acos(dot(uv3,normalize(vec3(movex,-1.*movey,-1.))));
+    float thetaorg = acos(dot(uv3,normalize(vec3(0., 0.,-1.))));
     vec2 params = vec2( (R-1.0)/(maxRad - 1.),  1. - theta /M_PI );
     vec4 distcolor = texture2D(defSampler,params);
 
     // and convert the color into a deflection angle
-    // why we should have a .98 here will forever be a mistery
+    // why we should have a .98 here will forever be a mystery
     float Phi =  2.* M_PI  * (0.98*distcolor.r + 0.1*(distcolor.g));
 
-    vec3 v3 = -normalize(cross(vec3(0,0,-1),uv3));
-    
-    uv3 = rotate(vec3(0.,0.,R), Phi, v3);
+    vec3 v3 = -normalize(cross(normalize(vec3(movex, -1.*movey,-1.)),uv3));
+    v3.z = 0.;
+    v3 = normalize(v3);
+
+    vec3 uv3s = uv3;
+    uv3 = rotate(normalize(vec3(movex, 0., R)), Phi, v3);
 
     //this will ensure that we get a black center
     float nothorizon =  max(
@@ -506,8 +602,14 @@ void main() {
 	(1. - step(theta,1.57))
     );
     
-    vec4 color = starfield(normalize(uv3), nothorizon);
-    //vec4 color = starfield_noBH(normalize(vec3(uv,2.)));
+//    vec4 color = starfield_noBH(normalize(vec3(uv.x - movex, uv.y + movey, -1.)));
+//    vec4 color = starfield_noBH(normalize(vec3(uv, -1.)));
+    vec4 color = starfield_noBH(uv3s);
+    if (addBH > 0.){
+        color = starfield(normalize(uv3), nothorizon);
+    }
+    //vec4 color = vec4(params, 0, 1);
+    //vec4 color = vec4(v3, 1);
     gl_FragColor = color;
 }
 
@@ -518,11 +620,19 @@ void main() {
   <div class="container">
     <div id="texError"></div>
     <p> The shaders and <a target="_blank" href="http://spiro.fisica.unipd.it/~antonell/schwarzschild/">method</a> are borrowed from <a target="_blank" href="https://github.com/rantonels/schwarzschild">Riccardo Antonelli</a>, with my own cleaned up WebGL and HTML/CSS code.</p>
+
+    <p>Use the the left mouse bottom to move along the background image; right mouse button to move the BH around (still working on fixing some distortion when BH is off-center); the mouse wheel (or wheel buttom) to change distance from BH.</p>
 <table style="width:100%">
   <tr>
-    <td valign="top" style="width:120px">
+    <td valign="top" style="width:130px">
       <p id="radiusP">Radius</p>
-      
+
+      <h4>Add Black Hole</h4>
+      <form>
+	<input checked type="checkbox" name="BHradio" onchange="checkBH(this)">On/Off<br>
+	<br>
+      </form>
+
       <h4>Resolution</h4>
       <form>
 	<input type="radio" name="resradio" onclick="checkres(this.value)" value="240p">320x240<br>
@@ -536,14 +646,17 @@ void main() {
       <form>
 	<input checked type="radio" name="texradio" onclick="checktex(this.value)" value="bg">Milky Way<br>
 	<input type="radio" name="texradio" onclick="checktex(this.value)" value="ha">H-alpha<br>
+	<input type="radio" name="texradio" onclick="checktex(this.value)" value="al">under water<br>
 	<input type="radio" name="texradio" onclick="checktex(this.value)" value="uv">lat-long grid<br>
 	<input type="radio" name="texradio" onclick="checktex(this.value)" value="lp">Image from <a href="http://paulbourke.net/miscellaneous/littleplanet/">"Little Planet"</a><br>
 	<br>
       </form>
+
+
       <button class="button" onclick="fullscreen();"> Go Fullscreen</button>
     </td>
     <td>
-      <canvas id="WebGL-canvas" width="1920" height="1080" style="margin-left: auto; margin-right: auto; display: block; padding: 0px;" ></canvas>
+      <canvas oncontextmenu="return false;" id="WebGL-canvas" width="1920" height="1080" style="margin-left: auto; margin-right: auto; display: block; padding: 0px;" ></canvas>
     </td>
 </tr>
 </table>
