@@ -1,0 +1,162 @@
+html {
+	font-family: sans-serif;
+	font-size: 12px;
+}
+body {
+	background-color: white;
+	padding:25px;
+}
+#main_container {
+	position:absolute;
+	top:0px;
+	left:8%;
+	right:8%;
+	width: 1050px;
+	padding:25px;
+}
+#tabs_holder {
+	position:relative;	
+	width: 100%;
+	display: flex;
+}
+.tab {
+	position: relative;
+	min-width: 115px;
+	max-width: 8%;
+	padding: 8px;
+	margin-right: 5px;
+	border-style: solid;
+	border-width: 1px 1px 0px 1px;
+	border-color: grey;
+	background-color: silver;
+	text-align: center;
+}
+.tab:hover, .tab:focus {
+	cursor: pointer;
+	background-color: lightblue;
+}
+#pages_holder {
+	position:relative;
+	background-color: white;
+	top:-1px;
+	min-height:600px;
+	max-height: 100%;
+	width:100%;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey;
+}
+
+.selected_tab {
+	background-color: white !important;
+	z-index: 50;
+}
+.axis--y path {
+	display: none;
+}
+.viz_box {
+	overflow:auto;
+}
+.hidden_element {
+	display: none;
+}
+.time_users {
+	fill: none;
+	stroke: silver;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+	stroke-width: 1px;
+}
+
+.time_user--hover {
+	stroke: #000;
+}
+
+.focus text {
+	text-anchor: middle;
+	text-shadow: 0 2px 0 #fff, 2px 0 0 #fff, 0 -2px 0 #fff, -2px 0 0 #fff;	
+	font-weight: bold;
+	z-index: 100;
+}
+
+.voronoi path {
+	fill: none;
+	pointer-events: all;
+}
+
+#form {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+}
+
+.btn {
+	border-radius:5px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey;
+	margin: 20px;
+	position: absolute;
+	width: 45px;
+	height: 28px;
+	background-color: white;
+	text-align: center;
+}
+.btn_text {
+	display:inline-block;
+	vertical-align: middle;
+	line-height:28px 
+}
+#partition_up {
+	top:0;
+	right:0;
+}
+#partition_down {
+	bottom:0;
+	right:0;
+}
+.btn:hover, .btn:focus {
+	cursor: pointer;
+	background-color: lightblue;
+}
+
+.toolTip {
+	position: absolute;
+	display: none;
+	min-width: 80px;
+	height: auto;
+	background: none repeat scroll 0 0 #ffffff;
+	border: 1px solid #6F257F;
+	padding: 14px;
+	text-align: center;
+	z-index: 100;
+}
+.axis path,
+.axis line {
+  	fill: none;
+  	stroke: silver;
+  	stroke-width: 1px;
+  	shape-rendering: crispEdges;
+}
+.grid line {
+	stroke: lightgrey;
+  	stroke-opacity: 0.7;
+  	shape-rendering: crispEdges;
+}
+
+.grid path {
+  	stroke-width: 0;
+}
+.axis text {
+  	font: 10px sans-serif;
+}
+.bar--positive {
+  	fill: #00a0a0;
+}
+.bar--negative {
+  	fill: #db9600;
+}
+.fade_text {
+	color: silver;
+	opacity: .8;
+}

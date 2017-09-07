@@ -1,0 +1,82 @@
+<style>
+  .grand_parent {
+  	position:relative;
+  	margin-left: 800px;
+  	margin-right: 800px;
+  	width:150px;
+  	height:100px;
+  	background-color:grey;
+    color:white;
+    text-align: center;
+  }
+  .parent {
+  	font-weight: bold;
+
+  	margin-top: 100px;
+  	width:inherit;
+  	height:inherit;
+  	background-color: inherit;
+  }
+  .child {
+  	border-radius:25px;
+
+	margin-top: inherit;
+  	width:inherit;
+  	height:inherit;
+  	background-color: inherit;
+  }
+  .first_parent {
+  	position:absolute;
+  	left:-300px;
+  }
+  .second_parent {
+  	background-color: lightgrey;
+  	color:black;
+
+  	position:absolute;
+  	right:-300px;
+  }
+  .first_child {
+  	position:absolute;
+  	left:-150px;
+  }
+  .second_child {
+  	color:blue;
+  	font-style:italic;
+
+  	position:absolute;
+  	right:-150px;
+  }
+  #marion {
+  	font-weight: normal;
+  	color:darkred;
+  	border-radius:50px;
+  }
+
+</style>
+
+<body>
+	<div class='grand_parent'>
+		Grand parent.
+		<div class='parent first_parent'>
+			FIRST parent
+			<div class='child first_child'>
+				FIRST parent's first child
+			</div>
+			<div class='child second_child'>
+				FIRST parent's second child
+			</div>
+		</div>
+		<div class='parent second_parent'>
+			SECOND parent
+			<div class='child first_child'>
+				SECOND parent's first child
+			</div>
+			<div id='marion' class='child second_child'>
+				Marion,<br> a special child<br><br>(SECOND parent's second child)
+			</div>
+		</div>
+	</div>
+</body>
+
+
