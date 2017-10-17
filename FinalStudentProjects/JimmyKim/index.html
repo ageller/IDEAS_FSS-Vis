@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="test.css"/>
+    <title>Neural decoding simulation</title>
+</head>
+
+<body>
+    <h1 align="center">Visualizing neural decoding with head direction cells</h1>
+    <span id="Display">
+        <h2>Neurons</h2>
+        <svg id="Network"></svg>
+    </span>
+    
+    <span id="Control">
+        <h2>Control</h2>   
+        <svg id="Compass"></svg>
+    </span>
+    
+    <span id="Options">
+        <h2>Options</h2>
+        <p>
+            <label>Number of neurons:</label>
+            <select id="selectN">
+                <option value="4">4</option>
+                <option value="8" selected="selected">8</option>
+                <option value="16">16</option>
+                <option value="32">32</option>
+            </select>
+        </p>
+        <p>
+            <label>Tuning curve width:</label>
+            <span id="sigmaValue"></span>
+            <div id="sigmaContainer">
+                <input type="range" min="1" max="300" value="100" class="slider" id="sigmaSlider">
+            </div>
+        </p>
+    </span>
+    <span id="MLE">
+        <h2>Simulate neural decoding</h2>
+        <p>
+        Samples neural response assuming Poisson noise and uses population vector method (response-weighted vector sum of the neuron directions) to infer the original stimulus.
+        </p>
+        <div class='button_wrapper'>
+            <div onclick = 'collectSpikes()' class='button'>
+                <span id='buttonMLE'>Start</span>
+            </div>
+        </div>
+    </span>
+    <span id="MLEplot">
+        <h2>Mean squared error</h2>
+        <svg id="svgPlot"></svg>
+    </span>
+</body>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="test.js"></script>
+
+</html>

@@ -1,0 +1,1092 @@
+<!-- Licensed under a BSD license. See license.html for license -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+
+.button {
+  display: inline-block;
+  padding: 12px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: orange;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: darkorange}
+
+.button:active {
+  background-color: darkorange;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.particleDiv {
+  position:absolute;
+  left:10px;
+  z-index:2;
+  background-color: #d3d3d3;
+  width:265px;
+  padding:5px;
+  margin:5px;
+  height:20px;
+  opacity: 0.8;
+  -webkit-transition: .15s;
+  transition: opacity .15s;
+}
+.particleDiv:hover {
+    opacity: 1;
+}
+.pLabelDiv {
+  display: inline-block;
+  text-align: left;
+  vertical-align:top;
+  line-height: normal;
+  width:50px;
+}
+.pTextInput{
+  display: inline-block;
+  text-align: left;
+  vertical-align:top;
+  line-height: normal;
+  width:30px;
+}
+/* point size slider */
+.sliderps {
+    /*-webkit-appearance: scrollbarthumb-horizontal;*/
+    width: 100px;
+    margin:0;
+    padding:0;
+    height: 20px;
+    background: #d3d3d3;
+    outline: none;
+}
+
+.sliderps::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 10px;
+    height: 20px;
+    background: #000000;
+    cursor: pointer;
+    border-radius: 0px;
+}
+
+.sliderps::-moz-range-thumb {
+    width: 10px;
+    height: 20px;
+    background: #000000;
+    cursor: pointer;
+    border-radius: 0px;
+}
+
+/* onoff slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 20px;
+}
+
+.switch input {display:none;}
+
+.slideroo {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding:0;
+  margin:0;
+  background-color: #ffffff;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.slideroo:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #d3d3d3;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+input:checked + .slideroo {
+  background-color: #000000;
+}
+
+input:focus + .slideroo {
+  box-shadow: 0 0 1px #000000;
+}
+
+input:checked + .slideroo:before {
+  -webkit-transform: translateX(8px);
+  -ms-transform: translateX(8px);
+  transform: translateX(8px);
+}
+
+/* Rounded sliders */
+.slideroo.round {
+  border-radius: 34px;
+}
+
+.slideroo.round:before {
+  border-radius: 50%;
+}
+
+/* color picker = spectrum */
+.sp-replacer{
+    border:0px;
+    z-index:2;
+    position:absolute;
+    top:0px;
+    margin:0;
+    height:20px;
+    width:27px;
+    background:#d3d3d3;
+    left:240px;
+}
+.sp-replacer:hover, .sp-replacer.sp-active  {
+    border:0;
+}
+.sp-picker-container{
+    border:0;
+}
+
+
+}
+
+</style>
+<meta charset="utf-8">
+<title>Firefly-WebGL</title>
+
+<!-- using a couple functions from these guys, yes I'm a WebGL noob -->
+<script type="text/javascript" src="resources/webgl-utils.js"></script> 
+<script type="text/javascript" src="resources/glMatrix-0.9.5.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+<!-- for the color picker = spectrum : https://github.com/bgrins/spectrum -->
+<link rel="stylesheet" href="resources/spectrum.css" />
+<script src="resources/jquery-3.2.1.slim.min.js"></script> 
+<script src="resources/spectrum.js"></script>
+
+<!-- ############  makes stuff full screen ############ -->
+<!--Fullscreen query-->
+<script>
+
+var saveWidth = 0.;
+var saveHeight = 0.;
+
+function fullscreen(){
+    var elem = document.getElementById('WebGL-canvas');
+    saveWidth = elem.width;
+    saveHeight = elem.height;
+    elem.width = screen.width;
+    elem.height = screen.height;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    }
+}
+
+if (document.addEventListener)
+{
+    document.addEventListener('webkitfullscreenchange', exitHandler, false);
+    document.addEventListener('mozfullscreenchange', exitHandler, false);
+    document.addEventListener('fullscreenchange', exitHandler, false);
+    document.addEventListener('MSFullscreenChange', exitHandler, false);
+}
+
+function exitHandler()
+{
+    var elem = document.getElementById('WebGL-canvas');
+
+    if (document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement != null){
+        console.log("fullscreen");
+        console.log(saveWidth, saveHeight);
+    } else {
+        console.log("NOT fullscreen");
+        elem.width = saveWidth;
+        elem.height = saveHeight;
+    }
+}
+
+</script>
+
+<!-- The main attraction -->
+<script type="text/javascript">
+
+// make a GL container to hold information
+var gl;
+// make a canvas object
+var canvas; 
+// program carries information between the shaders
+var shaderProgram;
+// window height
+var defHeight = 786;
+// canvas width
+var defWidth = 1024;
+
+//positions
+zmax=100;
+zmin=1e-1;
+
+// define the center of the volume
+var center = [0., 0., -9.];
+
+// translates/rotates the data as you move stuff around
+var mvMatrix = mat4.create();
+mat4.identity(mvMatrix);
+// updates the perspective (part of rotating...?)
+var pMatrix = mat4.create();
+mat4.identity(pMatrix);
+
+// buffer that holds all the data
+var VertexPositionBuffer;
+
+// initialize variables for mouse events
+var mouseDown = false;
+var lastMouseX = null;
+var lastMouseY = null;
+
+// initialize variables for changing the view
+var xrot = 0.;
+var yrot = 0.;
+var dR = 0.;
+var friction = 1.;
+var df = 0.0003;
+
+
+
+/* ############ EVENT HANDLING ############## */
+// handle Mouse events
+function handleMouseDown(event) {
+    mouseDown = true;
+    lastMouseX = event.clientX;
+    lastMouseY = event.clientY;
+}
+
+function handleMouseUp(event) {
+    mouseDown = false;
+}
+
+function handleMouseMove(event) {    
+    if (!mouseDown) {
+        return;
+    }
+
+    // find where the mouse is
+    var newX = event.clientX;
+    var newY = event.clientY;
+
+    // find direction vector
+    var deltaX = newX - lastMouseX
+    var deltaY = newY - lastMouseY;
+
+    lastMouseX = newX
+    lastMouseY = newY;
+
+    var dxrot = 0.;
+    var dyrot = 0.;
+    var fac = 200.;
+    if (event.which == 1 || event.which == 3){
+        dxrot = deltaX / canvas.width;
+        dyrot = deltaY / canvas.height;
+    } 
+    if (event.which == 2) {
+        dR = deltaY;
+    }
+
+    xrot += dxrot*fac;
+    xrot = xrot % 360.
+    yrot += dyrot*fac;
+    yrot = yrot % 360.;
+
+    lastMouseY = newY
+    lastMouseX = newX
+    //console.log(xrot, yrot);
+}
+
+//https://stackoverflow.com/questions/25204282/mousewheel-wheel-and-dommousescroll-in-javascript
+function handleMouseWheel(event) 
+{
+    // Determine the direction of the scroll (< 0 = up, > 0 = down).
+    var delta = ((event.deltaY || -event.wheelDelta || event.detail) >> 10) || 1;
+    dR = delta;
+    center[2]+=dR;
+
+}
+
+// handle keypresses for panning w/ wasd
+function handleKeyPress(event){
+    // set the panspeed to change based off how far away you are from the center
+    var panspeed=canvas.height*Math.abs(center[2])/1e4;
+    // w -> move forward
+    if (event.charCode==119){
+        center[2]+=panspeed;
+    }
+    // s -> move backward
+    if (event.charCode==115){
+        center[2]-=panspeed;
+    }
+    // a -> move left
+    if (event.charCode==97){
+        center[0]-=panspeed
+    }
+    // d -> move right
+    if (event.charCode==100){
+        center[0]+=panspeed;
+    }
+    // r -> move up 
+    if (event.charCode==102){
+        center[1]+=panspeed
+    }
+    // f-> move down
+    if (event.charCode==114){
+        center[1]-=panspeed;
+    }
+}
+
+function handleResize(event){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    gl.viewportWidth=canvas.width;
+    gl.viewportHeight=canvas.height;
+}
+/* ############ SETTINGS MENU ############## */
+//functions called on settings form click events
+function checkres(value)
+{
+    var w1 = canvas.width;
+    var h1 = canvas.height;
+
+    if (value == "240p"){
+        canvas.width=320;
+        canvas.height=240;
+    }
+    else if (value == "480p"){
+        canvas.width=640;
+        canvas.height=480;
+    }
+    else if (value == "786p"){
+        canvas.width=1024;
+        canvas.height=786;
+    }
+    else if (value =="1080p"){
+        canvas.width=1920;
+        canvas.height=1080;
+    }
+    var w2 = canvas.width;
+    var h2 = canvas.height;
+
+    gl.viewportWidth = w2;
+    gl.viewportHeight = h2;
+    mat4.perspective(45, w2/h2,zmin, zmax, pMatrix);
+
+//not sure how to resize canvas without moving object around
+//    mat4.translate(mvMatrix, [(w2-w1)/defWidth, (h2-h1)/defHeight, 0.]);
+
+}
+
+/* ############ INITIALIZATION FUNCTIONS ############## */
+//initialize the shaders
+function initShaders() {
+
+    //Shader compilation, loads from definitions here in script
+    vertexShader = createShaderFromScriptElement(gl, "vertex-shader");
+    fragmentShader = createShaderFromScriptElement(gl, "fragment-shader");
+    // creates a program to pass information between the shaders
+    shaderProgram = gl.createProgram();
+    gl.attachShader(shaderProgram, vertexShader);
+    gl.attachShader(shaderProgram, fragmentShader);
+    gl.linkProgram(shaderProgram);
+
+    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+        alert("Could not initialise shaders");
+    }
+
+    gl.useProgram(shaderProgram);
+
+    //Uniform location
+    shaderProgram.positionLocation = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+    gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+
+    // bind javascript variables to program "Uniform" attributes (stuff that doesn't change) 
+    shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+    shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+    shaderProgram.resUniform = gl.getUniformLocation(shaderProgram, "resolution");
+    shaderProgram.colorUniform = gl.getUniformLocation(shaderProgram, "color");
+    shaderProgram.radiusUniform = gl.getUniformLocation(shaderProgram,"radius")
+    shaderProgram.weightUniform =  gl.getUniformLocation(shaderProgram,"weight")
+    shaderProgram.partTypeUniform = gl.getUniformLocation(shaderProgram,'parttype')
+
+}    
+
+// initialize the buffer(s) that contain the vertices
+// this is just a simple quad (billboard)
+function initBuffers() {
+    VertexPositionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, VertexPositionBuffer);
+    vertices = [
+         1.0,  1.0,  0.0,
+        -1.0,  1.0,  0.0,
+         1.0, -1.0,  0.0,
+        -1.0, -1.0,  0.0
+    ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    VertexPositionBuffer.itemSize = 3;
+    VertexPositionBuffer.numItems = 4;
+
+}
+
+function initData(snapname){
+    // from https://codepen.io/KryptoniteDove/post/load-json-file-locally-using-pure-javascript
+    function loadJSON(callback) {   
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', snapname+'.json', true); 
+        xobj.onreadystatechange = function () {
+              if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                callback(xobj.responseText);
+              }
+        };
+        xobj.send(null);  
+     }
+    loadJSON(function(response){
+        // Parse JSON string into object
+         parts = JSON.parse(response);
+         console.log("Successfully loaded:")
+         console.log(Object.keys(parts[0]));
+         parts = parts[0];
+         })
+}
+
+
+function initFrustrumPlanes(){
+
+    fov = 45;
+    ratio = gl.viewportWidth / gl.viewportHeight;
+    nearDist = zmin;
+    farDist = zmax;
+
+
+    Hnear = 2 * Math.tan(degToRad(fov) / 2) * nearDist
+    Wnear = Hnear * ratio
+
+    Hfar = 2 * Math.tan(degToRad(fov) / 2) * farDist
+    Wfar = Hfar * ratio
+
+    d = [0.,0.,-1.];
+    up = [0.,1.,0.];
+    right = [1.,0.,0.];
+
+    //far and near plane center points
+    fc = [0.,0.,zmax*d[2]];
+    fn = d;
+    
+    nc = [0.,0.,zmin*d[2]];
+    nn = scaleVector(-1.,d);
+    
+
+    //far plane cardinal points
+    fl = addVectors(fc,scaleVector(-Wfar/2.,right))
+    fr = addVectors(fc,scaleVector(Wfar/2.,right))
+    fu = addVectors(fc,scaleVector(Hfar/2.,up))
+    fd = addVectors(fc,scaleVector(-Hfar/2.,up))
+
+    // get vectors to cardinal points from camera (at [0,0,0] so don't subtract)
+    fln = normalizeVector(fl)
+    frn = normalizeVector(fr)
+    fun = normalizeVector(fu)
+    fdn = normalizeVector(fd)
+
+    // get plane normal vectors by crossing two vectors that live in the plane
+    pln = crossProduct(up,fln);
+    prn = crossProduct(frn,up);
+    pun = crossProduct(right,fun);
+    pdn = crossProduct(fdn,right);
+
+    //length to walk backwards from cardinal points in order to find the center of the plane
+    var ddist = (zmax - zmin)/2.
+
+    // get plane center points
+    pcl = addVectors(fl,scaleVector(-ddist,fln))
+    pcr = addVectors(fr,scaleVector(-ddist,frn))
+    pcu = addVectors(fu,scaleVector(-ddist,fun))
+    pcd = addVectors(fd,scaleVector(-ddist,fdn))
+
+    //create vector objects for plane center points
+    pcuR = vec3.create();
+    pcdR = vec3.create();
+    pcrR = vec3.create();
+    pclR = vec3.create();
+    fcR = vec3.create();
+    ncR = vec3.create();
+
+    //create vector objects for plane normal vectors
+    punR = vec3.create();
+    pdnR = vec3.create();
+    prnR = vec3.create();
+    plnR = vec3.create();
+    fnR = vec3.create();
+    nnR = vec3.create();
+
+}
+
+function initGL() {
+    try {
+        gl = canvas.getContext('webgl');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        gl.viewportWidth = canvas.width;
+        gl.viewportHeight = canvas.height;
+        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, zmin, zmax, pMatrix);
+    } catch (e) {
+    }
+    if (!gl) {
+        alert("Could not initialise WebGL, sorry !");
+    }
+}
+
+function webGLStart() {
+    canvas = document.getElementById("WebGL-canvas");
+
+    // inialize stuff 
+    initData('snap50');
+    initGL();
+    initShaders();
+    initBuffers();
+    initFrustrumPlanes();
+
+    // background color
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.blendFunc(gl.SRC_ALPHA, gl.DST_ALPHA);
+    gl.enable(gl.BLEND);
+    gl.disable(gl.DEPTH_TEST);
+
+    // handle events
+    canvas.onmousedown = handleMouseDown;
+    document.onmouseup = handleMouseUp;
+    document.onmousemove = handleMouseMove;
+    canvas.addEventListener('wheel', handleMouseWheel);
+    canvas.addEventListener('mousewheel', handleMouseWheel)
+    canvas.addEventListener('DOMMouseScroll', handleMouseWheel);
+    document.addEventListener("keypress", handleKeyPress)
+    window.addEventListener('resize',handleResize)
+    canvas.onwheel = function(event){ event.preventDefault(); };
+    canvas.onmousewheel = function(event){ event.preventDefault(); };
+
+    // draw a new frame
+    tick();
+}
+
+/* ############# MATH FUNCTIONS ################ */
+function crossProduct(x,y){
+    return [x[1]*y[2]-x[2]*y[1],x[2]*y[0]-x[0]*y[2],x[0]*y[1]-x[1]*y[0]]
+}
+
+function addVectors(x,y){
+    return [x[0]+y[0],x[1]+y[1],x[2]+y[2]]
+}
+
+function scaleVector(c,x){
+    return [c*x[0],c*x[1],c*x[2]]
+}
+
+function normalizeVector(x){
+    var norm = Math.sqrt(x[0]*x[0]+x[1]*x[1]+x[2]*x[2])
+    return scaleVector(1./norm,x)
+}
+
+function dotVectors(x,y){
+    return [x[0]*y[0],x[1]*y[1],x[2]*y[2]]
+}
+
+function createInverseMatrices(){
+    mymatrix = mat4.create()
+    mynormalmatrix = mat4.create()
+    mat4.identity(mynormalmatrix)
+    mat4.rotate(mynormalmatrix, degToRad(yrot), [1, 0, 0]);
+    mat4.rotate(mynormalmatrix, degToRad(xrot), [0, 1, 0]);
+    mat4.inverse(mynormalmatrix,mynormalmatrix)
+
+    //create the inverse for moving the center points, normal vectors don't move, they just rotate
+    mat4.set(mynormalmatrix,mymatrix)
+    mat4.translate(mymatrix, scaleVector(-1,center));
+}
+
+function myInverse(x){
+    var myvector = vec3.create();
+    vec3.set(x,myvector);
+    mat4.multiplyVec3(mymatrix,myvector,myvector);
+
+    return myvector;
+}
+
+function myNormalInverse(x){
+    var myvector = vec3.create();
+    vec3.set(x,myvector);
+    mat4.multiplyVec3(mynormalmatrix,myvector,myvector);
+    return myvector;
+}
+
+ // ############ FRUSTUM FUNCTIONS ###############
+function rotateFrustrum(){
+    createInverseMatrices();
+    var cvecs = [fc,nc,pcl,pcr,pcu,pcd]
+    var nvecs = [fn,nn,pln,prn,pun,pdn]
+    for (var i=0; i<nvecs.length; i++){
+        // rotate the plane centers
+        cvecs[i]=myInverse(cvecs[i])
+        // rotate the plane normal vectors (doesn't need to be translated)
+        nvecs[i]=myNormalInverse(nvecs[i])
+    }
+    rcvecs = cvecs
+    rnvecs = nvecs
+}
+
+function testPointInFrustrum(coord,rcvecs,rnvecs,printflag){
+    // use the rotated vectors calculated earlier (just once)
+    var boolTest = true;
+    for (var i=0; i < rnvecs.length; i++){
+        if (printflag) {
+            console.log('testing')
+            console.log(rcvecs[i], rnvecs[i])
+            console.log(coord)
+        }
+        boolTest = boolTest&&(((coord[0]- rcvecs[i][0])*rnvecs[i][0] + (coord[1]- rcvecs[i][1])*rnvecs[i][1] + (coord[2]- rcvecs[i][2])*rnvecs[i][2]) <= 0)
+    }
+    return boolTest
+}
+
+function setLogBoundaries(minn,maxx){
+    logmin=minn;
+    logmax=maxx;
+}
+
+/* ############ DRAWING FUNCTIONS ############## */
+// for moving and rotating objects
+function degToRad(degrees) {
+    return degrees * Math.PI / 180;
+}
+
+function setMatrixUniforms() {
+    gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
+    gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
+}
+
+plotThis = [1,1,1];
+radiusFacts = [1,1,1];
+partsColors = [
+    [1., 0., 0., 1.],
+    [0., 0., 1., 1.],
+    [1., 1., 0., 1.]   
+    ];
+
+function drawScene() {
+    gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+
+    
+
+    parttypes = [0,1,4];
+
+    //gl.uniform2f(shaderProgram.resUniform, canvas.width/defWidth, canvas.height/defHeight);
+    rotateFrustrum();
+    dist_correct_factor = Math.min(-center[2]/zmax,1);
+    radiusFactor = Math.max(Math.sqrt(dist_correct_factor)*6.,1);//Math.max(Math.sqrt(dist_correct_factor)*3.3,1)*2;
+
+    //setLogBoundaries(-8,1);
+    //var logflag=false;
+
+    // draw parttype d
+    console.log(center)
+    for (var j = 0; j < parttypes.length; j++){
+        var myparts = parts['parttype'+parttypes[j]]
+        var particles_drawn = 0;
+        // loop over all particles until reach the max number for this particle type
+        if (!plotThis[j]){
+            continue
+            console.log(plotThis[j],j);
+        }
+        for (var i = 0; i < myparts.coords.length; i++) {
+            if (particles_drawn>=myparts.maxparts){
+                break
+            }
+            // see if this point lives in the camera
+            if (testPointInFrustrum(myparts.coords[i],rcvecs,rnvecs,false)){
+                particles_drawn++;
+
+                
+                //create matrix to rotate circles into new spatial positions
+                mat4.identity(mvMatrix);
+                mat4.translate(mvMatrix, center);
+                mat4.rotate(mvMatrix, degToRad(yrot), [1, 0, 0]);
+                mat4.rotate(mvMatrix, degToRad(xrot), [0, 1, 0]);
+
+                //augment matrix to rotate circles into proper orientation (facing the camera)
+                mat4.translate(mvMatrix, myparts.coords[i]);
+                mat4.rotate(mvMatrix, degToRad(-xrot), [0, 1, 0]);
+                mat4.rotate(mvMatrix, degToRad(-yrot), [1, 0, 0]);
+
+                //pass the matrices to the shader program
+                setMatrixUniforms();
+
+
+                gl.bindBuffer(gl.ARRAY_BUFFER, VertexPositionBuffer);
+                gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+                // pass the particle data to the shader program 
+                gl.uniform4fv(shaderProgram.colorUniform, partsColors[j]);
+
+
+                if (parttypes[j]==0) {
+                    partRadius = parts.parttype0.hsml[i]*radiusFactor;
+                    partWeight = myparts.den[i];//parts.parttype0.mass[i]/(4*Math.PI*partRadius*partRadius)*1e2*parts.parttype0.dec;
+                    }
+                
+                else{
+                    partRadius = 0.01;
+                    partWeight=1.;
+                }
+                partRadius*=radiusFacts[j];
+                gl.uniform1f(shaderProgram.radiusUniform,partRadius)
+                gl.uniform1f(shaderProgram.weightUniform,partWeight)
+                gl.uniform1i(shaderProgram.partTypeUniform,j)
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, VertexPositionBuffer.numItems);
+            }
+        }
+    }
+
+}
+
+var drawit = true;
+function tick() {
+    requestAnimFrame(tick);
+	if (drawit){
+        drawScene();
+        //drawit = false;
+    }
+}
+//function to check which types to plot
+function checkPlotParts(checkbox)
+{
+    if (checkbox.id == "GasCheck"){
+        console.log('changing the checkbox from',plotThis[0])
+        plotThis[0]=false;
+        if (checkbox.checked){
+            plotThis[0] = true;
+        }
+    } 
+    if (checkbox.id == "StarsCheck"){
+        plotThis[2] = false;
+        if (checkbox.checked){
+            plotThis[2] = true;
+        }
+    }
+    if (checkbox.id == "LRDMCheck"){
+        plotLRDM = false;
+        if (checkbox.checked){
+            plotLRDM = true;
+        }
+    }
+    if (checkbox.id == "HRDMCheck"){
+        plotThis[1] = false;
+        if (checkbox.checked){
+            plotThis[1] = true;
+        }
+    }
+}
+
+function checkSlider(slider)
+{
+    if (slider.id == "GasRange"){
+        radiusFacts[0] = slider.value /100.;
+        document.getElementById("GasText").value = slider.value/100.;
+    }
+    if (slider.id == "StarsRange"){
+        radiusFacts[2] = slider.value /100.;
+        document.getElementById("StarsText").value = slider.value/100.;
+    }
+    if (slider.id == "LRDMRange"){
+        LRDMPsize = slider.value /100.;
+        document.getElementById("LRDMText").value = slider.value/100.;
+    }
+    if (slider.id == "HRDMRange"){
+        radiusFacts[1] = slider.value /100.;
+        document.getElementById("HRDMText").value = slider.value/100.;
+    }
+}
+
+function checkText(input, event)
+{
+    var key=event.keyCode || event.which;
+    if (key==13){
+        if (input.id == "GasText"){
+            document.getElementById("GasRange").value = 100.*input.value;
+            radiusFacts[0] = input.value ;
+        }
+        if (input.id == "StarsText"){
+            document.getElementById("StarsRange").value = 100.*input.value;
+            radiusFacts[2] = input.value ;
+        }
+        if (input.id == "LRDMText"){
+            document.getElementById("LRDMRange").value = 100.*input.value;
+            LRDMPsize = 0.001 * input.value ;
+        }
+        if (input.id == "HRDMText"){
+            document.getElementById("HRDMRange").value = 100.*input.value;
+            radiusFacts[1] = input.value ;
+        }
+    }
+
+}
+
+function checkColor(event, color)
+{
+    rgb = color.toRgb();
+    if (event.id == "GasColorPicker"){
+        partsColors[0] = [rgb.r/255., rgb.g/255., rgb.b/255., rgb.a];
+    }
+    if (event.id == "LRDMColorPicker"){
+        LRDMColor = [rgb.r/255., rgb.g/255., rgb.b/255., rgb.a];
+    }
+    if (event.id == "HRDMColorPicker"){
+        partsColors[1] = [rgb.r/255., rgb.g/255., rgb.b/255., rgb.a];
+    }
+    if (event.id == "StarsColorPicker"){
+        partsColors[2] = [rgb.r/255., rgb.g/255., rgb.b/255., rgb.a];
+    }
+
+}
+
+</script>
+
+<!-- ############## GL  shaders ################## -->
+<!--fragment shader -->
+<script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+
+    // vertex positions to tell where on the fragment we are
+    varying vec3 vPosition;
+    //varying vec2 vResolution;
+    
+    // particle data 
+    uniform vec4 color;
+    uniform float weight;
+    uniform int parttype;
+
+    void main(void) {
+        
+        gl_FragColor = color;
+        // Get the distance vector from the center
+        vec2 fromCenter = abs(vPosition.xy);
+        float dist = length(fromCenter);//*uVertexScale;
+
+        if (parttype == 0){
+            
+            float dist2 = dist*dist;
+    
+            //gl_FragColor.a = 1.;
+            // best fit quartic to SPH kernel (unormalized)
+            gl_FragColor.a =  -4.87537494*dist2*dist2+11.75074987*dist2*dist-8.14117164*dist2 +0.2657967*dist + 0.99328463;
+            
+    
+            float fdimless;
+            //bestfit 6th order polynomial for 2d projection of normalized sph 
+            //fdimless = 2.16436594e+02*dist*dist*dist*dist*dist*dist-6.28118444e+02*dist*dist*dist*dist*dist+5.54960756e2*dist*dist*dist*dist -3.98391144e+1*dist*dist*dist-1.27356224e+2*dist*dist-1.98297338e-2*dist+2.39926898e+01;
+            fdimless=3.;
+            gl_FragColor.r = weight*fdimless;
+        }
+        // make the square into a circle
+        if (dist > 1.) {
+           discard;
+        }   
+        
+    }
+</script>
+
+<!-- vertex shader -->
+<script id="vertex-shader" type="x-shader/x-vertex">
+    varying vec3 vPosition;
+    //varying vec2 vResolution;
+    // uniform vec2 resolution;
+
+    // vertex positions
+    attribute vec3 aVertexPosition;
+
+    // rotation and perspective matrices 
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    // particle data
+    uniform float radius;
+
+    void main(void) {
+
+        vPosition = aVertexPosition;
+        //vResolution = resolution;
+
+        // scale the vertices in a local variable to increase its size without affecting anything else
+        vec3 vPos = aVertexPosition;
+        vPos.xy *= radius;
+
+        vec4 vertex = uPMatrix * uMVMatrix * vec4(vPos, 1.0);
+        gl_Position = vertex;
+    }
+</script>
+
+
+
+</head>
+
+<body onload="webGLStart();">
+  <div class="container">
+  <div class="particleDiv" style="top:10px">
+            <div class="pLabelDiv">Gas</div>
+            <label class="switch">
+                <input checked id="GasCheck" type="checkbox" onchange="checkPlotParts(this)">
+                <span class="slideroo"></span>
+            </label>
+            <input id="GasRange" type="range" min="0" max="500" value="100" class="sliderps" autocomplete="off" oninput="checkSlider(this)">
+            <input id="GasText" type="text" class="pTextInput" value="1" autocomplete="off" onkeypress="checkText(this, event)">
+            <!--<input type="text" id="GasColorPicker"/>-->
+        </div>
+
+<table style="width:100%">
+  <tr>
+    <td valign="top" style="width:130px">
+<!--
+      <h4>Resolution</h4>
+      <form>
+	<input type="radio" name="resradio" onclick="checkres(this.value)" value="240p">320x240<br>
+	<input type="radio" name="resradio" onclick="checkres(this.value)" value="480p">640x480<br>
+	<input checked type="radio" name="resradio" onclick="checkres(this.value)" value="786p">1024x786<br>
+	<input type="radio" name="resradio" onclick="checkres(this.value)" value="1080p">1920x1080<br>
+	<br>
+      </form>
+
+      <button class="button" onclick="fullscreen();"> Go Fullscreen</button>
+    </td>
+    -->
+    <td>
+      <canvas oncontextmenu="return false;" id="WebGL-canvas" style="margin-left:0px; margin-right:0px; display:block; padding:0px; background-color:black; top:0px; left:0px; position:absolute;"></canvas>
+    </td>
+</tr>
+</table>
+</div>
+
+<!-- Stars -->
+    <div class="particleDiv" style="top:45px">
+        <div class="pLabelDiv">Stars</div>
+        <label class="switch">
+            <input checked id="StarsCheck" type="checkbox" onchange="checkPlotParts(this)">
+            <span class="slideroo"></span>
+        </label>
+        <input id="StarsRange" type="range" min="0" max="500" value="100" class="sliderps" autocomplete="off" oninput="checkSlider(this)">
+        <input id="StarsText" type="text" class="pTextInput" value="1" autocomplete="off" onkeypress="checkText(this, event)">
+        <input type="text" id="StarsColorPicker"/>
+
+    </div>
+
+<!-- HRDM -->
+    <div class="particleDiv" style="top:80px">
+    <div class="pLabelDiv">HRDM</div>
+        <label class="switch">
+            <input checked id="HRDMCheck" type="checkbox" onchange="checkPlotParts(this)">
+            <span class="slideroo"></span>
+        </label>
+        <input id="HRDMRange" type="range" min="0" max="500" value="100" class="sliderps" autocomplete="off" oninput="checkSlider(this)">
+        <input id="HRDMText" type="text" class="pTextInput" value="1" autocomplete="off" onkeypress="checkText(this, event)">
+        <input type="text" id="HRDMColorPicker"/>
+    </div>
+
+<!-- for color pickers -->
+<script type="text/javascript">
+
+$("#GasColorPicker").spectrum({
+    color: "rgb(255,0,0)",
+    flat: false,
+    showInput: true,
+    showInitial: false,
+    showAlpha: true,
+    showPalette: false,
+    showSelectionPalette: true,
+    clickoutFiresChange: false,
+    maxSelectionSize: 10,
+    preferredFormat: "rgb",
+    change: function(color) {
+        checkColor(this, color);
+    },
+    });
+
+$("#StarsColorPicker").spectrum({
+    color: "rgb(255,255,0)",
+    flat: false,
+    showInput: true,
+    showInitial: false,
+    showAlpha: true,
+    showPalette: false,
+    showSelectionPalette: true,
+    clickoutFiresChange: false,
+    maxSelectionSize: 10,
+    preferredFormat: "rgb",
+    change: function(color) {
+        checkColor(this, color);
+    },
+    });
+
+$("#LRDMColorPicker").spectrum({
+    color: "rgb(0,0,255)",
+    flat: false,
+    showInput: true,
+    showInitial: false,
+    showAlpha: true,
+    showPalette: false,
+    showSelectionPalette: true,
+    clickoutFiresChange: false,
+    maxSelectionSize: 10,
+    preferredFormat: "rgb",
+    change: function(color) {
+        checkColor(this, color);
+    },
+    });
+
+$("#HRDMColorPicker").spectrum({
+    color: "rgb(0,0,255)",
+    flat: false,
+    showInput: true,
+    showInitial: false,
+    showAlpha: true,
+    showPalette: false,
+    showSelectionPalette: true,
+    clickoutFiresChange: false,
+    maxSelectionSize: 10,
+    preferredFormat: "rgb",
+    change: function(color) {
+        checkColor(this, color);
+    },
+    });
+
+</script>
+
+</body>
+</html>
+

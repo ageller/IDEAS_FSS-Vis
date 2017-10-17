@@ -1,0 +1,63 @@
+h1 {
+    color: black;
+    font-family: verdana;
+}
+
+body {
+    font-family:verdana;
+}
+
+.button_wrapper {
+	display:inline-block;
+}
+
+.button {
+    margin-left: 10px;
+    width:80px;
+    height:30px;
+    color:white;
+    background-color: steelblue;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+}  
+.button:hover {
+    background-color: lightsteelblue;
+    cursor: pointer;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+#slidecontainer {
+    width: 100%;
+}
+
+.slider {
+    width: 100%;
+}
+
+.slider:hover {
+    cursor: pointer;
+}
+
+.axis {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+#Compass:hover {
+    cursor: none;
+}
