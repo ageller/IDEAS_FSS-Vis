@@ -1,0 +1,3 @@
+[submodule "Bokeh/LCBokeh"]
+	path = Bokeh/LCBokeh
+	url = https://github.com/ageller/LCBokeh
