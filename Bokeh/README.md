@@ -1,1 +1,1 @@
-The submodule on this page links to one of Aaron Geller's GitHub repos.  You can also view the notebook from the repo [here](https://github.com/ageller/LCBokeh/blob/1383eaf489f1104cb6ae8a0552e5e193794f0855/LC_Bokeh.ipynb).
+The submodule on this page links to Aaron Geller's ["LCBokeh" GitHub repo](https://github.com/ageller/LCBokeh).  You can also view the notebook from the repo [here](http://nbviewer.jupyter.org/github/ageller/LCBokeh/blob/master/LC_Bokeh.ipynb).
