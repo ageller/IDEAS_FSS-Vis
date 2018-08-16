@@ -1,0 +1,1 @@
+This is a simple demo of using (dat.gui)[http://workshop.chromeexperiments.com/examples/gui/] with (three.js)[https://threejs.org/] to draw and modify a sphere.  The demo is adapted from (here)[https://threejs.org/docs/#api/geometries/SphereGeometry]. 
