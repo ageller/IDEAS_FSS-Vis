@@ -1,1 +1,1 @@
-This is written in "raw" WebGL (e.g., without the three.js library).  The code is adapted from [here](https://github.com/rantonels/schwarzschild).
+This is written in "raw" WebGL (e.g., without the three.js library).  The code is adapted from [here](https://github.com/rantonels/schwarzschild), and see [here](http://spiro.fisica.unipd.it/~antonell/schwarzschild/) also.
