@@ -12,9 +12,9 @@ add_library('video')
 #define some variables that will be used later (as globals)
 video = None
 scl = 1 #scale, to speed up capture (not needed on my laptop)
-aspect = 9./16. #y/x #this is the  aspect of my webcam and cannot be changed 
+aspect = 9./16. #this is the  aspect (y/x) of my webcam and cannot be changed 
 iSize = 720 #height of the image
-fRate = 30 #frame rate (anything higher than 6 here doesn't seem to work either)
+fRate = 30 #frame rate 
 
 #for BHs
 NBH = 100 #maximum number of BHs
