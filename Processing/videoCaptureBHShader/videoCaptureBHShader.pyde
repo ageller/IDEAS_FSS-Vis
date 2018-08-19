@@ -1,7 +1,3 @@
-##############
-## Somehow I need to account for the different aspect ratio of the video
-## It seems to work best if I send a square to the shader
-
 #add the video library
 add_library('video')
 
@@ -17,7 +13,7 @@ iSize = 720 #height of the image
 fRate = 30 #frame rate 
 
 #for BHs
-NBH = 100 #maximum number of BHs
+NBH = 10 #maximum number of BHs
 iMBH = [-1. for x in range(NBH)] #BH masses (if < 1, no BH will be drawn)
 ixBH = [0. for x in range(NBH)] #BH x positionx, in fraction of the screen size, origin in upper left
 iyBH = [0. for x in range(NBH)] #BH y positionx, in fraction of the screen size, origin in upper left
@@ -40,8 +36,6 @@ def setup():
     frameRate(fRate)
     noStroke()
     
-
-    
     #load the shaders
     sh = loadShader("fragment.glsl", "vertex.glsl")
 
@@ -60,7 +54,7 @@ def captureEvent(c):
         diffx = int(round( (video.width - width/scl)/2. ))
         img.copy(video, diffx, 0, video.width-diffx*2, video.height, 0, 0, img.width, img.height);
 
-        
+
 def draw():
     #check for keyboard input
     if( keyPressed):
@@ -70,7 +64,7 @@ def draw():
     if (iMBH[ipos] > 0 or ipos == 0):
         shader(sh)
         sh.set("MBH", iMBH[ipos])
-        sh.set("xBH", ixBH[ipos])
+        #sh.set("xBH", ixBH[ipos]) #setting this below to allow for flipped image
         sh.set("yBH", iyBH[ipos])
         sh.set("xSize", float(video.width))
         sh.set("ySize", float(video.height))
@@ -82,18 +76,28 @@ def draw():
         beginShape(QUADS)
         
         #now define the Quad
+        #NOTE: I am flipping the webcam image here horizontally so that this is like a mirror
+        #      It would probably be cleaner to do this above, but I couldn't figure that out
         normal(0,0,1)
-        vertex(-width/2., height/2., 0, 1)
-        vertex(width/2., height/2., 1, 1)
-        vertex(width/2., -height/2., 1, 0)
-        vertex(-width/2., -height/2., 0, 0)
+        if (ipos == 0):
+            sh.set("xBH", 1. - ixBH[ipos])
+            vertex(-width/2., height/2., 1, 1)
+            vertex(width/2., height/2., 0, 1)
+            vertex(width/2., -height/2., 0, 0)
+            vertex(-width/2., -height/2., 1, 0)
+        else:
+            sh.set("xBH", ixBH[ipos])
+            vertex(-width/2., height/2., 0, 1)
+            vertex(width/2., height/2., 1, 1)
+            vertex(width/2., -height/2., 1, 0)
+            vertex(-width/2., -height/2., 0, 0)
         endShape()
         
     resetShader()
     
 #keyboard 
 def handleKeys():
-    global mcount, addBH
+    global mcount, addBH, ipos
     #reset the BH array if "r" is pressed
     if (key == "r"):
         resetBH()
@@ -106,6 +110,7 @@ def handleKeys():
 
     #add more BHs (will pause the image)
     if (key == "a"):
+        resetBH()
         addBH = True
         
     #save the image
@@ -135,7 +140,7 @@ def resetBH():
 
 #mouse events
 def mousePressed():
-    global locked, mcount
+    global locked, mcount, img
     locked = True 
     mcount = None
     setBHpos()
@@ -151,7 +156,5 @@ def mouseReleased():
     locked = False
     mcount = None
     if (addBH):
-        ipos += 1
-        if (ipos > 0 and ipos < NBH):
-            img = get()
-        ipos = min(ipos, NBH-1)
+        ipos = min(ipos+1, NBH-1)
+        img = get()
