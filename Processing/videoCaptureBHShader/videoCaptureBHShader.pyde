@@ -5,17 +5,19 @@
 #add the video library
 add_library('video')
 
+#see the list of resolutions of the webcam
+### YOU NEED TO CHOOSE A RESOLUTION AND FRAMERATE FROM THIS LIST
+#print(Capture.list())
+
 #define some variables that will be used later (as globals)
 video = None
-scl = 8 #scale, to speed up capture
-#I *think* this is the default aspect of my webcam and cannot be changed (otherwise image is stretched)
-aspect = 3./4. #y/x
-#seems like anything over 80 pixels here doesn't work (maybe too slow?)
-iSize = 80 #width of the image
+scl = 1 #scale, to speed up capture (not needed on my laptop)
+aspect = 9./16. #y/x #this is the  aspect of my webcam and cannot be changed 
+iSize = 720 #height of the image
 fRate = 30 #frame rate (anything higher than 6 here doesn't seem to work either)
 
 #for BHs
-NBH = 10 #maximum number of BHs
+NBH = 100 #maximum number of BHs
 iMBH = [-1. for x in range(NBH)] #BH masses (if < 1, no BH will be drawn)
 ixBH = [0. for x in range(NBH)] #BH x positionx, in fraction of the screen size, origin in upper left
 iyBH = [0. for x in range(NBH)] #BH y positionx, in fraction of the screen size, origin in upper left
@@ -28,6 +30,7 @@ img = None
 
 #for mouse events
 locked = False
+addBH = False
 mcount = None
 
 def setup():
@@ -36,25 +39,26 @@ def setup():
     #canvas = createGraphics(width, height, P2D)
     frameRate(fRate)
     noStroke()
-    #see the list of resolutions of the webcam
     
-    #print(Capture.list())
+
+    
     #load the shaders
     sh = loadShader("fragment.glsl", "vertex.glsl")
 
     #for the video
     #start the video capture process
-    video = Capture(this, iSize, iSize, fRate)
+    video = Capture(this, int(round(iSize/aspect)), iSize, fRate)
     video.start()
     #create an image to hold the current frame of the webcam 
-    img = createImage(video.width, video.height, ARGB);
+    img = createImage(width, height, ARGB);
 
     
 #An event for when a new frame is available
 def captureEvent(c):
     c.read()
     if (ipos == 0):
-        img.copy(video, 0, 0, video.width, video.height, 0, 0, img.width, img.height);
+        diffx = int(round( (video.width - width/scl)/2. ))
+        img.copy(video, diffx, 0, video.width-diffx*2, video.height, 0, 0, img.width, img.height);
 
         
 def draw():
@@ -89,7 +93,7 @@ def draw():
     
 #keyboard 
 def handleKeys():
-    global mcount
+    global mcount, addBH
     #reset the BH array if "r" is pressed
     if (key == "r"):
         resetBH()
@@ -100,10 +104,14 @@ def handleKeys():
             mcount = millis()
         setBHmass(min(max((millis() - mcount)/500., 1.), maxBHmass/0.01))
 
+    #add more BHs (will pause the image)
+    if (key == "a"):
+        addBH = True
+        
     #save the image
     if (key == "s"):
         c = get()
-        c.save("outputImage.jpg");
+        c.save("outputImage.jpg")
         
 #set the BH parameters
 def setBHpos():
@@ -117,11 +125,12 @@ def setBHmass(dur):
         iMBH[ipos] = dur*0.01;
         
 def resetBH():
-    global ixBH, iyBH, iMBH, ipos
+    global ixBH, iyBH, iMBH, ipos, addBH
     iMBH = [-1. for x in range(NBH)] 
     ixBH = [0. for x in range(NBH)]
     iyBH = [0. for x in range(NBH)] 
     ipos = 0
+    addBH = False
     resetShader()
 
 #mouse events
@@ -141,7 +150,8 @@ def mouseReleased():
     global locked, mcount, ipos, img
     locked = False
     mcount = None
-    ipos += 1
-    if (ipos > 0 and ipos < NBH):
-        img = get()
-    ipos = min(ipos, NBH-1)
+    if (addBH):
+        ipos += 1
+        if (ipos > 0 and ipos < NBH):
+            img = get()
+        ipos = min(ipos, NBH-1)
