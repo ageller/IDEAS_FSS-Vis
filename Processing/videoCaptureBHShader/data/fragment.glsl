@@ -34,7 +34,7 @@ void main() {
 
 		if (dist > rs){
 			float theta = atan(P1.y, P1.x);
-			float thetaNew = theta + 4.*iG*MBH/(dist*ic*ic);
+			float thetaNew = theta + 2.*rs/dist;
 			float xNew = dist*cos(thetaNew);
 			float yNew = dist*sin(thetaNew);
 			vec2 P2 = vec2(xNew, yNew) + PBH;
