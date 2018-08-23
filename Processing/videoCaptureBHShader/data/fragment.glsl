@@ -17,7 +17,6 @@ float iG = 1.; //graviational constant
 float ic = 1.; //speed of light
 
 void main() {
-	//normalize the coordinates so that I can get the distance from the center as a circle
 	gl_FragColor = texture2D(vtex, vertTexCoord.st);
 
 	if (MBH > 1e-4){
