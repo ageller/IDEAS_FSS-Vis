@@ -1,0 +1,498 @@
+
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Intro to Visualization</title>
+
+		<meta name="description" content="Intro to Viz">
+		<meta name="author" content="Frank Elavsky">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="css/monokai-sublime.css">
+
+		<!-- Google fonts
+			<link href='https://fonts.googleapis.com/css?family=Bad+Script' rel='stylesheet' type='text/css'>
+		 -->
+
+		<!-- Printing and PDF exports
+		<script>
+			/*
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+			*/
+		</script>
+	-->
+		<script>
+			function play() { 
+				function currentvid() {
+					return document.getElementsByClassName('present')[0].getElementsByTagName('video')[0]
+				}
+				function checkligo() {
+					if (document.getElementsByClassName('present')[0].getElementsByTagName('iframe')[0] === document.getElementById('ligo')) {
+						return document.getElementsByClassName('present')[0].getElementsByTagName('iframe')[0]
+					}
+					return false
+				}
+				function checkinteractive() {
+					if (document.getElementsByClassName('present')[0] === document.getElementById('interactive')) {
+						return document.getElementsByClassName('present')[0].getElementsByTagName('iframe')
+					}
+					return false
+				}
+				var current = currentvid();
+				var ligo = checkligo();
+				var interactive = checkinteractive()
+				if (current) {
+
+					setTimeout(
+						function(){ 
+							current.play() 
+							setTimeout(
+								function(){ 
+									current.play() 
+								}, 5200);
+						}, 2500);
+
+				} else if (ligo) {
+					ligo.src = 'https://ligo.northwestern.edu/media/mass-plot/index.html'
+				} else if (interactive) {
+					interactive[0].src = 'https://nuitrcs.github.io/kellogg_insight_automation/'
+					interactive[1].src = 'https://nuitrcs.github.io/kellogg_insight_city_automation/'
+				}
+			} 
+		</script>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>Intro to Visualization:</h1>
+					<h3><i>How to make more effective research figures</i></h3>
+					<p>
+						<i>Frank Elavsky, Data Visualization Specialist
+						<br>Research Computing Services, Northwestern University IT</i>
+					</p>
+				</section>
+				<section>
+					<h1>These slides:</h1>
+					<h3><a href='https://nuitrcs.github.io/scientific-figures-workshop/'>https://nuitrcs.github.io/scientific-figures-workshop/</a></h3>
+				</section>
+				<section>
+					<h1>This repo:</h1>
+					<h3><a href='https://github.com/nuitrcs/scientific-figures-workshop'>github.com/nuitrcs/scientific-figures-workshop</a></h3>
+				</section>
+				<section>
+					<h1>Table of Contents:</h1>
+					<p>1. A Test.</p>
+					<p>2. Myth or Law?</p>
+					<p>3. The Basics.</p>
+					<p>4. Gestalt Principles.</p>
+					<p>5. The "Problem" in Visualization.</p>
+					<p>6. A Systematic Approach.</p>
+					<p>Check your skills.</p>
+				</section>
+
+				<section>
+					<h1>1. A Test.</h1>
+				</section>
+				<section>
+					<img src='files/1context.jpg' style='width:50%; height:auto'>
+					<p>What does this figure show us?<br><i>Source: <a href='http://cebp.aacrjournals.org/content/18/12/3349
+'>Lung Cancer Epidemiology</a></i></p>
+				</section>
+				<section>
+					<img src='files/1context.jpg' style='width:50%; height:auto'>
+					<p>Is this a "good" scientific figure?</p>
+				</section>
+				<section>
+					<h1>Why or why not?</h1>
+				</section>
+				<section>
+					<h1>Today's first lesson:</h1>
+					<h3><i>Don't rely on personal preference.</i></h3>
+				</section>
+
+				<section>
+					<h1>2. Myth or Law?</h1>
+				</section>
+				<section>
+					<h3>Myth or Law:</h3>
+					<h1>Effective scientific figures should be beautiful.</h1>
+				</section>
+				<section>
+					<h1>Myth.</h1>
+				</section>
+				<section>
+					<h3>They need to communicate clearly. Beauty is secondary.</h3>
+				</section>
+				<section>
+					<h3>Myth or Law:</h3>
+					<h1>Effective scientific figures should show everything in your research.</h1>
+				</section>
+				<section>
+					<h1>Myth.</h1>
+				</section>
+				<section>
+					<h3>You will lose your audience. Prime them instead.</h3>
+				</section>
+				<section>
+					<h3>Myth or Law:</h3>
+					<h1>Effective scientific figures should be simple.</h1>
+				</section>
+				<section>
+					<h1>Myth.</h1>
+				</section>
+				<section>
+					<h3>You can show complex information, but pick a single thesis at a time.</h3>
+				</section>
+				<section>
+					<h3>Myth or Law:</h3>
+					<h1>Effective scientific figures should always show geometric precision.</h1>
+				</section>
+				<section>
+					<h1>Myth.</h1>
+				</section>
+				<section>
+					<h3>You often have limited space and resolution. Do the best you can.</h3>
+				</section>
+				<section>
+					<h3>The truth is:</h3>
+					<h1>There are no laws.</h1>
+					<h3>There are only myths, guidelines, and principles.</h3>
+				</section>
+
+				<section>
+					<h1>3. The Basics.</h1>
+				</section>
+				<section>
+					<h3>So before you learn how to systematically measure effectiveness,</h3>
+					<h1>We must cover the basics.</h1>
+				</section>
+				<section>
+					<img src='files/1bad.PNG' style='width:35%; height:auto'>
+					<p>Chart literacy is important.</p>
+				</section>
+				<section>
+					<img src='files/1a_bad.PNG' style='width:35%; height:auto'>
+					<p>Not just for the audience, but for communicators too.</p>
+				</section>
+				<section>
+					<h3>Visualization is a</h3>
+					<h1>Chainsaw</h1
+>					<p><i>Use wisely.</i></p>
+				</section>
+				<section>
+					<img src='files/2bad.png' style='width:75%; height:auto'>
+					<p>This is the chart version of a chainsaw massacre.</p>
+				</section>
+				<section>
+					<img src='files/3bad.jpg' style='width:55%; height:auto'>
+					<p><i>Think</i> about your data! How did this happen?</p>
+				</section>
+				<section>
+					<img src='files/4bad.jpg' style='width:65%; height:auto'>
+					<p>An honest mistake... or?</p>
+				</section>
+				<section>
+					<img src='files/5bad.png' style='width:75%; height:auto'>
+					<p>Poor designer put their own name on this one.</p>
+					<p style='font-size: 75%'>From Smashing Magazine's series: <a href='https://www.smashingmagazine.com/2010/05/imagine-a-pie-chart-stomping-on-an-infographic-forever/
+'>"Imagine a pie chart stomping on an infographic forever"</a></p>
+				</section>
+				<section>
+					<img src='files/6bad.jpg' style='width:23%; height:auto'>
+					<p style='position:absolute;float:right; top:50%'>An "automated" visualization report.<br>Yikes.</p>
+				</section>
+
+				<section>
+					<h3>4. Gestalt Principles.</h3>
+					<h1>Hacking the Mind</h1>
+					<p><i>AKA: the “chainsaws of visual communication”</i></p>
+				</section>
+				<section>
+					<h1>Proximity</h1>
+					<p>(creates categories)</p>
+					<video width='65%' src="files/1proximity.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Similarity</h1>
+					<p>(creates subcategories)</p>
+					<video width='65%' src="files/2similarity.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Contrast</h1>
+					<p>(creates focus)</p>
+					<video width='65%' src="files/3contrast.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Commonality</h1>
+					<p>(creates connections)</p>
+					<video width='65%' src="files/4commonality.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Continuity</h1>
+					<p>(creates flow)</p>
+					<video width='65%' src="files/5continuity.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Closure</h1>
+					<p>(creates suggestion)</p>
+					<video width='65%' src="files/6closure.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Figure-Ground</h1>
+					<p>(creates entry-point and layers)</p>
+					<video width='65%' src="files/7figure_ground.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Common Fate</h1>
+					<p>(creates meta-categories)</p>
+					<video width='65%' src="files/8common_fate.mp4" type="video/mp4" controls>
+				</section>
+				<section>
+					<h1>Quick thanks to Pablo Stanley</h1>
+					<a href='https://twitter.com/pablostanley/status/974303621092225024
+'>@pablostanley</a>
+				</section>
+
+				<section>
+					<h1>5. The "Problem" in Visualization.</h1>
+				</section>
+				<section>
+					<h1>Any guesses?</h1>
+					<h3>Why do we show charts and graphs and figures?</h3>
+				</section>
+				<section>
+					<h1>Data is painful.</h1>
+					But you have <a href='https://hbr.org/2006/12/the-curse-of-knowledge'><i>the curse of knowledge</i></a>
+				</section>
+				<section>
+					<h1>So what do you do?</h1>
+					<p><i>Hint: it's time to take notes!</i></p>
+				</section>
+
+				<section>
+					<h1>6. A Systematic Approach.</h1>
+				</section>
+				<section>
+					<h1>Big Picture: Empathy and Awareness</h1>
+					<p><i>Your skill in these will define whether your visualization is successful or not.</i></p>
+				</section>
+				<section>
+					<h1>Audience, Purpose, Context</h1>
+					<p><i>The holy triumvirate: </i>Who, why, and where</p>
+				</section>
+				<section>
+					<h1>Audience</h1>
+					<p><i>Who is your visualization for?</i><br>This is the first and most important consideration.</p>
+				</section>
+				<section>
+					<img src='files/1audience.png'>
+					<p>I'm not sure even astrophysists know what this means.<br><i>Disciplines intersecting over Equation of State. Ozel F, Freire P. 2016. Annu. Rev. Astron. Astrophys. 54:401-40
+</i></p>
+				</section>
+				<section>
+					<img src='files/3audience.jpg'>
+					<p>This color scale is very bad, but if meteorologists did things differently, the public would lose their minds.<br><i><a href='http://Texasstormchasers.com
+'>Texas Storm Chasers
+</a></i></p>
+				</section>
+				<section>
+					<h1>Purpose</h1>
+					<p><i>Why are you visualizing data?</i><br>How can you measure your success if you don't define your purpose?</p>
+				</section>
+				<section>
+					<img src='files/1purpose.png' style='width:60%; height:auto'>
+					<p>This is <b>explaining</b> data to a general audience - a little fluff is acceptable to keep their interest.<br><i><a href='https://insight.kellogg.northwestern.edu/article/neuroscience-can-predict-movie-sales'>Brain response predicts movie sales.
+</a></i></p>
+				</section>
+				<section>
+					<img src='files/2purpose.png'>
+					<p>This is <b>learning</b> data for your own analysis - not meant to be pretty.<br><i>Using ggplot to test data</i></p>
+				</section>
+				<section id="interactive">
+					<iframe width='26.5%' height='810px' style='background:white' src=""></iframe>
+					<iframe width='35%' height='810px' style='background:white' src=""></iframe>
+					<p>This is <b>exploring</b> the dimensions of the data - meant for the audience to learn something (not you)<br><i><a href='https://insight.kellogg.northwestern.edu/article/how-will-automation-affect-different-united-states-cities'>"How will Automation Affect Different US Cities?"
+</a></i></p>
+				</section>
+				<section>
+					<h1>Context</h1>
+					<p><i>Where does the visual end up?</i><br>You can do a lot differently depending on the answer to this question.</p>
+				</section>
+				<section>
+					<img src='files/1context.jpg' style='width:50%; height:auto'>
+					<p>Editors: "Print. Small size. No color." (Given the context, this isn't too shabby!)<br><i><a href='http://cebp.aacrjournals.org/content/18/12/3349
+'>Lung Cancer Epidemiology</a></i></p>
+				</section>
+				<section>
+					<img src='files/2context.png' style='width:45%; height:auto'>
+					<p>Small multiples are great for many static dimensions (if you have the room)<br><i><a href='http://andrewgelman.com/2009/07/15/hard_sell_for_b/'>"Public support for vouchers"
+</a></i></p>
+				</section>
+				<section>
+					<h1>Time+scope are part of context too!</h1>
+					<p><i>How long do you have and how much do you do?</i><br>Don't wait until the end of your research or analysis before you consider this.</p>
+				</section>
+				<section>
+					<iframe id='ligo' src='' width='100%' height='950px' ></iframe>
+				</section>
+
+				<section>
+					<h1>7. Check your skills.</h1>
+				</section>
+				<section>
+					<img src='files/9pie.PNG' style='width:55%; height:auto'>
+					<h1>This is a monster.</h1>
+					<p>Tell me why. What is wrong with this?</p>
+				</section>
+				<section>
+					<img src='files/10explode.PNG' style='width:55%; height:auto'>
+					<h1>Which wedge is largest? Smallest?</h1>
+					<p>This is a case of <i>too much dimension</i> for the data.</p>
+				</section>
+				<section>
+					<img src='files/11bar.PNG' style='width:55%; height:auto'>
+					<h1>Default bar version from excel</h1>
+					<p>What can we improve about this? Use <i>empathy.</i> What is hard?</p>
+				</section>
+				<section>
+					<img src='files/12bar.PNG' style='width:55%; height:auto'>
+					<h1>Horizontal has more room for text</h1>
+					<p>Text is often a big limitation for the <i>context</i> of your visual.</p>
+				</section>
+				<section>
+					<img src='files/13bar.PNG' style='width:65%; height:auto'>
+					<h1>Cut axis, bump up font size</h1>
+				</section>
+				<section>
+					<img src='files/14bar.PNG' style='width:75%; height:auto'>
+					<h1>Sort and use color to emphasize</h1>
+				</section>
+				<section>
+					<img src='files/15compare.PNG' style='width:85%; height:auto'>
+					<h1>Much better.</h1>
+					<p>Minimize the time your audience takes to understand your <i>purpose.</i></p>
+				</section>
+				<section>
+					<img src='files/16dataink.gif' style='width:55%; height:auto'>
+					<h1>Edward Tufte's 'Data to Ink Ratio'.</h1>
+					<p><i>The golden rule of visualization.</i></p>
+				</section>
+				<section>
+					<img src='files/17datatables.gif' style='width:55%; height:auto'>
+					<h1>Even your tables have 'ink'</h1>
+					<p><i>These gifs courtesy of <a href='https://www.darkhorseanalytics.com/'>Dark Horse Analytics</a></i></p>
+				</section>
+				<section>
+					<h1>Whew, what a rush.</h1>
+					<p><i>You have all leveled up as Chart Wizards.</i> Congrats.</p>
+				</section>
+				<section>
+					<h1>Your take-aways:</h1>
+					<h3>Empathy is the key to effective visualization<br>&nbsp;</h3>
+					<h3>Audience</h3>
+					<p><i>Who is your reader? What about your data will be difficult for them?</i></p>
+					<h3>Purpose</h3>
+					<p><i>Why are you visualizing your data? How will you know when you have succeeded?</i></p>
+					<h3>Context</h3>
+					<p><i>Where/what/when are your limitations? Do you have the scope to do what you want?</i></p>
+					<p>&nbsp<br>Frank Elavsky, Research Computing Services, Northwestern IT</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<!-- REVEAL -->
+		<script src="js/reveal.js"></script>
+
+		<!-- JQUERY 
+			<script src="js/jquery.js"></script>
+		-->
+
+		<!-- UNDERSCORE 
+			<script src="js/underscore.js"></script>
+		-->
+
+		<!-- D3 
+			<script src="js/d3.min.js"></script>
+		-->
+
+		<!-- REVEAL TO D3 
+			<script src="js/reveal-to-d3-config.js"></script>
+			<script src="js/reveal-to-d3.js"></script>
+		-->
+
+		<!-- Some helper functions for the slides 
+			<script src="js/helperFunctions.js"></script>
+			<script src="slides/slide_01/titleSlide.js"></script>
+		-->
+
+		<!-- INIT -->
+		<script>
+			
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				//controls: false,
+				progress: false,
+				history: true,
+				center: true,
+				// The "normal" size of the presentation, aspect ratio will be preserved
+			    // when the presentation is scaled to fit different resolutions. Can be
+			    // specified using percentage units.
+			    width: 1920, //'100%', 
+			    height: 1080, //'100%', 
+			    // Factor of the display size that should remain empty around the content
+    			margin: 0,
+				// Bounds for smallest/largest possible scale to apply to content
+    			minScale: 0.2,
+    			maxScale: 4,
+
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+				/*
+					{ src: 'plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external]' ); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/highlight/highlight.js', async: false, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+					*/
+				]
+			});
+
+			//Remove the very heavy title slide (& slightly heavy end slide)
+			//by slides before and after that have no JS scripts running by themselves
+			
+			Reveal.addEventListener( 'slidechanged', function() {
+		    	play()
+			} );
+			
+
+		</script>
+
+	</body>
+</html>
