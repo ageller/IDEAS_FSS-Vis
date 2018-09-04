@@ -1,0 +1,56 @@
+.parent {
+	width:250px;
+	height:250px;
+	border:1px solid black;
+}
+
+.child {
+	width:150px;
+	height:150px;
+	border:1px solid black;
+}
+
+.parent:hover {
+	background-color:lemonchiffon;
+}
+
+.child:hover {
+	width:200px;
+	height:200px;
+}
+
+.parent {
+	max-width: 500px;
+	max-height: 500px;
+	border:1px solid black;
+}
+
+/* 
+	SOLUTION to BONUS 
+	- You must comment out the code above
+	- And also remove the comment tags below
+	- In order for this styling to work
+*/
+
+/*
+.parent {
+	position:relative;
+
+	min-width:250px;
+	min-height:250px;
+	max-width: 500px;
+	max-height: 500px;
+	border:1px solid black;
+}
+.child {
+	position:absolute;
+
+	width:60%;
+	height:60%;
+	border:1px solid black;
+}
+.child:hover {
+	width:80%;
+	height:80%;
+}
+*/

@@ -32,7 +32,7 @@
 <body>
 	<div class='button_wrapper'>
 		<div class='button'>
-			<span id='increase' onclick='changeLoops()'>Increase</span>
+			<span id='increase'>Increase</span>
 		</div>
 	</div>
 	<div class='button_wrapper'>
@@ -48,15 +48,19 @@
 	<div>
 		How many times should your program loop?
 	</div>
-	<form id="frm1" action="/action_page.php">
+	<div id="frm1" action="/action_page.php">
 		Loop: 1 time<br>
+	</div>
 	<ul id="write_location">
 	</ul>
 </body>
 
 <script>
 	document.getElementById("decrease").addEventListener("click",function(e){
-		console.log(e.target)
+		changeLoops()
+	})
+	document.getElementById("increase").addEventListener("click",function(e){
+		changeLoops(1)
 	})
 	document.getElementById("loop").addEventListener("click",writeList);
 
@@ -64,9 +68,17 @@
 		document.getElementById(id).appendChild(child_node);
 	}
 
-	function changeLoops(){
-		console.log(this)
-		console.log(e)
+	function changeLoops(change){
+		var time = " time";
+		if (change) {
+			input_number++;
+			if (input_number>1){
+				time = " times";
+			}
+		} else {
+			input_number--
+		}
+		document.getElementById("frm1").innerHTML = "Loop: "+input_number+ time;
 	}
 
 	var input_number = 1;
