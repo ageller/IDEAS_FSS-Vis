@@ -1,2 +1,2 @@
-# IDEAS_FSS-Vis_2017
-Materials for the 2017 IDEAS FSS-Visualization course
+# IDEAS_FSS-Vis_
+Materials for the IDEAS FSS-Visualization course
