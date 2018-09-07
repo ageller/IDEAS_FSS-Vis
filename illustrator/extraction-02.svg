@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 900">
+  <defs>
+    <style>
+      .axis, .error-bar {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .axis {
+        stroke: #000;
+      }
+
+      .error-bar {
+        stroke: blue;
+        stroke-width: 2px;
+      }
+
+      .dot {
+        fill: #ed1c24;
+      }
+    </style>
+  </defs>
+  <g id="axis">
+    <g id="axis08">
+      <line class="axis" x1="731.5" y1="19.25" x2="731.5" y2="882.75"/>
+    </g>
+    <g id="axis04">
+      <line class="axis" x1="503.5" y1="19.25" x2="503.5" y2="882.75"/>
+    </g>
+    <g id="axis0">
+      <line class="axis" x1="276.5" y1="19.25" x2="276.5" y2="882.75"/>
+    </g>
+    <g id="axis-04">
+      <line class="axis" x1="48" y1="19.25" x2="48" y2="882.75"/>
+    </g>
+  </g>
+  <g id="Kagan">
+    <line class="error-bar" x1="129" y1="57.91" x2="294" y2="57.91"/>
+    <circle class="dot" cx="212" cy="57.91" r="7"/>
+  </g>
+  <g id="Gorsuch">
+    <g>
+      <line class="error-bar" x1="614" y1="34" x2="732" y2="34"/>
+      <circle class="dot" cx="673" cy="34" r="7"/>
+    </g>
+  </g>
+  <g id="Sotomayor">
+    <line class="error-bar" x1="134.5" y1="81.83" x2="283.5" y2="81.83"/>
+    <circle class="dot" cx="208.5" cy="81.83" r="7"/>
+  </g>
+  <g id="Alito">
+    <line class="error-bar" x1="523.5" y1="105.74" x2="676.5" y2="105.74"/>
+    <circle class="dot" cx="600.5" cy="105.74" r="7"/>
+  </g>
+  <g id="Roberts">
+    <line class="error-bar" x1="537.5" y1="129.66" x2="698.5" y2="129.66"/>
+    <circle class="dot" cx="618.5" cy="129.66" r="7"/>
+  </g>
+  <g id="Breyer">
+    <line class="error-bar" x1="218.5" y1="153.57" x2="363.5" y2="153.57"/>
+    <circle class="dot" cx="292" cy="153.57" r="7"/>
+  </g>
+  <g id="Ginsburg">
+    <line class="error-bar" x1="192.5" y1="177.49" x2="333.5" y2="177.49"/>
+    <circle class="dot" cx="263" cy="177.49" r="7"/>
+  </g>
+  <g id="Thomas">
+    <line class="error-bar" x1="480.5" y1="201.4" x2="621.5" y2="201.4"/>
+    <circle class="dot" cx="551" cy="201.4" r="7"/>
+  </g>
+  <g id="Souter">
+    <line class="error-bar" x1="231.5" y1="225.31" x2="394.5" y2="225.31"/>
+    <circle class="dot" cx="313.5" cy="225.31" r="7"/>
+  </g>
+  <g id="Kennedy">
+    <line class="error-bar" x1="457.5" y1="249.23" x2="592.5" y2="249.23"/>
+    <circle class="dot" cx="525" cy="249.23" r="7"/>
+  </g>
+  <g id="Scalia">
+    <line class="error-bar" x1="506" y1="273.14" x2="630" y2="273.14"/>
+    <circle class="dot" cx="568" cy="273.14" r="7"/>
+  </g>
+  <g id="O_Connor" data-name="O&apos;Connor">
+    <line class="error-bar" x1="474" y1="297.06" x2="602" y2="297.06"/>
+    <circle class="dot" cx="538" cy="297.06" r="7"/>
+  </g>
+  <g id="Stevens">
+    <line class="error-bar" x1="286.5" y1="320.97" x2="426.5" y2="320.97"/>
+    <circle class="dot" cx="356" cy="320.97" r="7"/>
+  </g>
+  <g id="Rehnquist">
+    <line class="error-bar" x1="522.5" y1="344.89" x2="641.5" y2="344.89"/>
+    <circle class="dot" cx="582" cy="344.89" r="7"/>
+  </g>
+  <g id="Powell">
+    <line class="error-bar" x1="463.5" y1="368.8" x2="606.5" y2="368.8"/>
+    <circle class="dot" cx="535" cy="368.8" r="7"/>
+  </g>
+  <g id="Blackmun">
+    <line class="error-bar" x1="372" y1="392.71" x2="536" y2="392.71"/>
+    <circle class="dot" cx="454" cy="392.71" r="7"/>
+  </g>
+  <g id="Burger">
+    <line class="error-bar" x1="503.5" y1="416.63" x2="630.5" y2="416.63"/>
+    <circle class="dot" cx="567" cy="416.63" r="7"/>
+  </g>
+  <g id="Marshall">
+    <line class="error-bar" x1="253.5" y1="440.54" x2="371.5" y2="440.54"/>
+    <circle class="dot" cx="313" cy="440.54" r="7"/>
+  </g>
+  <g id="Fortas">
+    <line class="error-bar" x1="144" y1="464.46" x2="252" y2="464.46"/>
+    <circle class="dot" cx="198" cy="464.46" r="7"/>
+  </g>
+  <g id="Goldberg">
+    <line class="error-bar" x1="60" y1="488.37" x2="246" y2="488.37"/>
+    <circle class="dot" cx="152" cy="488.37" r="7"/>
+  </g>
+  <g id="White">
+    <line class="error-bar" x1="424.5" y1="512.29" x2="561.5" y2="512.29"/>
+    <circle class="dot" cx="493" cy="512.29" r="7"/>
+  </g>
+  <g id="Stewart">
+    <line class="error-bar" x1="420" y1="536.2" x2="556" y2="536.2"/>
+    <circle class="dot" cx="488" cy="536.2" r="7"/>
+  </g>
+  <g id="Whittaker">
+    <line class="error-bar" x1="448" y1="560.11" x2="602" y2="560.11"/>
+    <circle class="dot" cx="525" cy="560.11" r="7"/>
+  </g>
+  <g id="Brennan">
+    <line class="error-bar" x1="216" y1="584.03" x2="324" y2="584.03"/>
+    <circle class="dot" cx="269" cy="584.03" r="7"/>
+  </g>
+  <g id="Harlan">
+    <line class="error-bar" x1="361" y1="607.94" x2="537" y2="607.94"/>
+    <circle class="dot" cx="448" cy="607.94" r="7"/>
+  </g>
+  <g id="Warren">
+    <line class="error-bar" x1="156" y1="631.86" x2="264" y2="631.86"/>
+    <circle class="dot" cx="209" cy="631.86" r="7"/>
+  </g>
+  <g id="Minton">
+    <line class="error-bar" x1="361" y1="655.77" x2="581" y2="655.77"/>
+    <circle class="dot" cx="471" cy="655.77" r="7"/>
+  </g>
+  <g id="Clark">
+    <line class="error-bar" x1="325.5" y1="679.69" x2="463.5" y2="679.69"/>
+    <circle class="dot" cx="395" cy="679.69" r="7"/>
+  </g>
+  <g id="Vinson">
+    <line class="error-bar" x1="425.5" y1="703.6" x2="574.5" y2="703.6"/>
+    <circle class="dot" cx="500" cy="703.6" r="7"/>
+  </g>
+  <g id="Burton">
+    <line class="error-bar" x1="431.5" y1="727.51" x2="581.5" y2="727.51"/>
+    <circle class="dot" cx="506.5" cy="727.51" r="7"/>
+  </g>
+  <g id="Rutledge">
+    <line class="error-bar" x1="207" y1="751.43" x2="343" y2="751.43"/>
+    <circle class="dot" cx="275.5" cy="751.43" r="7"/>
+  </g>
+  <g id="Jackson">
+    <line class="error-bar" x1="437.5" y1="775.34" x2="574.5" y2="775.34"/>
+    <circle class="dot" cx="506" cy="775.34" r="7"/>
+  </g>
+  <g id="Murphy">
+    <line class="error-bar" x1="224" y1="799.26" x2="319" y2="799.26"/>
+    <circle class="dot" cx="272" cy="799.26" r="7"/>
+  </g>
+  <g id="Douglas">
+    <line class="error-bar" x1="230.5" y1="823.17" x2="307.5" y2="823.17"/>
+    <circle class="dot" cx="269" cy="823.17" r="7"/>
+  </g>
+  <g id="Frankfurter">
+    <line class="error-bar" x1="415" y1="847.09" x2="556" y2="847.09"/>
+    <circle class="dot" cx="485.5" cy="847.09" r="7"/>
+  </g>
+  <g id="Reed">
+    <line class="error-bar" x1="408" y1="871" x2="565" y2="871"/>
+    <circle class="dot" cx="487" cy="871" r="7"/>
+  </g>
+</svg>

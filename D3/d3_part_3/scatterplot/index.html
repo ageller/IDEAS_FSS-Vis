@@ -66,6 +66,7 @@ d3.tsv("data.tsv", function(error, data) {
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
+      .style('fill','black')
       .text("Sepal Width (cm)");
 
   svg.append("g")
@@ -77,16 +78,25 @@ d3.tsv("data.tsv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
+      .style('fill','black')
       .text("Sepal Length (cm)")
-
+var current_congress = 90
   svg.selectAll(".dot")
       .data(data)
     .enter().append("circle")
-      .attr("class", "dot")
+      .attr("class", function(d,i){
+      	return "dot dot_"+d.congress
+      })
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d.sepalWidth); })
       .attr("cy", function(d) { return y(d.sepalLength); })
-      .style("fill", function(d) { return color(d.species); });
+      .style("fill", function(d) { return color(d.species); })
+      .classed("hidden",function(d,i){
+      	if (d3.select(this).classed("dot_"+current_congress)) {
+      		return false
+      	}
+      	return true
+      });
 
   var legend = svg.selectAll(".legend")
       .data(color.domain())
