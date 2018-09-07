@@ -1,0 +1,139 @@
+---
+title: "Exercise Instructions"
+author: "Christina Maimone"
+date: '2018-07-06'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+These exercises are done as part of the workshop.  The information here copies what is on the slides.
+
+Files for the exercises are in the exercises directory of this project.
+
+## Exercise 1A
+
+* Create a new Shiny app
+  * File > New File > Shiny web app
+* Application Type: Single file
+* Name: exercise1
+* Run App
+
+**Bonus:** Change the x axis label and title on the plot
+
+* x="Minutes between Eruptions"
+* main="Waiting Time Distribution"
+
+**Answer**: exercises/exercise1/answer1a.R
+
+
+## Exercise 1B
+
+Using the app you created in the first exercise:
+
+1. Change the `sidebarLayout` to `verticalLayout`
+    * Run app to see changes
+2. Change the `sidebarPanel` to `inputPanel`
+    * Run/Reload app to see changes
+3. Between the `inputPanel` and the `mainPanel`, insert a `headerPanel("The Plot")`
+    * Run/Reload app to see changes
+  
+**Answer**: exercises/exercise1/answer1b.R
+
+
+## Exercise 1C
+
+Create a new Shiny app, as you did in Exercise 1A (or work from the previous file)
+
+To the `sidebarPanel`, add a `radioButtons` input with 
+
+* `inputId="color"`
+* `label="Bar Color"`
+* `choices=c("red","blue","green")`
+
+Run the app to make sure there aren't an errors.  The radio input won't have an effect yet though.
+
+**Answer**: exercises/exercise1/answer1c.R
+
+
+## Exercise 1D
+
+Using the app you created in Exercise 1C (with the color `radioButtons`): Set the color (`col=`) of the bars in the histogram (`hist`) using the value from the color `radioButtons` `input`.
+
+**Bonus:** Change the default color choice to green instead of red using `selected=` as part of the `radioButtons` input.  Add additional color choices.
+
+**Answer**: exercises/exercise1/answer1d.R
+
+## Exercise 2A
+
+Find and fix the four errors in exercises/exercise2/app.R.  Run the code, read the error, and try to fix that.  Then run again and see if you get a new error.
+
+**Answer**: exercises/exercise2/answer2a.R
+
+## Exercise 2B
+
+Also working from exercises/exercise2/app.R (or exercises/exercise2/answer2a.R if you didn't get app.R to work), fill in the code to render a DataTable of the entire data set.
+
+Hints:
+
+* What is the name of the element on output you need to set? `output$_____` 
+* Using the cheat sheet, what is the render function for a `DataTable` that goes with `dataTableOutput`?
+* The only expr you need for the render function is the name of the data object. What did we call the dataset when importing it at the top of the file?
+
+**Answer**: exercises/exercise2/answer2b.R
+
+
+## Exercise 2C
+
+Working from exercises/exercise2/app.R or answer2b.R, set the `brush` argument to `plotOutput` to "plot1_brush": `brush="plot1_brush"`.  Change `DT::renderDataTable()` to use output from `brushedPoints()` instead of using `data` directly.
+
+**Answer**: exercises/exercise2/answer2c.R
+
+
+
+## Challenge Exercise 2D
+
+This exercise is not part of the workshop and requires knowledge of things not covered in the workshop.  Slides at the end of the slide deck have information related to this exercise.
+
+Working from exercises/exercise2/app.R or answer2c.R:
+
+* Fix the application so that the DataTable doesn't display empty rows for missing data.
+* Subset the data returned by `brushedPoints()` to filter out rows with missing values in the `input$yval` column
+* Use `req()` to check that there's at least one row in the subset
+* Make sure the last line in the {} is the data to display
+
+**Bonus**: If nothing is highlighted on the plot, show all of the data in the DataTable.
+
+**Answer**: exercises/exercise2/answer2d.R
+
+
+## Exercise 2E
+
+Working from exercises/exercise2/app.R or answer2c.R:
+
+* Add a horizontal rule `hr()` between the `mainPanel` and `verticalLayout`.
+* Add a link to the source of the data: 
+    * African Development Bank Statistical Data Portal
+    * http://dataportal.opendataforafrica.org
+    * Hint: There's a caption tag (`tags$caption()`).  You'll also need an `a()` tag for a link.
+
+**Answer**: exercises/exercise2/answer2e.R
+
+
+## Exercise 2F
+
+Working from exercises/exercise2/exercise2f.R:
+
+* Put a `tabsetPanel` inside the `mainPanel` with 2 tabs:
+* "All" `tabPanel`: Existing `plotOutput()`
+* "By Region" `tabPanel`: New `plotOutput()` with `outputId="regionplot"` (there's code already in the server section to actually make the plot `output$regionplot`)
+
+Refer to documentation as needed.
+
+**Answer**: exercises/exercise2/answer2f.R
+
+## Exercise 2G
+
+Apply a theme from `shinythemes` to any working app.  Or use `shinythemes::themeSelector()` to see the themes applied to the app in real time.

@@ -1,0 +1,1 @@
+Examples are copied from https://github.com/rstudio/shiny-examples.
