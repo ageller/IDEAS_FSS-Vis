@@ -1,0 +1,7 @@
+Goal: easy visualization of "movement" in short scenes
+
+Our training dataset is known to have very slow movement (see lizzard and tiger frames). Our ML is trained on these slow-movement scenes. But is our test dataset also slow moving? 
+
+To figure this out, we need an easy way to "visualize" movement in frames. One way to achieve this is by detecting edges in a frame and tracking the differences in edges across time. We'd have a histogram of gradient DIFFERENCES (not of gradient themselves), which we can change interactively to visualize time change. In slow moving scenes, our hitogram of gradient differences would mostly be zero everywhere (because all gradients stay the same). But in fast moving scenes, the histogram of gradient differences should show more informatino (random gradients appearing across time). 
+
+ 

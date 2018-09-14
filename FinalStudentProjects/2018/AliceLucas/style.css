@@ -1,0 +1,119 @@
+#tester {
+  display: flex;
+  flex-direction:column;
+}
+
+
+#second_div {
+  width:600px;
+  height:650px;
+}
+
+.chart-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+
+.all_results {
+  display:flex;
+}
+
+.color-plot-container{
+  
+  display: flex;
+  align-items: center;
+  flex-direction:row;
+  justify-content: center;
+  align-content: flex-end;
+
+}
+
+.canvas {
+  float: left;
+  width: 40%;
+}
+
+p {
+  margin-left:10px;
+}
+
+.image-selector {
+  width:100%;
+  height:100px;
+  background-color: #E4E4E4;
+  display:flex;
+  flex-direction: row;
+  overflow-x: auto;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.image {
+  display: block;
+  width: 90%;
+  margin-top:40px;
+  margin-left: 10px;
+
+  }
+
+
+.header-image:hover { 
+  border: 5px solid RoyalBlue  ;
+}
+
+.header-image {
+  /* width: 15%; */
+  /*object-fit: contain;*/
+  width: 13%;
+  height: auto;
+  margin: 0px 8px;
+  border: 0px;
+
+}
+
+.header-image.highlight {
+  /* width: 15%; */
+  /*object-fit: contain;*/
+  width: 20%;
+  height: auto;
+  margin: 0px 8px;
+  border: 5px solid blue;
+}
+
+#intensity_hist{
+display:flex;
+flex-direction:column;
+align-items: center;
+}
+
+body {
+  margin:0px;
+}
+
+.point {
+  fill: #000;
+  fill-opacity: 0.4;
+}
+
+.point--scanned {
+  fill: orange;
+  fill-opacity: 1;
+  stroke: orange;
+  stroke-width: 3px;
+}
+
+.point--selected {
+  fill: red;
+  fill-opacity: 1;
+  stroke: red;
+  stroke-width: 5px;
+}
+
+.node {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}

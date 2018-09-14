@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<head>
+
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <style>
+      body {
+        font-family: 'Lato', sans-serif;
+        font-size: 15px;
+      }
+    </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/2.0.4/js/Jcrop.min.js"></script>
+  <link rel='stylesheet' href='style.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/2.0.4/css/Jcrop.min.css'>
+</head>
+
+
+<body>
+
+  <h1>Color and intensity distribution of images </h1> 
+
+
+  <div class='image-selector'>
+    <img class='header-image' name='agriculture' id='agriculture' src='./agriculture.png'>
+    <img class='header-image' name='lizzard' id='lizzard' src='./lizzard.png' >
+    <img class='header-image' name='tiger' id='tiger' src='./tiger.png'>
+    <img class='header-image' name='temple' id='temple' src='./temple.png'>
+    <img class='header-image' name='children' id='children' src='./children.png'>
+    <img class='header-image' name='temple_1' id='temple_1' src='./temple_1.png'>
+  </div>
+
+
+
+<div id='container'>
+    <div class='canvas'>
+        <p align="justify">Image information can be divided into two components: the color information and the intensity information.
+            In this interactive web page, the user can visualize these by selecting one of the images below. 
+            Once selected, the color and intensity distributions of the corresponding image will be shown. The color distribution 
+            is shown as multiple scatter plots, where each plot shows the correlation between a pair of colors. The intensity distribution
+            is a histogram that shows the different intensity levels (measured by the luminance channel) at each pixel in the image.
+            The user also has the option to select a smaller region of the image, in which case the plots will update to show the new data.
+          Try it out! </p> 
+        <img id='image' class='image'>
+    </div>  
+        
+    <div class='color-plot-container'>
+        <div class='two_plots'>
+            <div id='red-green' class='small_plot'></div>
+            <div id='green-blue' class='small_plot'></div>
+        </div>
+        <div class = 'two_plots'>
+            <div id='red-blue' class='small_plot'></div>
+            <div id='intensity_hist' class='small_plot'></div>
+        </div>
+        
+      </div>
+    
+</div>
+
+
+
+
+
+
+
+<div class='chart-container'>
+    <div id='tester'></div> 
+</div>
+
+  <script type='text/javascript' src='data.js'></script>
+  <script type='text/javascript' src='tiger.js'></script>
+  
+  <script type='text/javascript' src='chart.js'></script>
+</body>
+
+<script>
+</script>
