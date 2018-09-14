@@ -13,3 +13,4 @@ Using this visualization is easy. The user should first host a local server in t
 The result of this visualization provides users a straightforward understanding of this block copolymer’s phase transition process. The fluorescence intensity jumping at 75 min is a strong evidence that this block copolymer is precipitating out of the solution and forming micelles.
 
 
+*Note: the data files have been removed.*
