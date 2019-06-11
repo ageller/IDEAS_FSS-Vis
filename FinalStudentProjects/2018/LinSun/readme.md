@@ -10,3 +10,6 @@ The top plot provides a 2D map of emission distribution. By the slider on top to
 
 
 The plots are made with bokeh and written and viewed in Jupyter Notebook (the html file is too large due to the large data size). This is advantageous for my future data analysis due to it's interactive features. The main challenge of this project is making an interactive 2D image in bokeh, which seems to have limited examples online.
+
+
+The data files can be downloaded from [this Box folder](https://northwestern.box.com/s/vv1l0i88grnq9e7w1oo9wy8r4axplt21).
