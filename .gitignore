@@ -13,3 +13,9 @@ Thumbs.db
 *ipynb_checkpoints*
 __pycache__
 *.pyc
+
+# large files #
+###############
+*.fits
+*.vti
+*.vtr
