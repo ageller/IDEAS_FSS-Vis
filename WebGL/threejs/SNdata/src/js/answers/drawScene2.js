@@ -16,12 +16,12 @@ function drawScene(){
 	cmap.domain(extent).nice();
 
 	params.data.forEach(function(d){
-		geometry.vertices.push( new THREE.Vector3( d.x, d.y, d.z ) );
+		if (d.t < params.year){
+			geometry.vertices.push( new THREE.Vector3( d.x, d.y, d.z ) );
 
-		//color by distance
-		dist = Math.sqrt(d.x*d.x + d.y*d.y + d.z*d.z);
-		geometry.colors.push(new THREE.Color(cmap(dist)));
-
+			//color by SN luminosity
+			geometry.colors.push(new THREE.Color(cmap(d.log10lum)));
+		}
 		
 	});
 

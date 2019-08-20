@@ -27,14 +27,22 @@ function defineParams(){
 
 		//define some colors (https://github.com/d3/d3-scale-chromatic)
 		this.colorMapOptions = [d3.interpolateReds,
-								d3.interpolateViridis];
+								d3.interpolatePlasma, 
+								d3.interpolateViridis,
+								d3.interpolateWarm,
+								d3.interpolateCool];
 		this.colorMapOptionsGUI = {'reds':0,
-								   'viridis':1
+								   'plasma':1,
+								   'viridis':2,
+								   'warm':3,
+								   'cool':4
 								}
 		this.colorMapIndex = 0;
 		this.colorMap = this.colorMapOptions[this.colorMapIndex];
-		this.colorMapMin = 0;
-		this.colorMapMax = 5000;
+		this.colorMapMin = 6;
+		this.colorMapMax = 11;
+
+		this.year = 2020;
 
 	};
 

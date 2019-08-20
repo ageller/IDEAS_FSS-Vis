@@ -1,0 +1,8 @@
+challenge 1:
+
+--add more colormaps
+--color by log10luminosity
+
+challenge 2:
+
+-- add new item to gui that slides time, only show points with t< time
