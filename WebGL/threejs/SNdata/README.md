@@ -6,7 +6,7 @@ I downloaded the data from The Open Supernova Catalog [https://sne.space](https:
 
 **Challenge #1:**
 
-1. Add more colormaps to the gui.
+1. Add more colormaps to the gui (and enable them in the code).
 2. Color the points instead by the luminosity (using the log10lum key).
 
 **Challenge #2:**
