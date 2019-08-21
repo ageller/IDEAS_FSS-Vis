@@ -1,4 +1,6 @@
-# Supernovae from the past 135 years plotted in galactocentric cartesian coordinates
+# Supernovae from the past 135 years 
+
+## Plotted in galactocentric cartesian coordinates
 
 Data downloaded from The Open Supernova Catalog [https://sne.space](https://sne.space) on Aug. 20, 2019.
 
