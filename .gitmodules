@@ -1,3 +1,6 @@
 [submodule "Bokeh/LCBokeh"]
 	path = Bokeh/LCBokeh
 	url = https://github.com/ageller/LCBokeh
+[submodule "Glue/GlueNEO"]
+	path = Glue/GlueNEO
+	url = https://github.com/ageller/GlueNEO.git
