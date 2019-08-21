@@ -14,4 +14,4 @@ I downloaded the data from The Open Supernova Catalog [https://sne.space](https:
 1. Add a new item to the gui that controls the time.
 2. Only show supernovae that formed at a time prior to the gui time.
 
-Answers to these challenges are in the [src/js/answers](https://github.com/ageller/IDEAS_FSS-Vis/tree/master/WebGL/threejs/SNdata/src/js/answers) directory.
+Solutions to these challenges are in the [src/js/answers](https://github.com/ageller/IDEAS_FSS-Vis/tree/master/WebGL/threejs/SNdata/src/js/answers) directory.
