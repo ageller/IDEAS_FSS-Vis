@@ -1,8 +1,8 @@
 # Supernovae from the past 135 years 
 
-## Plotted in galactocentric cartesian coordinates
 
-I downloaded the data from The Open Supernova Catalog [https://sne.space](https://sne.space) on Aug. 20, 2019. See [src/data/convertOpenSN.ipynb](https://github.com/ageller/IDEAS_FSS-Vis/blob/master/WebGL/threejs/SNdata/src/data/convertOpenSN.ipynb) for more information on the data contents.  
+I downloaded the data from The Open Supernova Catalog [https://sne.space](https://sne.space) on Aug. 20, 2019. See [src/data/convertOpenSN.ipynb](https://github.com/ageller/IDEAS_FSS-Vis/blob/master/WebGL/threejs/SNdata/src/data/convertOpenSN.ipynb) for more information on the data contents.  In the WebGL viz, the SNe are plotted in galactocentric cartesian coordinates.
+
 
 **Challenge #1:**
 
