@@ -1,0 +1,124 @@
+# This file was produced by the NASA Exoplanet Archive  http://exoplanetarchive.ipac.caltech.edu
+# Wed Aug 21 11:02:05 2019
+#
+# COLUMN fpl_hostname:   Host Name
+# COLUMN fpl_letter:     Planet Letter
+# COLUMN fpl_name:       Planet Name
+# COLUMN fpl_discmethod: Discovery Method
+# COLUMN fpl_controvflag: Controversial Flag
+# COLUMN fpl_disc:       Year of Discovery
+# COLUMN fpl_orbper:     Orbital Period [days]
+# COLUMN fpl_orbpererr1: Orbital Period Upper Unc. [days]
+# COLUMN fpl_orbpererr2: Orbital Period Lower Unc. [days]
+# COLUMN fpl_orbperlim:  Orbital Period [days] Limit Flag
+# COLUMN fpl_orbperreflink: Orbital Period Reference
+# COLUMN fpl_smax:       Orbit Semi-Major Axis [AU]
+# COLUMN fpl_smaxerr1:   Orbit Semi-Major Axis Upper Unc.[AU]
+# COLUMN fpl_smaxerr2:   Orbit Semi-Major Axis Lower Unc.[AU]
+# COLUMN fpl_smaxlim:    Orbit Semi-Major Axis [AU] Limit Flag
+# COLUMN fpl_smaxreflink: Orbit Semi-Major Axis Reference
+# COLUMN fpl_eccen:      Eccentricity
+# COLUMN fpl_eccenerr1:  Eccentricity Upper Unc.
+# COLUMN fpl_eccenerr2:  Eccentricity Lower Unc.
+# COLUMN fpl_eccenlim:   Eccentricity Limit Flag
+# COLUMN fpl_eccenreflink: Eccentricity Reference
+# COLUMN fpl_bmasse:     Planet Mass or M*sin(i) [Earth mass]
+# COLUMN fpl_bmasseerr1: Planet Mass or M*sin(i) Upper Unc. [Earth mass]
+# COLUMN fpl_bmasseerr2: Planet Mass or M*sin(i) Lower Unc. [Earth mass]
+# COLUMN fpl_bmasselim:  Planet Mass or M*sin(i) [Earth mass] Limit Flag
+# COLUMN fpl_bmassj:     Planet Mass or M*sin(i) [Jupiter mass]
+# COLUMN fpl_bmassjerr1: Planet Mass or M*sin(i) Upper Unc. [Jupiter mass]
+# COLUMN fpl_bmassjerr2: Planet Mass or M*sin(i) Lower Unc. [Jupiter mass]
+# COLUMN fpl_bmassjlim:  Planet Mass or M*sin(i) [Jupiter mass] Limit Flag
+# COLUMN fpl_bmassprov:  Planet Mass or M*sin(i) Provenance
+# COLUMN fpl_bmassreflink: Planet Mass or M*sin(i) Reference
+# COLUMN fpl_rade:       Planet Radius [Earth radii]
+# COLUMN fpl_radeerr1:   Planet Radius Upper Unc. [Earth radii]
+# COLUMN fpl_radeerr2:   Planet Radius Lower Unc. [Earth radii]
+# COLUMN fpl_radelim:    Planet Radius [Earth radii] Limit Flag
+# COLUMN fpl_radj:       Planet Radius [Jupiter radii]
+# COLUMN fpl_radjerr1:   Planet Radius Upper Unc. [Jupiter radii]
+# COLUMN fpl_radjerr2:   Planet Radius Lower Unc. [Jupiter radii]
+# COLUMN fpl_radjlim:    Planet Radius [Jupiter radii] Limit Flag
+# COLUMN fpl_rads:       Planet Radius [Solar radii]
+# COLUMN fpl_radserr1:   Planet Radius Upper Unc. [Solar radii]
+# COLUMN fpl_radserr2:   Planet Radius Lower Unc. [Solar radii]
+# COLUMN fpl_radslim:    Planet Radius [Solar radii] Limit Flag
+# COLUMN fpl_radreflink: Planet Radius Reference
+# COLUMN fpl_dens:       Planet Density [g/cm**3]
+# COLUMN fpl_denserr1:   Planet Density Upper Unc. [g/cm**3]
+# COLUMN fpl_denserr2:   Planet Density Lower Unc. [g/cm**3]
+# COLUMN fpl_denslim:    Planet Density [g/cm**3] Limit Flag
+# COLUMN fpl_densreflink: Planet Density Reference
+# COLUMN fpl_eqt:        Equilibrium Temperature [K]
+# COLUMN fpl_eqterr1:    Equilibrium Temperature Upper Unc. [K]
+# COLUMN fpl_eqterr2:    Equilibrium Temperature Lower Unc. [K]
+# COLUMN fpl_eqtlim:     Equilibrium Temperature [K] Limit Flag
+# COLUMN fpl_eqtreflink: Equilibrium Temperature Reference
+# COLUMN fpl_insol:      Insolation Flux [Earth flux]
+# COLUMN fpl_insolerr1:  Insolation Flux Upper Unc. [Earth flux]
+# COLUMN fpl_insolerr2:  Insolation Flux Lower Unc. [Earth flux]
+# COLUMN fpl_insollim:   Insolation Flux [Earth flux] Limit Flag
+# COLUMN fpl_insolreflink: Insolation Flux Reference
+# COLUMN fpl_tranflag:   Planet Transit Flag
+# COLUMN fpl_cbflag:     Planet Circumbinary Flag
+# COLUMN fpl_snum:       Number of Stars in System
+# COLUMN ra_str:         RA [sexagesimal]
+# COLUMN ra:             RA [decimal degrees]
+# COLUMN dec_str:        Dec [sexagesimal]
+# COLUMN dec:            Dec [decimal degrees]
+# COLUMN fst_posreflink: RA/Dec Reference
+# COLUMN fst_dist:       Distance [pc]
+# COLUMN fst_disterr1:   Distance Upper Unc. [pc]
+# COLUMN fst_disterr2:   Distance Lower Unc. [pc]
+# COLUMN fst_distlim:    Distance [pc] Limit Flag
+# COLUMN fst_distreflink: Distance Reference
+# COLUMN fst_optmag:     Optical Magnitude [mag]
+# COLUMN fst_optmagerr:  Optical Magnitude Unc. [mag]
+# COLUMN fst_optmaglim:  Optical Magnitude [mag] Limit Flag
+# COLUMN fst_optmagband: Optical Magnitude Band
+# COLUMN fst_optmagreflink: Optical Magnitude Reference
+# COLUMN fst_nirmag:     Near-IR Magnitude [mag]
+# COLUMN fst_nirmagerr:  Near-IR Magnitude Unc. [mag]
+# COLUMN fst_nirmaglim:  Near-IR Magnitude [mag] Limit Flag
+# COLUMN fst_nirmagband: Near-IR Magnitude Band
+# COLUMN fst_nirmagreflink: Near-IR Magnitude Reference
+# COLUMN fst_spt:        Spectral Type
+# COLUMN fst_sptreflink: Spectral Type Reference
+# COLUMN fst_teff:       Effective Temperature [K]
+# COLUMN fst_tefferr1:   Effective Temperature Upper Unc. [K]
+# COLUMN fst_tefferr2:   Effective Temperature Lower Unc. [K]
+# COLUMN fst_tefflim:    Effective Temperature [K] Limit Flag
+# COLUMN fst_teffreflink: Effective Temperature Reference
+# COLUMN fst_logg:       Stellar Surface Gravity [log10(cm/s**2)]
+# COLUMN fst_loggerr1:   Stellar Surface Gravity Upper Unc. [log10(cm/s**2)]
+# COLUMN fst_loggerr2:   Stellar Surface Gravity Lower Unc. [log10(cm/s**2)]
+# COLUMN fst_logglim:    Stellar Surface Gravity [log10(cm/s**2)] Limit Flag
+# COLUMN fst_loggreflink: Stellar Surface Gravity Reference
+# COLUMN fst_lum:        Stellar Luminosity [log10(Solar luminosity)]
+# COLUMN fst_lumerr1:    Stellar Luminosity Upper Unc. [log10(Solar luminosity)]
+# COLUMN fst_lumerr2:    Stellar Luminosity Lower Unc. [log10(Solar luminosity)]
+# COLUMN fst_lumlim:     Stellar Luminosity [log10(Solar luminosity)] Limit Flag
+# COLUMN fst_lumreflink: Stellar Luminosity Reference
+# COLUMN fst_mass:       Stellar Mass [Solar mass]
+# COLUMN fst_masserr1:   Stellar Mass Upper Unc. [Solar mass]
+# COLUMN fst_masserr2:   Stellar Mass Lower Unc. [Solar mass]
+# COLUMN fst_masslim:    Stellar Mass [Solar mass] Limit Flag
+# COLUMN fst_massreflink: Stellar Mass Reference
+# COLUMN fst_rad:        Stellar Radius [Solar radii]
+# COLUMN fst_raderr1:    Stellar Radius Upper Unc. [Solar radii]
+# COLUMN fst_raderr2:    Stellar Radius Lower Unc. [Solar radii]
+# COLUMN fst_radlim:     Stellar Radius [Solar radii] Limit Flag
+# COLUMN fst_radreflink: Stellar Radius Reference
+# COLUMN fst_met:        Stellar Metallicity [dex]
+# COLUMN fst_meterr1:    Stellar Metallicity Upper Unc. [dex]
+# COLUMN fst_meterr2:    Stellar Metallicity Lower Unc. [dex]
+# COLUMN fst_metlim:     Stellar Metallicity [dex] Limit Flag
+# COLUMN fst_metratio:   Metallicity Ratio
+# COLUMN fst_metreflink: Stellar Metallicity Reference
+# COLUMN fst_age:        Stellar Age [Gyr]
+# COLUMN fst_ageerr1:    Stellar Age Upper Unc. [Gyr]
+# COLUMN fst_ageerr2:    Stellar Age Lower Unc. [Gyr]
+# COLUMN fst_agelim:     Stellar Age [Gyr] Limit Flag
+# COLUMN fst_agereflink: Stellar Age Reference
+#

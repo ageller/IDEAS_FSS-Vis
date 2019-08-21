@@ -1,7 +1,10 @@
-Let's work in python mode.  See [here to get started](https://py.processing.org/tutorials/gettingstarted/).  
+# Processing : https://processing.org/
 
-This demo will use the video library and follow from [this java example](https://processing.org/tutorials/video/) and [this python example](https://github.com/jdf/processing.py/blob/069dee655fa4083fb256f20da253fbdbc5dec5c2/mode/examples/Contributed%20Libraries%20in%20Python/OpenCV/LiveCamTest/LiveCamTest.pyde).  
+Processing is a super fun tool that can run using a few different languages (including Python, and javascript).  It can be used locally, and can also be used on the web. 
 
-First, you will need to install the video library (which doesn't come installed by default).  To do this, go to the menu "Sketch / Import Library ... / Add Library ...".  Import the "Video" library (from "The Processing Foundation").  
+Every Processing code as at least two function:
 
-For black hole see [here](view-source:https://www.esa.int/gsp/ACT/phy/Projects/Blackholes/WebGL.html).
+1. setup() : sets the scene (e.g., the size of the window, etc.).
+2. draw() : the main draw loop that is executed every frame refresh time.
+
+There are great [tutorials](https://processing.org/tutorials/) and [examples](https://processing.org/examples/) on the Processing website.
