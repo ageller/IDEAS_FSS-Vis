@@ -1,0 +1,1 @@
+Please also see the slides from Adam Miller on [Effective Communication via Principles of Design.](https://github.com/LSSTC-DSFP/LSSTC-DSFP-Sessions/blob/master/Session9/Day2/2019_06_DSFP_design_viz.pdf)
