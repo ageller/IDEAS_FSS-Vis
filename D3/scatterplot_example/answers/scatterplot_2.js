@@ -1,6 +1,12 @@
+//NOTE: you could use .filter (https://bl.ocks.org/d3noob/47b319ec0250b4063063942c64f0f949)
+// or .nest (http://bl.ocks.org/phoebebright/raw/3176159/)
+// to select only certain congress numbers.
+// I chose to manually create a new data array each time the slider is used.
+
 
 //some global variables (not the best style, but will work for us)
 var data;
+var party;
 
 // define the size of the svg
 var margin = {top: 50, right: 50, bottom: 50, left: 50},
@@ -10,13 +16,16 @@ var margin = {top: 50, right: 50, bottom: 50, left: 50},
 //define some colors (https://github.com/d3/d3-scale-chromatic)
 var colorMap = d3.scaleSequential(d3.interpolateSinebow).domain([Math.log10(100), Math.log10(5000)]);
 
-function init(inputData){
+var x,y;
+function init(inputData, partyCodes){
 
 	data = inputData;
+	party = partyCodes;
 
 	//define the scales for the plot: these will convert from pixels to data units
-	var x = d3.scaleLinear().range([0, width]);
-	var y = d3.scaleLinear().range([height, 0]);
+	x = d3.scaleLinear().range([0, width]);
+	y = d3.scaleLinear().range([height, 0]);
+
 	//nice does what it sounds like : gives you nice round values 
 	x.domain(d3.extent(data, function(d) { return +d.x_dimension; })).nice();
 	y.domain(d3.extent(data, function(d) { return +d.alt_dimension; })).nice();
@@ -33,7 +42,7 @@ function init(inputData){
 		.attr('min',1)
 		.attr('max',114)
 		.on("input", function() {
-			updateScatterPlot(+this.value,x,y);
+			updateScatterPlot(+this.value);
 		})
 	slider.append('label')
 		.attr('for','congressN')
@@ -80,12 +89,12 @@ function init(inputData){
 	var currentCongress = 114;
 
 	//select the data we want to plot, add the points and legend to the scatter plot
-	updateScatterPlot(currentCongress, x,y);
+	updateScatterPlot(currentCongress);
 
 }
 
 
-function populateScatter(currentData, x,y){
+function populateScatter(currentData){
 
 	var svg = d3.select('#scatterSVG');
 
@@ -127,7 +136,13 @@ function populateScatter(currentData, x,y){
 		.attr("y", 9)
 		.attr("dy", ".35em")
 		.style("text-anchor", "end")
-		.text(function(d) { return d; });
+		.text(function(d) {			
+			var label = "foo"
+			party.forEach(function(p){
+				if (p.code == d) label = p.party; 
+			});
+			return label;
+		});
 }
 
 function selectData(currentCongress){
@@ -138,7 +153,7 @@ function selectData(currentCongress){
 	return returnData;
 }
 
-function updateScatterPlot(currentCongress, x,y){
+function updateScatterPlot(currentCongress){
 	var svg = d3.select('#scatterSVG')
 
 	//remove the legend 
@@ -154,14 +169,17 @@ function updateScatterPlot(currentCongress, x,y){
 
 	//select the right data and add back the dots and legend
 	currentData = selectData(currentCongress)
-	populateScatter(currentData, x,y);
+	populateScatter(currentData);
 
 		
 }
 //runs on load
 d3.csv('data/congress_data.csv')
 	.then(function(d) {
-		init(d)
+		d3.csv('data/voteView_partyCode.csv')
+			.then(function(p) {
+				init(d, p)
+			})
 	})
 	.catch(function(error){
 		console.log('ERROR:', error)	
