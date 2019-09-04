@@ -1,7 +1,6 @@
-//NOTE: you could use .filter (https://bl.ocks.org/d3noob/47b319ec0250b4063063942c64f0f949)
-// or .nest (http://bl.ocks.org/phoebebright/raw/3176159/)
+//NOTE: you could use .nest (http://bl.ocks.org/phoebebright/raw/3176159/)
 // to select only certain congress numbers.
-// I chose to manually create a new data array each time the slider is used.
+// I chose to use .filter (https://bl.ocks.org/d3noob/47b319ec0250b4063063942c64f0f949)
 
 
 //some global variables (not the best style, but will work for us)
@@ -42,7 +41,7 @@ function init(inputData, partyCodes){
 		.attr('min',1)
 		.attr('max',114)
 		.on("input", function() {
-			updateScatterPlot(+this.value);
+			populateScatter(+this.value);
 		})
 	slider.append('label')
 		.attr('for','congressN')
@@ -89,33 +88,46 @@ function init(inputData, partyCodes){
 	var currentCongress = 114;
 
 	//select the data we want to plot, add the points and legend to the scatter plot
-	updateScatterPlot(currentCongress);
+	populateScatter(currentCongress);
 
 }
 
 
-function populateScatter(currentData){
+function populateScatter(currentCongress){
 
 	var svg = d3.select('#scatterSVG');
+
+	//remove the legend 
+	svg.selectAll(".legend").remove();
+
+	//remove the dots
+	svg.selectAll(".dot").remove();
+
+	// adjust the text on the range slider
+	d3.select("#congressN-value").text(currentCongress);
+	d3.select("#congressN").property("value", currentCongress);
+
+
 
 	var colors = []; //for the legend
 
 	//add all the dots
 	svg.selectAll(".dot")
-		.data(currentData).enter()
-		.append("circle")
-			.attr("class", "dot")
-			.attr("r", 5)
-			.attr("cx", function(d) { return x(+d.x_dimension); })
-			.attr("cy", function(d) { return y(+d.alt_dimension); })
-			.style("fill", function(d) { 
-				//for the legend
-				if(!colors.includes(+d.party_code)) {
-					colors.push(+d.party_code);
-				}
-				return colorMap(Math.log10(+d.party_code));
-			})
-			.style("opacity",0.7)
+		.data(data).enter()
+		.filter(function(d) { return d.congress_number == currentCongress })
+			.append("circle")
+				.attr("class", "dot")
+				.attr("r", 5)
+				.attr("cx", function(d) { return x(+d.x_dimension); })
+				.attr("cy", function(d) { return y(+d.alt_dimension); })
+				.style("fill", function(d) { 
+					//for the legend
+					if(!colors.includes(+d.party_code)) {
+						colors.push(+d.party_code);
+					}
+					return colorMap(Math.log10(+d.party_code));
+				})
+				.style("opacity",0.7)
 
 
 	//add a legend, using the colors array defined above
@@ -145,34 +157,6 @@ function populateScatter(currentData){
 		});
 }
 
-function selectData(currentCongress){
-	var returnData = [];
-	data.forEach(function(d){
-		if (d.congress_number == currentCongress) returnData.push(d);
-	});
-	return returnData;
-}
-
-function updateScatterPlot(currentCongress){
-	var svg = d3.select('#scatterSVG')
-
-	//remove the legend 
-	svg.selectAll(".legend").remove();
-
-	//remove the dots
-	svg.selectAll(".dot").remove();
-
-	// adjust the text on the range slider
-	d3.select("#congressN-value").text(currentCongress);
-	d3.select("#congressN").property("value", currentCongress);
-
-
-	//select the right data and add back the dots and legend
-	currentData = selectData(currentCongress)
-	populateScatter(currentData);
-
-		
-}
 //runs on load
 d3.csv('data/congress_data.csv')
 	.then(function(d) {
