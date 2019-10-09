@@ -1,10 +1,13 @@
 # Diatomic Spring-Mass Lattice Visualization
 ## Ziwei Wang
 
+Interactive dispersion and wave propagation visualization of the diatomic spring-mass lattice with tunable mass ratio and excitation frequency.
+
 _Note:_ This directory is a static copy of the GitHub repository : https://github.com/ziwei-wang/lattice
 
-Interactive dispersion and wave propagation visualization of the diatomic spring-mass lattice with tunable mass ratio and excitation frequency.
-https://ziwei-wang.github.io/lattice/
+A live version is available here : https://mrizzo25.github.io/3DLIGOSkymap
+
+
 ## Introduction
 Diatomic spring-mass lattice is a simple 1D model describing the dynamics of periodic bi-material/bi-layer structures. In this model, the traveling wave speed is dependent on the frequency. Thus, the dispersion relation between frequency and wave number (spatial periodicity of the wave) is often used to study the wave propagation behavior.  
 
