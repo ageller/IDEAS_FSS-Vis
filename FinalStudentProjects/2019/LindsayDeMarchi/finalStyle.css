@@ -1,0 +1,73 @@
+
+.header {
+  padding: 10px;
+  text-align: center;
+  background: #a94601a8;
+  color: black;
+  font-size: 30px;
+  margin: 10px;
+  border: 5px solid black;
+  border-radius: 15px;
+  font-family: 'Lobster';
+}
+
+
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+
+.tick{
+	font-size: 15px;
+}
+
+
+
+.dot {
+	stroke: #000;
+}
+.label{
+	fill:black;
+}
+.hidden {
+	display:none;
+}
+
+.quadrant {
+	position: 'absolute';
+	border: 3px solid black;
+	border-radius:15px;
+
+}
+
+
+.isolated {
+	stroke-width: 5px;
+}
+
+
+.error-line {
+	stroke: #b30059;
+	stroke-dasharray: 2,2;
+}
+
+.error-cap {
+	stroke: #b30059;
+	stroke-width: 2px;
+	stroke-type: solid;
+}
+
+
+.title{
+	font-size:28px;
+	font-family:'Playfair Display SC', serif;
+	color: black;
+
+}
+
+
+

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Mu2e Signal Example</title>
+    <meta charset="UTF-8" />
+    <script type="text/javascript" charset="UTF-8" src="libs/three/three.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="libs/three/controls/TrackballControls.js"></script>
+    <script type="text/javascript" src="libs/other/d3.v5.min.js"></script>
+    <script type="text/javascript" src="libs/util/Stats.js"></script>
+    <script type="text/javascript" src="libs/util/dat.gui.js"></script>
+    <script type="text/javascript" src="libs/other/FirstPersonControls.js"></script>
+
+    <script type="text/javascript" src="src/js/util.js"></script>
+
+    <script type="text/javascript" src="src/js/main.js"></script>
+
+
+    <link rel="stylesheet" href="css/default.css">
+</head>
+
+<body>
+    <div style="position = absolute" id="outer">
+        <div class="plot-box" id="mainmenu">
+            <!-- <iframe src="assets/plots/ds_bz_phi_0.00.html" allowfullscreen>Your browser doesn't support iFrames.</iframe> -->
+            <iframe src="src/menu.html" allowfullscreen>Your browser doesn't support iFrames.</iframe>
+        </div>
+    </div>
+
+
+    <!-- <div style="width=50%">
+        <img src="assets/images/DS_coords_z.png" alt="DS Coordinates Z">
+    </div> -->
+    <div>
+        <div id="webgl-output"></div>
+        <!-- <div id="mainmenu">
+            <h1>test</h1>
+        </div> -->
+    </div>
+    
+    <!-- Javascript code that runs our Three.js examples -->
+    <script type="text/javascript">
+        (function () {
+            // your page initialization code here
+            // the DOM will be available here
+            // var filename = "assets/data/r05_sr01_e000.json";
+            var filename = "assets/data/track_data.json";
+            d3.json(filename)
+                .then(function(d) {
+                    data_full = d;
+                    data = data_full.filter(function(row){
+                        return row.event == 2;
+                    });
+                    // }).then(function(d){
+                        // init();
+                    // })
+                    init();
+                })
+        .catch(function(error){
+            console.log('ERROR:', error)
+        })
+            init()
+        })();
+    </script>
+
+</body>
+
+</html>

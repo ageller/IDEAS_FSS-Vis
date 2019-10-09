@@ -1,0 +1,71 @@
+body {
+	font-size: 16px;
+	font-family: sans-serif;
+}
+
+p {
+	font: 16px;
+	font-family: "Libre Baskerville", serif;
+}
+
+.intro {
+	font: 16px;
+	font-family: 'Arial', sans-serif;
+	text-align:left;
+	padding: 25px 0px 0px 100px;
+	margin-right: 0px;
+}
+.container {
+	padding: 0px 50px 75px 100px;
+}
+
+.topimg {
+ 	width: 500px;
+ 	align-content: center;
+ 	padding: 0px 0px 0px 100px;
+}
+.line-a {
+	fill: none;
+	stroke: steelblue;
+	stroke-width:2px;
+}
+.line-o {
+	fill: none;
+	stroke: red;
+	stroke-width:2px;
+}
+.legend line,
+.legend path{
+	fill:none;
+	stroke:none;
+}
+.legend {
+	font: 20px sans-serif;
+}
+.legend-text{
+	font: 16px sans-serif;
+}
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+
+}
+.axis {
+	font: 18px sans-serif;
+}
+.label {
+	font: 18px sans-serif;
+}
+
+.dot {
+	/*stroke: #000;*/
+}
+.label{
+	fill:black;
+	/*font-size:22px;*/
+}
+.hidden {
+	display:none;
+}

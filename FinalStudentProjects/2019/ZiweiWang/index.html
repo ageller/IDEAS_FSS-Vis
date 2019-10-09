@@ -1,0 +1,44 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<!-- link the style sheet -->
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+
+		<!-- link to the d3 library, using v5 here -->
+		<script src="//d3js.org/d3.v5.min.js"></script>
+		<script src="//unpkg.com/mathjs@6.2.1/dist/math.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+	</head>
+	<body>
+		<!-- this will contain the visualization -->
+		<div class='intro'>
+			<h3>Diatomic Spring-Mass Chain</h3>
+			<p>
+			This demo visualizes how the dispersion relation and wave propagation in a diatomic spring-mass chain change with the <b>mass ratio</b> \(m_1/m_2\) and the <b>excitation frequency</b> \(f\).
+			</p>
+
+			<p>
+			In the dispersion relation, there is a gap between the <span style="background-color: rgba(255, 99, 71,0.5)">optical</span> and the <span style="background-color: rgba(0, 90, 156,0.5)">acoustic</span> branch known as <span style="background-color: rgba(211,211,211,0.7)">phononic bandgap</span>. In the bandgap frequency range, there is no real-valued wavenumber solution and the elastic wave will be drastically attenuated.
+			</p>
+			<p>
+			For the <span style="background-color: rgba(0, 90, 156,0.5)">acoustic branch</span>, \(m_1\) and \(m_2\) oscillate in phase. And they oscillate out of phase on the <span style="background-color: rgba(255, 99, 71,0.5)">optical branch</span>.
+			</p> 
+		</div>
+
+		<img class="topimg" src="1.svg">
+		<div id="container"></div>
+
+		<!-- link in our script -->
+		<script src="lattice.js"></script>
+
+	</body>
+</html>

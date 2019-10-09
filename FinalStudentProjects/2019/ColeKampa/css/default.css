@@ -1,0 +1,59 @@
+body {
+	margin: 0;
+    overflow: hidden;
+}
+
+.plot-box {
+	/*position:   relative;
+  	width:      100%;
+ 	*//*height: 750px;*/
+ 	/*height: 100%;*/
+ 	/*max-height: 1000px;*/
+ 	/*min-height: 700px;*/
+ 	width: 100%;
+ 	/*height: 50%;*/
+ 	/*border: black 1px solid;*/
+ 	/*border-radius: 10px;*/
+  	/*padding-top:   66.6%;  This is your aspect ratio */
+  	/*overflow: hidden;*/
+  	/*// Calculated from the aspect ration of the content (in case of 16:9 it is 9/16= 0.5625)*/
+  	padding-top: 56.25%;
+  	position: relative;
+  	/*position: absolute;*/
+  	/*z-index: 10;*/
+  	/*display: none;*/
+  	display: 'block';
+  	opacity: .8;
+  	/*margin: 50px 50px;*/
+}
+
+.plot-box iframe {
+   border: 0;
+   height: 82%;
+   /*left: 100px;*/
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+   /*opacity: 0.9;*/
+   /*background-color: white;*/
+   /*opacity: 1.;*/
+}
+
+#webgl-output {
+
+}
+
+#mainmenu {
+	position: absolute;
+	/*z-index: 10;*/
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	color: white;
+	/*top: 100px;*/
+}
+
+#outer {
+	text-align: center;
+}

@@ -1,0 +1,27 @@
+ 1. Typical (energetic) particle mass = 2.63307e-16 M_Sun
+ 2. Typical (energetic) particle radius = 3.3425e-08 AU
+ 3. [DERIVED] Particle density = 1.68329e+06 M_Sun/AU^3
+ 4. Maximum expected particle speed = 8.0982e-05 x 30 km/s
+ 5. Maximum fractional overlap = 0.01 (times typical radius)
+ 6. Acceleration due to gravity (uniform or surface) = 4.10701e-05 AU/(yr/2pi)^2
+ 7. Maximum system height (or bulk radius) = 7.98402e-05 AU
+    [DERIVED: free-fall speed = 8.0982e-05 x 30 km/s; free-fall time = 1.9718 yr/2pi]
+ 8. Packing efficiency = 0.65
+ 9. [DERIVED] Bulk density = 1.09414e+06 M_Sun/AU^3
+10. Steps per overlap = 30
+11. iCohesionModel = 0 (0:contact area depends on beta_s, 1:constant area)
+12. Cohesive strength between particles in contact = 0 Pa
+
+Current best estimates for DEM parameters:
+
+Kinetic dKn = 1.545600e-05 M_Sun/(yr/2pi)^2 (recommended)
+Static dKn  = 1.199200e-08 M_Sun/(yr/2pi)^2
+Cohesion dKn  = 0.000000e+00 M_Sun/(yr/2pi)^2
+dDelta (for recommended dKn) = 3.056304e-07 yr/2pi
+dCohesiveCoeff = 0.000000e+00 M_Sun/AU/(yr/2pi)^2
+
+NOTE: Typical overlap duration  = 9.16891e-06 yr/2pi
+      Typical propagation speed = 0.00729094 2pi AU/yr
+      Particle dynamical time = 0.129975 yr/2pi (number of timesteps = 2522)
+      Bulk dynamical time = 0.161214 yr/2pi (number of timesteps = 3128)
+      Cohesive force = 0 M_Sun*AU/(yr/2pi)^2 = 0 particle's weight (for beta_s = 0.5)

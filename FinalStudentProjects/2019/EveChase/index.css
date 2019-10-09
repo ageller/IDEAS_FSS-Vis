@@ -1,0 +1,21 @@
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+
+}
+
+.label{
+	fill:black;
+    font: 20px sans-serif;
+}
+.hidden {
+	display:none;
+}
+
+select {
+    display: block;
+}
+
