@@ -1,6 +1,8 @@
 # FSS-Vis_final_project
 _Author:_ **Cole Kampa**
 
+This directory is a static copy of the GitHub repository : https://github.com/ckampa13/FSS-Vis_final_project
+
 ## Visual elements:
 - Green sphere: electron (converted from stopped muon in Stopping Target)
 - Arrows starting at electron:
