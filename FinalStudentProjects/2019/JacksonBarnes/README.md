@@ -1,4 +1,4 @@
-#Jackson Barnes' Final Project
+# Jackson Barnes' Final Project
 
 The theory of gravitational collapse has served as an excellent means to bypass a number of planetesimal growth barriers while limiting
 excess growth of pairwise accretion. The process involves having a cloud of very small objects (e.g. asteroids, Kuiper Belt objects, etc.) at a predertimed orbit collapse in on itself to produce a single planetesimal or a planetesimal system.  The main goals of simulating gravitational collapse include observing the resulting morphology of the planetesimal or planetesimal system, noting how pairwise growth proceeds during the collapse process, and noting how efficient pairwise growth is. 
