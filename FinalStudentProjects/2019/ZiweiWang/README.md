@@ -1,4 +1,8 @@
 # Diatomic Spring-Mass Lattice Visualization
+## Ziwei Wang
+
+_Note:_ This directory is a static copy of the GitHub repository : https://github.com/ziwei-wang/lattice
+
 Interactive dispersion and wave propagation visualization of the diatomic spring-mass lattice with tunable mass ratio and excitation frequency.
 https://ziwei-wang.github.io/lattice/
 ## Introduction

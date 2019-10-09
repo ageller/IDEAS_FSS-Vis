@@ -1,5 +1,10 @@
 # 3DLIGOSkymap
-View LIGO skymaps projected onto 3D celestial sphere!
+
+## Monica Rizzo
+
+_Note:_ This directory is a static copy of the GitHub repository : https://github.com/mrizzo25/3DLIGOSkymap
+
+View LIGO skymaps projected onto 3D celestial sphere!  A live version is available here : https://mrizzo25.github.io/3DLIGOSkymap
 
 ## Motivation
 

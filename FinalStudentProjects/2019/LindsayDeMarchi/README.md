@@ -1,5 +1,6 @@
 # Lindsay DeMarchi
 
+_Note:_ This directory is a static copy of the GitHub repository : https://github.com/lindsaydemarchi/FSS-Viz-Final
 
 ### The coding: 
 
