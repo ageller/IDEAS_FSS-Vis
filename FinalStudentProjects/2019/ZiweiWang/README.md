@@ -5,7 +5,7 @@ Interactive dispersion and wave propagation visualization of the diatomic spring
 
 _Note:_ This directory is a static copy of the GitHub repository : https://github.com/ziwei-wang/lattice
 
-A live version is available here : https://mrizzo25.github.io/3DLIGOSkymap
+A live version is available here : https://ziwei-wang.github.io/lattice/
 
 
 ## Introduction
