@@ -1,6 +1,6 @@
 var data = source.data;
 var filetext = 'x,Sin,Cos\n';
-for (i=0; i < data['x'].length; i++) {
+for (var i=0; i < data['x'].length; i++) {
     var currRow = [data['x'][i].toString(),
                    data['y0'][i].toString(),
                    data['y1'][i].toString().concat('\n')];
