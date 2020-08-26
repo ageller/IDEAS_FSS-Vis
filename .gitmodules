@@ -4,3 +4,9 @@
 [submodule "Glue/GlueNEO"]
 	path = Glue/GlueNEO
 	url = https://github.com/ageller/GlueNEO.git
+[submodule "Unity/UnityNbodyCluster"]
+	path = Unity/UnityNbodyCluster
+	url = https://github.com/ageller/UnityNbodyCluster
+[submodule "Unity/UnityGaiaHDRStarClusters"]
+	path = Unity/UnityGaiaHDRStarClusters
+	url = https://github.com/ageller/UnityGaiaHDRStarClusters
