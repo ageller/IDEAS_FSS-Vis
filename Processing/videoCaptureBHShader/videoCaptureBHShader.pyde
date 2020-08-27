@@ -13,6 +13,7 @@ iSize = 720 #height of the image
 fRate = 30 #frame rate 
 
 #for BHs
+#Note: in the new version, adding extra BHs doesn't work as before.  You only see them when the mouse it clicked.  (I don't have time to fix this now :)
 NBH = 10 #maximum number of BHs
 iMBH = [-1. for x in range(NBH)] #BH masses (if < 1, no BH will be drawn)
 ixBH = [0. for x in range(NBH)] #BH x positionx, in fraction of the screen size, origin in upper left
@@ -36,12 +37,16 @@ def setup():
     frameRate(fRate)
     noStroke()
     
+    #define the camera
+    cameras = Capture.list()
+    i = 0
+    
     #load the shaders
-    sh = loadShader("fragment.glsl", "vertex.glsl")
+    sh = loadShader("data/fragment.glsl", "data/vertex.glsl")
 
     #for the video
     #start the video capture process
-    video = Capture(this, int(round(iSize/aspect)), iSize, fRate)
+    video = Capture(this, int(round(iSize/aspect)), iSize, cameras[i])
     video.start()
     #create an image to hold the current frame of the webcam 
     img = createImage(width, height, ARGB);
@@ -64,35 +69,39 @@ def draw():
     if (iMBH[ipos] > 0 or ipos == 0):
         shader(sh)
         sh.set("MBH", iMBH[ipos])
-        #sh.set("xBH", ixBH[ipos]) #setting this below to allow for flipped image
+        sh.set("xBH", ixBH[ipos]) #setting this below to allow for flipped image
         sh.set("yBH", iyBH[ipos])
         sh.set("xSize", float(video.width))
         sh.set("ySize", float(video.height))
         sh.set("vtex",img)
             
         textureMode(NORMAL)
-        translate(width/2., height/2.)
         background(0)
-        beginShape(QUADS)
+        #This is not needed/used now since I have to show the camera image
+        # translate(width/2., height/2.)
+        # beginShape(QUADS)
         
-        #now define the Quad
-        #NOTE: I am flipping the webcam image here horizontally so that this is like a mirror
-        #      It would probably be cleaner to do this above, but I couldn't figure that out
-        normal(0,0,1)
-        if (ipos == 0):
-            sh.set("xBH", 1. - ixBH[ipos])
-            vertex(-width/2., height/2., 1, 1)
-            vertex(width/2., height/2., 0, 1)
-            vertex(width/2., -height/2., 0, 0)
-            vertex(-width/2., -height/2., 1, 0)
-        else:
-            sh.set("xBH", ixBH[ipos])
-            vertex(-width/2., height/2., 0, 1)
-            vertex(width/2., height/2., 1, 1)
-            vertex(width/2., -height/2., 1, 0)
-            vertex(-width/2., -height/2., 0, 0)
-        endShape()
-        
+        # #now define the Quad
+        # #NOTE: I am flipping the webcam image here horizontally so that this is like a mirror
+        # #      It would probably be cleaner to do this above, but I couldn't figure that out
+        # normal(0,0,1)
+        # if (ipos == 0):
+        #     sh.set("xBH", 1. - ixBH[ipos])
+        #     vertex(-width/2., height/2., 1, 1)
+        #     vertex(width/2., height/2., 0, 1)
+        #     vertex(width/2., -height/2., 0, 0)
+        #     vertex(-width/2., -height/2., 1, 0)
+        # else:
+        #     sh.set("xBH", ixBH[ipos])
+        #     vertex(-width/2., height/2., 0, 1)
+        #     vertex(width/2., height/2., 1, 1)
+        #     vertex(width/2., -height/2., 1, 0)
+        #     vertex(-width/2., -height/2., 0, 0)
+        # endShape()
+
+    #this appears to be required now in order to load the pixels for the image sent to the shader        
+    image(video, 0, 0, width, height)
+    
     resetShader()
     
 #keyboard 
