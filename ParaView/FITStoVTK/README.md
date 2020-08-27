@@ -1,0 +1,1 @@
+ParaView works best with vtk files for input. (Though it says it can work with a very large number of file formats, I have rarely been able to get anything other than vtk files to load in!)  Luckily python has a few packages that can produce vtk files.  In this example I convert a fits file to vtk using pyevtk. 
