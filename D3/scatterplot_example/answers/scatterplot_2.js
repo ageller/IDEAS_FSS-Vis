@@ -16,10 +16,10 @@ var margin = {top: 50, right: 50, bottom: 50, left: 50},
 var colorMap = d3.scaleSequential(d3.interpolateSinebow).domain([Math.log10(100), Math.log10(5000)]);
 
 var x,y;
-function init(inputData, partyCodes){
+function init(inputData){
 
-	data = inputData;
-	party = partyCodes;
+	data = inputData[0];
+	party = inputData[1];
 
 	//define the scales for the plot: these will convert from pixels to data units
 	x = d3.scaleLinear().range([0, width]);
@@ -158,13 +158,12 @@ function populateScatter(currentCongress){
 }
 
 //runs on load
-d3.csv('data/congress_data.csv')
-	.then(function(d) {
-		d3.csv('data/voteView_partyCode.csv')
-			.then(function(p) {
-				init(d, p)
-			})
-	})
-	.catch(function(error){
-		console.log('ERROR:', error)	
-	})
+Promise.all([
+    d3.csv("data/congress_data.csv"),
+    d3.csv("data/voteView_partyCode.csv"),
+]).then(function(d) {
+	init(d)
+})
+.catch(function(error){
+	console.log('ERROR:', error)	
+})
