@@ -1,0 +1,96 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>SN 2019ehk</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.1.min.js" integrity="sha384-qkRvDQVAIfzsJo40iRBbxt6sttt0hv4lh74DG7OK4MCHv4C5oohXYoHUM5W11uqS" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.1.min.js" integrity="sha384-Sb7Mr06a9TNlet/GEBeKaf5xH3eb6AlCzwjtU82wNPyDrnfoiVl26qnvlKjmcAd+" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+
+        <style>
+        h1 {text-align: center;}
+        p {
+          text-align: center;
+          // display: block;
+          margin-left: 550px;
+          margin-right: 10px;
+        }
+        </style>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+              <h1>The Physical Evolution of a Calcium-rich Supernova</h1>
+              <div class="bk-root" id="e6f0edf0-d78d-4a8b-8867-695a4f76ab8b" data-root-id="2114"></div>
+              <p style="border:3px; border-style:solid; border-color:#FF0000; padding: 1em;"> 
+                Here we present the evolution of calcium-rich supernova (SN) 2019ehk discovered in host galaxy Messier 100. In the top left plot, we visualize SN 2019ehk as a circle whose radius is expanding in time, while the SN temperature rapidly decreases as shown by the colorbar. The top right plot shows telescope imaging of SN 2019ehk at different phases after explosion. The bottom panel shows the luminosity, radius and temperature of SN 2019ehk as the SN evolves. </p>
+            
+          
+        
+      
+      
+        <script type="text/javascript" id="2771" src="data.js"></script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  // var docs_json = document.getElementById('2771').textContent;
+                  var render_items = [{"docid":"cedd0372-274a-4b42-a802-06b1d7e014e8","root_ids":["2114"],"roots":{"2114":"e6f0edf0-d78d-4a8b-8867-695a4f76ab8b"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>
