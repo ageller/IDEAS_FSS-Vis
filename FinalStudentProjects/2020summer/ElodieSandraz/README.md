@@ -30,6 +30,8 @@ I initially struggled using JavaScript to write the interactive functions I desi
 
 On the left-hand side, we observe a comparison of the surface energies of selected shell elemental compositions versus the surface energies of selected core elemental compositions, color-coded by nanoparticle shape. In the top-right, we observe a comparison of the difference in surface energies between core and shell elemental compositions with the atomic number of the shell element. The dotted lines represent the end of a period in the periodic table. In the bottom-right, we compare the same difference in surface energy with the interfacial energy between the pair of elemental compositions. The slider on the top right allows the user to select the elemental composition they would like to explore as a core. Likewise, the multi-selection tool below allows the user to select as many elemental compositions as they would like to explore as a shell option. The points highlighted on each plot are the pairs of elemental compositions that satisfy the constraints posed by both the slider and the multi-selection tool. Additionally, the user can see the name of the pair and the corresponding plotted properties by mousing over a data point.
 
+Please note: to run the notebook or use the html file, the user must first unzip the doi_10.5061_dryad.f2n6f__v1.zip file.
+
 ## Results:
 
 This visualization hopes to challenge common assumptions about which properties influence nanoparticle shape formation and to provide the tools for further exploring correlations in other datasets. The tool currently operates under simplifying assumptions but can be readily adapted to accommodate more complex analysis of other materials properties and their correlation to nanoparticle shapes.
