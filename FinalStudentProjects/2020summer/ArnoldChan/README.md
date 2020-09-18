@@ -1,7 +1,5 @@
-# Brushing Window Signal Integration Tool
-
-designed for the analysis of time-resolved X-ray scattering difference patterns
-
+# Brushing Window Signal Integration Tool<br/>
+Designed for the analysis of time-resolved X-ray scattering difference patterns<br/>
 Arnold Chan | 09/18/2020 | IDEAS FSS-Vis Final Project
 ____________________________________________________________________
 
