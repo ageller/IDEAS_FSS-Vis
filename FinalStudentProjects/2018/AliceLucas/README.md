@@ -1,5 +1,6 @@
 # Alice Lucas's Final Project
 
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2018/AliceLucas/)
 
 Images, while being highly visual by nature, can actually be represented in many different ways. There exists many types of information in a given image, for example regarding the frequency, color, or greyscale intensities. In this project, we aim to look into some of these properties, more specifically focusing on the color distributions of natural images. We ask questions such as, do the different color channels correlate with one another? Is there a lot of variation between the image channels? How do color distributions differ given different images? 
 
