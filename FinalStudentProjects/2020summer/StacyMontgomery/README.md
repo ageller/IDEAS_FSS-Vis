@@ -12,4 +12,4 @@ In order develop this tool, I processed the data in Python and coded the website
 
 The final product is relatively straightforward to use, in that it is set up like an interactive paper. The figures have tables that pop up when you scroll over them, and the demographic map has a drop-down menu to pick the three demographic areas of analysis. In conclusion of this analysis, I show that we still have redlining-like segregation within the US, though the air quality story is not as straightforward. The analysis could benefit from additional air quality datasets. 
 
-Additional files related to the data processing are available for download from [this Box link]().
+Additional files related to the data processing are available for download from [this Box link](https://northwestern.box.com/s/irf5i9r4gmllxe8mwrf18z9zadv7ls1k).
