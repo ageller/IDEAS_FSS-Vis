@@ -2,7 +2,7 @@
 
 Sept. 18th, 2020
 
-[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2020summer/StacyMontgomery/)
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2020summer/StacyMontgomery/index.html)
 
 For my project, I have chosen to focus on the history of redlining and how it continues to influence us today. I study air quality, particularly the patterns of air quality within cities, so I am intrigued by geospatial connection between the environment and the people who live there. As a result, I took my expertise in spatial analysis and chemistry in order to explore the connection between these two geolocated datasets.
 
@@ -12,3 +12,4 @@ In order develop this tool, I processed the data in Python and coded the website
 
 The final product is relatively straightforward to use, in that it is set up like an interactive paper. The figures have tables that pop up when you scroll over them, and the demographic map has a drop-down menu to pick the three demographic areas of analysis. In conclusion of this analysis, I show that we still have redlining-like segregation within the US, though the air quality story is not as straightforward. The analysis could benefit from additional air quality datasets. 
 
+Additional files related to the data processing are available for download from [this Box link]().
