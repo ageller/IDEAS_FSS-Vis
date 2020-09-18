@@ -1,0 +1,10 @@
+Here are the configuration settings for this code.
+All entries should be vertical bar delimited and inside square brackets.
+
+Number of categories = [7]
+Color Mapping = [blue|orange|green|red|purple|yellow|pink]
+Category Labels = [1|2|3|4|5|6|7]
+T1 file location = [files2/GG-366-T1-1.0mm.nii.gz]
+Flair file location = [files2/GG-366-FLAIR-1.0mm.nii.gz]
+Ground Truth Mask file location = [files2/GG-366-WM-1.0mm.nii.gz]
+Predicted Mask file location = [files2/GG-366-CSF-1.0mm.nii.gz]
