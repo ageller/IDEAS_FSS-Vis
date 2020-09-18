@@ -2,7 +2,7 @@
 
 Visualization of SN blackbody radius/temperature + bolometric luminosity
 
-[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2020summer/WynnJacobson-Galan)
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2020summer/WynnJacobson-Galan/)
 
 Here, I have utilized the interactive python package Bokeh to visualize physical properties of a pecular supernova (SN) 2019ehk that belongs to the calcium-rich supernova class. The main parameters of the supernova that are shown here are the luminoisity as a function of time (i.e., light curve) as well as the radius and temperature, both of which were derived from blackbody modeling of SN 2019ehk's spectral energy distribution (SED). Additionally, in this visualization, I have shown false-color RBG images of SN 2019ehk in its host galaxy Messier 100 at different phases of its evolution.
 
