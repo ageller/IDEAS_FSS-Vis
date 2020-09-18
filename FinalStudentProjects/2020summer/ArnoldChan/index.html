@@ -1,0 +1,73 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<!-- link the style sheet -->
+		<link rel="stylesheet" type="text/css" href="index.css" />
+
+		<!-- link to the d3 library, using v5 here -->
+		<script src="//d3js.org/d3.v5.min.js"></script>
+
+	</head>
+	<body>
+		<!-- this will contain the visualization -->
+		<!-- <div id="container"></div>
+		<div class="rangeslider" id="slider">
+			<input type="range" min="1" max="114" value="1" class="myslider" id="sliderRange">
+			<p>Congress No.: <span id="demo"></span></p>
+		</div>
+		-->
+		<div class="row">
+			<h2 id="title" class="center">CO photolysis of Cytochrome c by Time-Resolved X-ray Solution Scattering</h2>
+		</div>
+		
+        <div class="row">
+			<div class="column">
+				<img src="data/cyt_c.gif" width="370" height="345">
+			</div>
+			<div class="column">
+				<p id="description"><br>Cytochrome c (cyt c) is a model system for heme metalloprotein folding dynamics and chemical interactions. In this experiment, a denatured ground state carbon monoxide-, CO, bound cyt c is prepared, and its folding is subsequently triggered by the photolysis of CO from the iron center. A pulsed laser initiates the folding dynamics in less than 10 ns, and time-delayed x-ray pulses capture the structural information as small-/wide- angle x-ray scattering patterns. The scattering patterns taken before and after the photolysis event are subtracted to show the scattering difference plots below. The scattering difference signal plotted along the momentum transfer, q, is proportional to the change in characteristic lengthscales of the molecule.This interactive tool integrates the time series according to the brushing window to explore trends in the dataset (Hsu et al. Chem. Sci. 2019, 10, 9788-9800).</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="column">
+				<div id="ds-staggered" max-width=100%></div>
+			</div>
+			<div class="column">
+				<div id="ds" max-width=100%></div>
+				<div id="sigint_title" class="center">Integrated Scattering Difference from <span id="qminValue"></span> to <span id="qmaxValue"></span> 1/<span>&#8491;</span></div>
+				<div id="sigint" max-width=100%></div>
+				<!-- <p>
+	  				<label for="qminValue" 
+	         				style="display: inline-block; width: 240px; text-align: right">
+	         				lower bound q = <span id="qminValue-value"></span>
+	  				</label>
+	 				<input type="number" min="0.03" max="0.595" step="0.005" value="0.03" id="qminValue">
+				</p>
+				<p>
+	  				<label for="qmaxValue" 
+	         				style="display: inline-block; width: 240px; text-align: right">
+	         				upper bound q = <span id="qmaxValue-value"></span>
+	  				</label>
+	 				<input type="number" min="0.035" max="0.6" step="0.005" value="0.24" id="qmaxValue">
+				</p> -->
+			</div>
+		</div>
+		
+
+
+		<!-- left-right panels -->
+  	<!-- <div style="width: 100%; displa: table;">
+ 			<div style="display: table-row; height: 400px;">
+ 				<div id="ds" style="width: 50%; display: table-cell;"></div>
+ 				<div id="sigint" style="display: table-cell;"></div>
+ 			</div>
+ 		</div> -->
+
+		<!-- link in our script -->
+		<script src="finalproject03.js"></script>
+
+	</body>
+</html>

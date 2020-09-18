@@ -1,0 +1,74 @@
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.line{
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+}
+
+.center {
+  margin: auto;
+  width: 90%;
+}
+
+h2 {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#description {
+  font-family: sans-serif;
+  margin: auto;
+  width: 80%;
+}
+
+img {
+
+  min-height: 370;
+  max-width: 100%;
+}
+
+/*.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}*/
+
+.row{
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    padding: 10px;
+}
+
+.dot {
+  /*fill: steelblue;
+  stroke: steelblue;*/
+  stroke-width: 1.5px;
+}
+
+#sigint_title {
+  font-family: sans-serif;
+}
+
+.label{
+	fill:black;
+}
+
+.hidden {
+	display:none;
+}
