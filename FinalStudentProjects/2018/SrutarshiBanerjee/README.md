@@ -1,5 +1,6 @@
 # Srutarshi Banerjee's Final Project
 
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2018/SrutarshiBanerjee/IDEAS-SB-Final.html)
 
 The FSS - Visualization project has been developed based on the concept of Image Compression, depending on quad tree structure. The work is done with the help of **d3 javascript library** and **html**. *Initially*, the image is loaded and subsampled in random manner. Based on the subsampled image pixels, the quad tree structure is selected. The **image** is stored in **canvas data format**. However, the **quad tree** is stored in the form of **svg data format**. The quad tree structure is loaded on top of the image in translucent appearance.
 
