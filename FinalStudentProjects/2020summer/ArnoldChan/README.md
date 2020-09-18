@@ -1,4 +1,5 @@
 # Brushing Window Signal Integration Tool  
+
 Designed for the analysis of time-resolved X-ray scattering difference patterns<br/>
 Arnold Chan | 09/18/2020 | IDEAS FSS-Vis Final Project
 ____________________________________________________________________
