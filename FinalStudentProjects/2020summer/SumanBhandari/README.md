@@ -1,5 +1,7 @@
 # Laser Induced Plasma Micromachining
 
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2020summer/SumanBhandari/)
+
 Laser-Induced Plasma Micromachining (LIPMM) has the ability to machine deeper features compared to direct laser ablation. In the LIPMM process, a workpiece is immersed on a dielectric (usually water) and a pulsed laser is focused just above the workpiece surface. If the laser pulse energy is greater than the breakdown threshold of the dielectric, plasma forms through the optical breakdown of the dielectric. When this laser-induced plasma comes in contact with the workpiece, material vaporizes. The temperature of the plasma is an important factor that determines the material removal rate.
 
 This visualization project shows how the temperature within the plasma varies with time and distance from the center of the plasma. The data is extracted from Ahmed et.al. 2008 paper titled “Spectroscopic study of laser-induced plasma in aqueous media”. The paper studies the laser-induced plasma on the surface of ionic solutions of Ca++. Linear interpolation is used to create more data points at different times and distances. The evolution of plasma is a nonlinear process so the temperature on this visualization project is not to be used for scientific purposes.

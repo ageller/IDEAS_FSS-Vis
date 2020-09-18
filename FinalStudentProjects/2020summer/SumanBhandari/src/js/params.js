@@ -22,7 +22,7 @@ function defineParams(){
 
 		//for the material of the points
 		this.size = 200;
-		this.alphaTest = 0.1;
+		this.alphaTest = 0.25;
 		this.sizeAttenuation = true;
 
 		//define some colors (https://github.com/d3/d3-scale-chromatic)
