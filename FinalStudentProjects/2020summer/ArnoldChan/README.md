@@ -2,6 +2,8 @@
 
 Designed for the analysis of time-resolved X-ray scattering difference patterns<br/>
 Arnold Chan | 09/18/2020 | IDEAS FSS-Vis Final Project
+
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2020summer/ArnoldChan/)
 ____________________________________________________________________
 
 ## Scientific Background:
