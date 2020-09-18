@@ -2,7 +2,7 @@
 
 This is a copy of [Dale's GitHub repo](https://github.com/dgaines2/fss-vis).
 
-[A live version is available here.]()
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2020summer/DaleGaines/index.html)
 
 ## Scientific Background
 
