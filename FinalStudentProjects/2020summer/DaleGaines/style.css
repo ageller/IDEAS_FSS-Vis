@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.WebGLContainer {
+    position: relative;
+}
+
+.title {
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    width: 70%;
+    height: 50px;
+    z-index: 1;
+}
+
+.button {
+    position: absolute;
+    top: 65px;
+    left: 20px;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 0px;
+    top: 75px;
+    min-width: 500px;
+    max-width: 700px;
+    height: 500px;
+    z-index: 1;
+    padding-left: 20px;
+    overflow: auto;
+    direction: ltr;
+    display: none;
+}
+
+.scatter_cont {
+    background: rgba(255, 255, 255, 0);
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1;
+}
+
+.titlefont {
+    font-family: Arial;
+    font-size: 28px;
+    color: white;
+    text-align: left;
+    text-decoration: underline;
+}
+
+.overfont {
+    padding-top: 10px;
+    font-family: Arial;
+    font-size: 20px;
+    color: white;
+    text-align: left;
+}
+
+.axis {
+    color: white;
+    font-size: 16px;
+    font-family: Arial;
+    fill: white;
+}
+
+.axis path,
+.axis line {
+    z-index: 1;
+	stroke: white;
+	shape-rendering: crispEdges;
+	fill: none;
+}
+
+.line {
+    z-index: 1;
+	stroke: white;
+	shape-rendering: crispEdges;
+	fill: none;
+}
+
+.dots {
+	stroke: white;
+    fill: white;
+    z-index: 1;
+}
+
+.dot {
+    z-index: 1;
+}
+
+.label{
+	color: white;
+    font-family: Arial;
+    font-size: 20px;
+    fill: white;
+}

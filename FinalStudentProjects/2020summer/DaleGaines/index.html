@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel='stylesheet' href='style.css'>
+	<head>
+		<meta charset="utf-8">
+		<title>Molecular Dynamics</title>
+
+		<!-- three.js resources -->
+		<script src="src/lib/three.min.js"></script>
+		<script src="src/lib/TrackballControls.js"></script>
+		<script src="src/lib/THREEx.WindowResize.js"></script>
+		<script src="src/lib/THREE.MeshLine.js"></script>
+
+		<!-- d3 library -->
+		<script src="src/lib/d3.v5.min.js"></script>
+		
+		<!-- dat.gui -->
+		<script src="src/lib/dat.gui.js"></script>
+
+		<!-- my scripts -->
+		<script src="src/js/params.js"></script>
+		<script src="src/js/drawScene.js"></script>
+		<script src="src/js/gui.js"></script> 
+		<script src="src/js/init.js"></script>
+
+	</head>
+	<body>
+		<!-- This will contain the canvas -->
+		<div id="WebGLContainer">
+            <div id="title" class="title">
+                <p class="titlefont"> Molecular Dynamics </p>
+            </div>
+            <button id="button" class="button"> Info </button>
+            <div id="overlay" class="overlay">
+                <p class="overfont" id='infotext'> This is a demonstration 
+                molecular dynamics (MD) simulation of a polymer melt. Each of 
+                these colored chains represents a single molecule of 
+                polyethylene, a common polyer made up of many repeating CH2 
+                units (and using the united-atom model, these are represented 
+                by a single colored point). The simulation starts with 
+                the polymers aligned within a box, and the goal of this 
+                simulation is to generate physically-reasonable conformations 
+                starting from this initial state. The temperature for this 
+                simulation is 400K and the timestep is 1 femptosecond. 
+                As time progresses, the thermal energy is distributed 
+                throughout the system, and the polymers
+                explore various conformational states. By the end  
+                of this simulation, the polymers have reached a randomized 
+                equilibrium configuration and are ready to be used in an MD run
+                where we can measure their properties.
+                </p>
+            </div>
+            <div id="scatter_container" class="scatter_cont"> </div>
+        </div>
+		<script src="src/js/scatterplot.js"></script>
+		<script src="src/js/toggleVis.js"></script>
+	</body>
+</html>
