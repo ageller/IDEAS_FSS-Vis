@@ -13,8 +13,11 @@
 <style>
 
 body, h1, h2, h3, p {
-  margin: 1;
-  padding: 1;
+  /*margin: 10px;*/
+  padding: 5px;
+  margin-left:auto;
+  margin-right:auto;
+  width: 75%;
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 1em;
   color: #333;
@@ -22,7 +25,7 @@ body, h1, h2, h3, p {
 }
 
 #container {
-  width: 70%;
+  width: 90%;
   margin: 5px;
   padding: 20px;
 }
@@ -66,6 +69,7 @@ body, h1, h2, h3, p {
   height: 300px;
   width: 50%;
 }
+
 img {
   width: 100%;
   height: 100%;
@@ -74,7 +78,7 @@ img {
 #content {
   margin: 5px;
   padding: 10px;
-  width: 90%;
+  width: 100%;
   /* border: 1px solid #ccc; */
 }
 
@@ -90,19 +94,19 @@ h1, h2, h3, h4 {
   color: #000;
 }
 
+h1{
+  text-align: left;
+  margin: 0px -20px 0px 0px;
+}
+
 h2.subtitle {
   font-size: 1em;
   color: #000;
   font-weight: 600;
   display: inline;
+  margin: 0px 0px 0px -4px;
 }
 
-h2.bold {
-  font-size: 1em;
-  color: #b30000;
-  font-weight: 600;
-  display: inline;
-}
 
 h2.year {
   margin: 10px 0px 0px 0px;
@@ -119,8 +123,9 @@ h3.title {
 }
 
 p {
-  margin: 10px 0px 0px 0px;
+  margin: 5px 0px 0px 0px;
 }
+
 a {
   color:#b30000;
 }
@@ -230,13 +235,12 @@ b {
 
  <!-- START THE WEBPAGE --> 
 
-</head>
 
 <body>
 
 
 <div id="content">
-  <h2 class = "year"> Anastasia Montgomery, PhD Candidate, Earth and Planetary Sciences, Northwestern University </h2>
+  <h2 class = "year"> Anastasia Montgomery, Earth and Planetary Sciences, Northwestern University </h2>
  
     <h3 class="title"> Have our racist housing policies destined current pollutant exposure? </h3>
     
@@ -247,13 +251,13 @@ b {
   </p>
 
 
-<h1> Introduction </h1>
+  <h1> Introduction </h1>
   <p>
-    <h2 class = "subtitle"> THE HOME OWNER'S LOAN CORPORATION (HOLC) </h2> In the 1930s, the Home Owner's Loan Corporation (HOLC) was established by the federal government under President Franklin D. Roosevelt as a part of the New Deal. This corporation created maps of hundreds of cities in order to rate the mortgage security and investment opportunities found in these communities. Grades ranged from “best,” “still desirable,” “declining” or “hazardous”, and were ultimately scored by the scholastic scale of A, B, C, D, and F. The community racial makeup was explicitly noted in these appraisals, with a special column for the population percentage of Black residents. <b> The Black and immigrant neighborhoods were consistently rated “hazardous” and outlined in red</b>, indicating that the neighborhood should not recieve funding. This set up a precedent for decades, such that these redlined communities continued to be denied access to federally backed mortgages and other credit, continuing a cycle of disinvestment. 
+      <h2 class = "subtitle"> THE HOME OWNER'S LOAN CORPORATION (HOLC) </h2> In the 1930s, the Home Owner's Loan Corporation (HOLC) was established by the federal government under President Franklin D. Roosevelt as a part of the New Deal. This corporation created maps of hundreds of cities in order to rate the mortgage security and investment opportunities found in these communities. Grades ranged from “best,” “still desirable,” “declining” or “hazardous”, and were ultimately scored by the scholastic scale of A, B, C, D, and F. The community racial makeup was explicitly noted in these appraisals, with a special column for the population percentage of Black residents. <b> The Black and immigrant neighborhoods were consistently rated “hazardous” and outlined in red</b>, indicating that the neighborhood should not recieve funding. This set up a precedent for decades, such that these redlined communities continued to be denied access to federally backed mortgages and other credit, continuing a cycle of disinvestment. 
   </p>
 
-  <p> 
-    In order to test the connection between current segregation levels and the HOLC precedent, I have spatially joined HOLC maps and the American Community Survey (ACS) Census Block demographic data. The HOLC appraisal maps were digitized by researchers at the Univeristy of Richmond, which are used to make the following plots.
+  <p> <h2 class = "subtitle"> </h2>
+      In order to test the connection between current segregation levels and the HOLC precedent, I have spatially joined HOLC maps and the American Community Survey (ACS) Census Block demographic data. The HOLC appraisal maps were digitized by researchers at the Univeristy of Richmond, which are used to make the following plots.
   </p>
  
  <!--  FIGURE 2 and 3 WITH REDLINING AND CENSUS--> 
@@ -261,7 +265,7 @@ b {
 
   <div id="one">
     <h1> Chicago Redline Maps</h1>
-    <h2 class="year">  (1935 - 1940)</h4>
+    <h2 class="year">  (1935 - 1940)</h2>
     <!-- <h2 class="Redline"></h2> -->
     <div class="map" id="redline_map_chicago" ></div>
     <p class="citation">Source: “Mapping Inequality" Robert K. Nelson, LaDale Winling, Richard Marciano, Nathan Connolly, et al. Accessed: Sep. 11, 2020. Retrieved from: https://dsl.richmond.edu/panorama/redlining </p>
@@ -272,7 +276,7 @@ b {
 
 
   <div id="two">
-    <h1> 5-yr Census Block Demographics</h1>
+    <h1> Block Demographics</h1>
     <h2 class="year">  (2013-2018) </h2>
     <!-- <div class="slider"></div> -->
     
@@ -290,90 +294,92 @@ b {
 
   <script type="text/javascript" src="demo_map_chicago.js"></script>
 
-<p> <h2 class = "subtitle"> THE MAPS </h2>
-    For brevity, only the city of Chicago is displayed to show the HOLC appraisals and census block demographics. In total, there are <b> 8,874 redline maps and 215,837 census blocks </b>. The HOLC appraisal map has been overlaid onto the census block demographic shapes, resulting in irregular patterns that are indiciative of where people live today. 
-</p>
-
-<p> 
-  Panning through the city of Chicago, no areas were rated below a D, with most of the "redlined" areas concentrated at the center of the city. The HOLC appraisals came with notes, with a final description of the area that summarized the final grade makeup. Along these neighborhoods at the center the city, the HOLC appraisals note that this area is "heavily immigrant" populated and the proximity to the polluted river resulted in a disgusting environment, although "easily accessible to work".
-</p>
-
-
-<p> 
-  Exploring the demographic makeup of the city of Chicago, it is notable that the levels of segregation within the city are stark. Panning between the "White" and "Black" tabs on the map, you can see that these two demographic groups have complementary shapes, with the Black population mainly concentrated in the South-West side of Chicago, while the rest of the areas are heavily populated by white people. Non-black, non-white people (including people of latinx, asian, and mixed descent) are more skewed to the outskirts of the county, however, within the city itself this demographic is more homogenous. 
-</p>
-
-<div id="content"> </div>
-<div id="content"> </div>
-
-<div id="three">
-  <table class="hoverTable">
-    <col>
-    <colgroup span="3"></colgroup>
-    <thead>
-    <tr>
-      <td rowspan="1"></td>
-      <th colspan="3" headers="big_head"> % of Total Population (2018) </th>
-    </tr>
-    <tr>
-        <th> GRADE</th>
-        <th> WHITE</th>
-        <th> BLACK</th>
-        <th> NONWHITE, NONBLACK</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope = "row">A</th>
-        <td>75% </td>
-        <td>19%</td>
-        <td>12%</td>
-      </tr>
-      <tr>
-        <th scope = "row">B</th>
-        <td>65%</td>
-        <td>25%</td>
-        <td>16%</td>
-      </tr>
-      <tr>
-        <th scope = "row">C</th>
-        <td>57%</td>
-        <td>30%</td>
-        <td>21%</td>
-      </tr>
-      <tr>
-        <th scope = "row">D</th>
-        <td>51%</td>
-        <td>36%</td>
-        <td>21%</td>
-      </tr>
-      <tr>
-        <th>F</th>
-        <td>36%</td>
-        <td>46%</td>
-        <td>26%</td>
-      </tr>
-    </tbody>
-    </table>
-</div>
-
-<div id="four">
-  <h1> But this segregation precedent holds true for most of America. </h1>
-  <p> 
-    Combining all of the redlined maps with the census block demographics, we actually see a similar level of segregation within the US. Despite the decades of efforts towards integration, it seems that our divestment from "undesirable" communities still persist. As shown in the table to the left, 2013-2018 Census demographics have a racial mapping.  
+  <p> <h2 class = "subtitle"> THE MAPS </h2>
+      For brevity, only the city of Chicago is displayed to show the HOLC appraisals and census block demographics. In total, there are <b> 8,874 redline maps and 215,837 census blocks </b>. The HOLC appraisal map has been overlaid onto the census block demographic shapes, resulting in irregular patterns that are indiciative of where people live today. 
   </p>
 
-  <p> 
-    This highlights the generational wealth that housing secures. In 2010, the median net wealth for <b>Black families was $4,900</b>, compared to the median wealth for <b> white families of $97,000. </b>
+  <p> <h2 class = "subtitle"> </h2>
+    Panning through the city of Chicago, no areas were rated below a D, with most of the "redlined" areas concentrated at the center of the city. The HOLC appraisals came with notes, with a final description of the area that summarized the final grade makeup. Along these neighborhoods at the center the city, the HOLC appraisals note that this area is "heavily immigrant" populated and the proximity to the polluted river resulted in a disgusting environment, although "easily accessible to work".
   </p>
 
-</div>
 
-<div id="content">
-  <p>
-    This segregation comes at a cost within the US. Black and brown communities are more likely to experience negative health outcomes than white communities due to environmental factors and access to healthcare. One study on redlining and asthma found that the historically redlined census tracts had <a href="https://doi.org/10.1016/S2542-5196(19)30241-4"> significantly higher rates of emergency department visits due to asthma </a>. Asthma can be triggered by exposure to airborne substances, indicating that these redlined areas may experience worse air quality.
+  <p> <h2 class = "subtitle"> </h2>
+    Exploring the demographic makeup of the city of Chicago, it is notable that the levels of segregation within the city are stark. Panning between the "White" and "Black" tabs on the map, you can see that these two demographic groups have complementary shapes, with the Black population mainly concentrated in the South-West side of Chicago, while the rest of the areas are heavily populated by white people. Non-black, non-white people (including people of latinx, asian, and mixed descent) are more skewed to the outskirts of the county, however, within the city itself this demographic is more homogenous. 
   </p>
-</div>
+
+  <div id="content"> </div>
+  <div id="content"> </div>
+
+  <div id="three">
+    <table class="hoverTable">
+      <col>
+      <colgroup span="3"></colgroup>
+      <thead>
+      <tr>
+        <td rowspan="1"></td>
+        <th colspan="3" headers="big_head"> % of Total Population (2018) </th>
+      </tr>
+      <tr>
+          <th> GRADE</th>
+          <th> WHITE</th>
+          <th> BLACK</th>
+          <th> NONWHITE, NONBLACK</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope = "row">A</th>
+          <td>75% </td>
+          <td>19%</td>
+          <td>12%</td>
+        </tr>
+        <tr>
+          <th scope = "row">B</th>
+          <td>65%</td>
+          <td>25%</td>
+          <td>16%</td>
+        </tr>
+        <tr>
+          <th scope = "row">C</th>
+          <td>57%</td>
+          <td>30%</td>
+          <td>21%</td>
+        </tr>
+        <tr>
+          <th scope = "row">D</th>
+          <td>51%</td>
+          <td>36%</td>
+          <td>21%</td>
+        </tr>
+        <tr>
+          <th>F</th>
+          <td>36%</td>
+          <td>46%</td>
+          <td>26%</td>
+        </tr>
+      </tbody>
+      </table>
+  </div>
+
+  <div id="four">
+    <h1> But this segregation precedent holds true for most of America. </h1>
+    <p> <h2 class = "subtitle"> </h2>
+      Combining all of the redlined maps with the census block demographics, we actually see a similar level of segregation within the US. Despite the decades of efforts towards integration, it seems that our divestment from "undesirable" communities still persist. As shown in the table to the left, 2013-2018 Census demographics have a racial mapping.  
+    </p>
+
+    <p> <h2 class = "subtitle"> </h2>
+      This highlights the generational wealth that housing secures. In 2010, the median net wealth for <b>Black families was $4,900</b>, compared to the median wealth for <b> white families of $97,000. </b>
+    </p>
+
+  </div>
+
+  <div id="content"></div>
+
+  <div id="content">
+    <p> <h2 class = "subtitle"> </h2>
+      This segregation comes at a cost within the US. Black and brown communities are more likely to experience negative health outcomes than white communities due to environmental factors and access to healthcare. One study on redlining and asthma found that the historically redlined census tracts had <a href="https://doi.org/10.1016/S2542-5196(19)30241-4"> significantly higher rates of emergency department visits due to asthma </a>. Asthma can be triggered by exposure to airborne substances, indicating that these redlined areas may experience worse air quality.
+    </p>
+  </div>
 
 
 
@@ -395,15 +401,15 @@ b {
     <p> <h2 class = "subtitle"> THE MONITORING </h2>
         These is a slight problem with air quality monitoring: we just don't get complete coverage. Ambient (meaning outdoor, background levels) quality monitors are set up by the Environemntal Protection Agency in order to enforce the Clean Air Act National Ambient Air Quality Standards (NAAQs) (1990). The NAAQs were established to set a level of acceptable concentrations of a variety of health-hazardous pollutants: ozone (O<sub>3</sub>), nirtogen dioxide (NO<sub>2</sub>), particulate matter (PM), lead (Pb), carbon monoxide (CO), and sulfur dioxide (SO<sub>2</sub>). There are only a finite number of these monitors across the US: for example, only 1,437 ozone (O<sub>3</sub>) monitoring stations and 683 2.5 um particulate matter (PM) monitoring stations. Which seems like a lot - <b> except that this results in ONE ozone monitor for each 2,642 square miles of the US </b> (or one PM monitor per 5,559 square miles). When they say ambient monitoring, they mean it.
     </p>
-    <p>
+    <p> <h2 class = "subtitle"> </h2>
         But these monitors are how we enforce environmental regulations. When these monitors are found to be "out of attainment" (breaking the law, per the Clean Air Act), the EPA fines the state and sets up a plan to remediate the area. This requires huge participation by a variety of local, city, and state governments to decide how best to proceed and return to "attainment" levels of monitoring. The city of Chicago, for example, is currently in non-attainment for ozone. This ozone problem cannot be blamed upon just one entity - in fact, the formation of ozone itself is quite complicated. Taking one step back, ozone is a "secondary pollutant", meaning that it is formed in the atmosphere by reactions from other pollutants, mainy volatile organic compounds (VOCs) and nitrogen dioxide (NO<sub>2</sub>). VOCs come from a variety of household products and plants (anything smelly), while NO<sub>2</sub> mainly comes from combustion. On top of all of this, ozone has a relatively short lifespan - anywhere from hours to weeks, depending on the conditions. And these chemicals can move -- particularly across state boundaries, which complicates the EPA's enforcement of the Clean Air Act. <b> Basically, the chemicals will move, regardless of these boundaries that we set up. </b>
     </p>
-    <p>
+    <p> <h2 class = "subtitle"> </h2>
         Each of these chemicals, however, have different properties. Some will travel far, drifting in a windswept plume because they won't react with anything. Others will just hangout where they were emitted, immediately being consumed by the environment they are emitted in. And these processes are all controlled by the local weather and local emission sources. Each environment results in a unique little microcosm of chemistry. But all throughout these chemical paths, we have the same underlying connection:<b> location </b>. So there has to be a connection between our housing location and the chemistry...right?
     </p>
   </div>
 
-<script type="text/javascript" src="epa_map.js"></script>
+    <script type="text/javascript" src="epa_map.js"></script>
 
 
 
@@ -415,107 +421,105 @@ b {
   </div>
 
 
-<div id="content">
-  <table class="hoverTable">
-    <!-- <col> -->
-    <!-- <colgroup span="3"> </colgroup> -->
-    <thead>
-      <tr>
-        <td rowspan="1"> </td>
-        <th colspan="3" headers="big_head"> % of Total Population (2018) </th>
-        <th colspan="6" headers="big_head"> Average Air Quality Metrics </th>
-        <th colspan="2" headers="big_head"> % of Blocks with Station </th>
-      </tr>
-      <tr>
-          <th> GRADE</th>
-          <th> WHITE</th>
-          <th> BLACK</th>
-          <th> NONWHITE, NONBLACK</th>
-          <th> O<sub>3</sub> 10%ile</th>
-          <th> O<sub>3</sub> Mean</th>
-          <th> O<sub>3</sub> 99%ile</th>
-          <th> PM<sub>2.5</sub> 10%ile</th>
-          <th> PM<sub>2.5</sub> Mean</th>
-          <th> PM<sub>2.5</sub> 99%ile</th>
-          <th> O<sub>3</sub> Stations</th>
-          <th> PM Stations</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope = "row">A</th>
-        <td>75% </td>
-        <td>19%</td>
-        <td>12%</td>
-        <td>34.1 </td>
-        <td>46.4</td>
-        <td>78.5</td>
-        <td>2.6</td>
-        <td>9.0</td>
-        <td>31.2</td>
-        <td> 13% </td>
-        <td> 32% </td>
-      </tr>
-      <tr>
-        <th scope = "row">B</th>
-        <td>65%</td>
-        <td>25%</td>
-        <td>16%</td>
-        <td>33.7 </td>
-        <td>46.1</td>
-        <td>79.2</td>
-        <td>2.4</td>
-        <td>9.1</td>
-        <td>32.5</td>
-        <td>16%</td>
-        <td>31%</td>>
+  <div id="content">
+    <table class="hoverTable">
+      <thead>
+        <tr>
+          <td rowspan="1"> </td>
+          <th colspan="3" headers="big_head"> % of Total Population (2018) </th>
+          <th colspan="6" headers="big_head"> Average Air Quality Metrics </th>
+          <th colspan="2" headers="big_head"> % of Blocks with Station </th>
+        </tr>
+        <tr>
+            <th> GRADE</th>
+            <th> WHITE</th>
+            <th> BLACK</th>
+            <th> NONWHITE, NONBLACK</th>
+            <th> O<sub>3</sub> 10%ile</th>
+            <th> O<sub>3</sub> Mean</th>
+            <th> O<sub>3</sub> 99%ile</th>
+            <th> PM<sub>2.5</sub> 10%ile</th>
+            <th> PM<sub>2.5</sub> Mean</th>
+            <th> PM<sub>2.5</sub> 99%ile</th>
+            <th> O<sub>3</sub> Stations</th>
+            <th> PM Stations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope = "row">A</th>
+          <td>75% </td>
+          <td>19%</td>
+          <td>12%</td>
+          <td>34.1 </td>
+          <td>46.4</td>
+          <td>78.5</td>
+          <td>2.6</td>
+          <td>9.0</td>
+          <td>31.2</td>
+          <td> 13% </td>
+          <td> 32% </td>
+        </tr>
+        <tr>
+          <th scope = "row">B</th>
+          <td>65%</td>
+          <td>25%</td>
+          <td>16%</td>
+          <td>33.7 </td>
+          <td>46.1</td>
+          <td>79.2</td>
+          <td>2.4</td>
+          <td>9.1</td>
+          <td>32.5</td>
+          <td>16%</td>
+          <td>31%</td>>
 
-      </tr>
-      <tr>
-        <th scope = "row">C</th>
-        <td>57%</td>
-        <td>30%</td>
-        <td>21%</td>
-        <td>33.3 </td>
-        <td>45.9</td>
-        <td>79.5</td>
-        <td>2.3</td>
-        <td>9.0</td>
-        <td>31.8</td>
-        <td>19%</td>
-        <td>31%</td>
-      </tr>
-      <tr>
-        <th scope = "row">D</th>
-        <td>51%</td>
-        <td>36%</td>
-        <td>21%</td>
-        <td>33.2 </td>
-        <td>45.3</td>
-        <td>78.0</td>
-        <td>2.4</td>
-        <td>9.1</td>
-        <td>31.8</td>
-        <td>23%</td>
-        <td>40%</td>
-      </tr>
-      <tr>
-        <th>F</th>
-        <td>36%</td>
-        <td>46%</td>
-        <td>26%</td>
-        <td>33.3 </td>
-        <td>45.5</td>
-        <td>83.0</td>
-        <td>2.7</td>
-        <td>8.1</td>
-        <td>26.8</td>
-        <td>6%</td>
-        <td>96%</td>
-      </tr>
-    </tbody>
-    </table>
-</div>
+        </tr>
+        <tr>
+          <th scope = "row">C</th>
+          <td>57%</td>
+          <td>30%</td>
+          <td>21%</td>
+          <td>33.3 </td>
+          <td>45.9</td>
+          <td>79.5</td>
+          <td>2.3</td>
+          <td>9.0</td>
+          <td>31.8</td>
+          <td>19%</td>
+          <td>31%</td>
+        </tr>
+        <tr>
+          <th scope = "row">D</th>
+          <td>51%</td>
+          <td>36%</td>
+          <td>21%</td>
+          <td>33.2 </td>
+          <td>45.3</td>
+          <td>78.0</td>
+          <td>2.4</td>
+          <td>9.1</td>
+          <td>31.8</td>
+          <td>23%</td>
+          <td>40%</td>
+        </tr>
+        <tr>
+          <th>F</th>
+          <td>36%</td>
+          <td>46%</td>
+          <td>26%</td>
+          <td>33.3 </td>
+          <td>45.5</td>
+          <td>83.0</td>
+          <td>2.7</td>
+          <td>8.1</td>
+          <td>26.8</td>
+          <td>6%</td>
+          <td>96%</td>
+        </tr>
+      </tbody>
+      </table>
+  </div>
 
 
  <!--  <script type="text/javascript" src="map.js"></script> -->
@@ -526,22 +530,22 @@ b {
       To compare the air quality stations to census blocks, I created a 3-km buffer around each of the monitoring stations and assigned their values to the intersecting census blocks. This did not result in every census block recieving a grade: in the far right portion of the block, you can see that most coverage for ozone is most concentrated in grade C (however, most of the HOLC grades were assigned C.). Additionally, the 96% PM coverage is because the total number of F grades were 47 areas, out of the 8,000+ city shapes. This index was meant to highlight any monitoring coverage discrepency (for example, if these monitors were mainly weighted towards one specific graded community), however, these seem to be in line with the characteristics of the HOLC numerical schemes. Further work will address normalizing these indices to see where the monitoring is weighted.
     </p>
 
-      <p>
-        In looking at the connection between the air quality indices and HOLC shema, there does not seem to be an apparent apparent connection between the redlined areas and poor air quality. While the connectioned between redlining and to current census block demographic groupings are strong, the same cannot be said for these AQ species. This could be for multiple reasons, one being the monitoring bias in the data, as discussed above. Another reason could be the metric of air quality data -- the given PM and ozone measurements are from the '1-Hour' EPA summary values, which are not the raw measurement values nor the only time period in which these species are regulated upon. Expanding the air quality datasets to include 8-hour averages and other species may further provide insight to these datasets. Finally, this monitoring data may be simply insufficient to capture the inter-city spatial patterns associated with demographics and pollution concentrations. Again, these stations are placed so that they monitor the background levels of pollution -- not a specific point source, not a specific area. Additional datasets with higher spatial resoution would make this study more robust.
+      <p> <h2 class = "subtitle"> </h2>
+        In looking at the connection between the air quality indices and HOLC grades, there does not seem to be an apparent apparent connection between the redlined areas and poor air quality. While the connectioned between redlining and to current census block demographic groupings are strong, the same cannot be said for these AQ species. This could be for multiple reasons, <b> one being the monitoring bias in the data</b>, as discussed above. Another reason could be the <b> temporal metric and species of air quality data </b> -- the given PM and ozone measurements are from the '1-Hour' EPA summary values, which are not the raw measurement values nor the only time period in which these species are regulated upon. Expanding the air quality datasets to include 8-hour averages and other species may further provide insight to these datasets. <b> Finally, this monitoring data may be simply insufficient to capture the inter-city spatial patterns associated with demographics </b> and pollution concentrations. Again, these stations are placed so that they monitor the background levels of pollution -- not a specific point source, not a specific area. Additional datasets with higher spatial resoution would make this study more robust.
       </p>
   </div>
 
-<div id="content">
-  <div id="five">
-    <h1> In conclusion ... this question remains unanswered. </h1>
-    <h1> Thank you for coming to my presentation! </h1>
-  </div>
-  <div id="six">
-    <img src="holc-scan.jpg" alt="Redline map of Chicago">
+  <div id="content">
+    <div id="five">
+      <h1> In conclusion ...  </h1>
+      <h1> This question remains <b>unanswered.</b> </h1>
+      <h1> Thank you for coming to my presentation! </h1>
+    </div>
+    <div id="six">
+      <img src="holc-scan.jpg" alt="Redline map of Chicago">
+    </div>
   </div>
 </div>
-
-  </p>
-</div>
+</body>
 
 </html>
