@@ -66,7 +66,7 @@ function init(inputData){
 	.append("text")
 		.attr("class", "label")
 		.attr("x", width -20)
-		.attr("y", 30)
+		.attr("y", 40)
 		.style("text-anchor", "end")
 		.text("x_dimension");
 
@@ -77,7 +77,7 @@ function init(inputData){
 		.attr("class", "label")
 		.attr("transform", "rotate(-90)")
 		.attr("x", -20)
-		.attr("y", -40)
+		.attr("y", -50)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
 		.text("alt_dimension")
