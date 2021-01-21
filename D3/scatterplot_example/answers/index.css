@@ -16,6 +16,9 @@ body {
 	fill:black;
 	font: 16px sans-serif;
 }
+.tick{
+	font: 16px sans-serif;
+}
 .hidden {
 	display:none;
 }
