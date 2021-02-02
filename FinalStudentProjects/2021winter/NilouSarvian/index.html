@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- based code from http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922 
+	AQI csv file from -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel= "stylesheet" type = "text/css" href = "index.css" />
+
+		<script src="//d3js.org/d3.v3.min.js"></script>
+
+		<!-- bokeh -->
+		<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.js"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        <!-- bokeh -->
+
+	</head>
+	<body>
+		
+		<!-- Title -->
+		<h1>USA Daily Average Air Quality (PM2.5) in 2020</h1>
+			<!-- slider instructions -->
+			<h2> <p>Drag the slider to change the date.</p>
+				<div>Day: <span id="demo"> </span></div></h2>
+			<h3> <p>Date: <span id="demo1"> </span></p> </h3>
+			
+			<!-- Slider  -->
+			<div class="slidecontainer">
+	  			<input type="range" min="1" max="364" value="0" class="slider" id="myRange">
+	  			
+	  			<h4>
+	  				<p> This map illustrates the average daily particulate matter 2.5 during 2020. Individual readings taken from different counties in each state.</p>
+	  				<p> Data was taken from the <a href = "https://aqs.epa.gov/aqsweb/airdata/download_files.html" target="_blank"> EPA</a>, sorted for PM2.5 and averaged daily county values for each state. Values were sorted using the <a href= "https://www.sparetheair.com/aqi.com" target = "_blank" </a> Air Quality Index (AQI)</a>. </p>
+	  				<p>The plots below are visualized using Bokeh, and have been sorted generally acording to region. </p>
+	  				<p> Use the toolbox in the upper right corner of the Bokeh plots to zoom out/in or subselect points on the plots to show how they correlate across states. </p>
+	  			</h4>
+	  		</div>
+				
+	  			</div>
+			<!-- Legend -->
+			<div id = "d3container" style = "margin-left : 80px"> </div>
+		<!-- Description of the D3 map -->
+		<!-- <p> 
+			<div> 
+				<h4>
+	  				<p> This map illustrates the average daily particulate matter 2.5 during 2020. Individual readings taken from different counties in each state. </p>
+	  				<p> Nilou was here </p>
+	  				 </p> 
+	  			</h4>
+	  		</div>
+	  	</p> -->
+
+				<!-- Description of Bokeh plot -->
+
+				
+			<p><script src="AQImapD3.js"> </script></p>
+			
+			<!-- bokeh -->
+			<p>
+			 <div class="bk-root" id="8456b0b0-9c02-4d0e-8363-01050bbf0c6e" data-root-id="13122"></div>
+			 <!-- bokeh -->
+			</p>
+		
+		<!-- bokeh -->
+		 <script type="text/javascript" id="20573" src = "bokehData.js"> </script>
+		 
+		 <script src="bokehScript.js"> </script>
+		 <!-- bokeh -->
+	</body>
+
+</html>

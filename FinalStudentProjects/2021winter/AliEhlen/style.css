@@ -1,0 +1,106 @@
+body {
+	font-size: 16px;
+	font-family: monospace;
+	margin: 30px;
+  }
+
+h2 {
+	color: #400080;
+}
+
+#left {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#right {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.plottitle {
+	font-size: 24px;
+	font-family: Verdana;
+	text-anchor: left;
+}
+
+.label {
+	font-size: 18px;
+	font-family: Verdana;
+	text-anchor: middle;
+}
+
+.slider {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.sliderlabel {
+	font-size: 18px;
+	/* font-family: Verdana; */
+	display: inline-block;
+	text-align: left;
+}
+
+.button {
+	fill: #f5f5e9;
+	stroke: black;
+	width: 10em;
+	height: 2em;
+}
+
+.buttoncover {
+	fill: grey;
+	opacity: 0.0;
+	stroke: black;
+	width: 10em;
+	height: 2em;
+}
+
+.buttontext {
+	font-size: 18px;
+	font-family: Verdana;
+}
+
+#eenumber {
+	font-size: 18px;
+	width: 2em;
+}
+
+#eenumber::-webkit-outer-spin-button {  
+	opacity: 1;
+ }
+
+.activerect {
+	fill-opacity:0.5;
+	stroke-width: 3px;
+}
+
+.legend {
+	font-family: Verdana;
+	font-size: 14px;
+	text-anchor: beginning;
+}
+
+.axis path {
+	stroke-width: 1px;
+	shape-rendering: crispEdges;
+}
+
+.tick {
+	font-size: 14px;
+}
+
+.tooltip {
+	background-color: white;
+	font-size: 14px;
+	font-family: Verdana;
+    border: solid;
+    border-width: 3px;
+    border-radius: 5px;
+    padding: 3px;
+    position: absolute;
+}
+
+/* axis class: axis*/

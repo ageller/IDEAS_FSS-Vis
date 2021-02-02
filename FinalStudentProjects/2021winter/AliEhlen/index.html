@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8">
+
+		<!-- link the style sheet -->
+		<link rel="stylesheet" type="text/css" href="style.css" />
+
+		<!-- link to the d3 library, using v5 here -->
+		<!-- <script src="//d3js.org/d3.v4.js"></script> -->
+		<script src="//d3js.org/d3.v5.min.js"></script>
+		<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+
+		<title>final project</title>
+
+	</head>
+
+	<body>
+		
+		<h2> heatmap </h2>
+
+		<div id="list">
+			<p> This is what we want to do:</p>
+			<ol> 
+				<li> read in data, make filtered heatmap of one data set </li>
+				<li> implement slider to switch between EE </li>
+				<li> add host with other data</li>
+				<li> add click to add g(r) plot next door </li>				
+			</ol>
+			<p>Goals:</p> 
+			<ol> 
+				<li> minimum viable product: heatmap with slider to change EEs and hover with info &#10004 </li>
+				<li> general goal: click and plot g(r) &#10004 </li>
+				<li> reach: plot g(r)s OR be able to adjust/remove data OR add diffusion data, visualize with region instead of boxes</li>
+			</ol>
+		</div>
+
+		<p> Here is the plot: </p>
+
+		<div class="container">
+			<br>
+			<div id="slider"></div>
+			<br>
+			<div id="left">
+				<div id="tilemap"></div>
+			</div>
+			<div id="right">
+				<div id="gr"></div>
+			</div>
+		</div>
+
+		<script src="params.js"></script> 
+		<script src="main.js"></script> 
+		<script src="plot_axes.js"></script> 
+		<script src="plot_rectangles.js"></script> 
+		<script src="plot_points.js"></script> 
+		<script src="tooltip.js"></script> 
+		<script src="zoom.js"></script> 
+		<script src="helpers.js"></script> 
+
+
+
+
+
+
+<!--		<script src="tilemap.js"></script>   -->
+
+	</body>
+</html>

@@ -1,0 +1,56 @@
+:root {
+  --font_fam: sans-serif;
+}
+
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.dot {
+	stroke: #000;
+}
+.label{
+	fill:black;
+	font-size:15;
+}
+.legend_text{
+	fill:black;
+	font-size:20;
+	font-family:var(--font_fam);
+}
+.hidden {
+	display:none;
+}
+
+#tooltip {
+	position:absolute;
+	border:2px solid black;
+	margin:2px;
+	background:white;
+	font-family:var(--font_fam);
+}
+
+#prec_recall {
+	position:absolute;
+	background:rgba(256,256,256,0.8);
+	font-family:var(--font_fam);
+	font-size:20;
+}
+
+#help_box {
+	position:absolute;
+	background:rgba(256,256,256);
+	border:3px solid black;
+	font-family:var(--font_fam);
+	font-size:30;
+}
+
+#explanation {
+	position:absolute;
+	background:rgba(256,256,256);
+	font-size:18;
+}

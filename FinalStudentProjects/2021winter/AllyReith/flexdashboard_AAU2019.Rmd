@@ -1,0 +1,419 @@
+---
+title: "NU Office of Equity - 2019 AAU Campus Climate Survey Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    vertical_layout: fill
+    source_code: embed
+    css: bootstrap.min.css
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+
+library(flexdashboard)
+library(tidyverse)
+library(shiny)
+library(forcats)
+library(RColorBrewer)
+
+setwd("/Users/al/Desktop/AAUdashboard 2")
+
+dashdata_og <- read.csv("AAUdata.csv", na.strings=c(""," ","NA"))
+
+#Data prep:
+dashdata <- dashdata_og %>%
+  select(1:14, "D1":"D5", "E1":"G1", "G2", "G3", "H1", "H2", "I1", "I2")
+
+#Change "Inapplicable" responses to actual NAs
+dashdata <- dashdata %>%
+  mutate_if(is.character, list(~na_if(., "Inapplicable, question not viewed"))) %>%
+  mutate_if(is.character, list(~na_if(., "Inapplicable, question not answered"))) %>%
+  mutate_if(is.character, list(~na_if(., "")))
+
+#New column names: 
+dashdata <- dashdata %>%
+  rename("age" = "A1", 
+         "affiliation" = "A2_C",
+         "sexuality" = "A12RC",
+         "genderId" = "GENDER_4CAT",
+         "disability" = "A15ARC",
+         "housing" = "A17",
+         "climate1" = "BB1",
+         "climate2" = "BB2",
+         "climate3" = "BB3", 
+         "climate4" = "BB4",
+         "climate5" = "BB5", 
+        "percept1" = "B1",
+         "percept2" = "B2",
+         "harassment" = "D1",
+         "harassment2" = "D2",
+         "harassment3" = "D3",
+         "harassment4" = "D4",
+         "harassment5"= "D5",
+         "stalking" = "E1",
+         "stalkingRepeated" = "E1A",
+         "IPVcontrol" = "F1",
+         "IPVthreat" = "F2",
+         "IPVphysical" = "F3",
+         "SVassault" = "G1",
+         "SVassaultEvaded" = "G2",
+         "SVforce" = "G3",
+         "misconductTraining" = "H1",
+         "misconductTraining2" = "H2",
+         "perceptReportSeriously" = "I1",
+         "perceptFairInvestigation" = "I2")
+
+#Factorize:
+dashdata <- dashdata %>%
+  select(-WESTATID) %>% #remove ID... idk
+  mutate_if(is.character, as.factor)
+
+#Some NU colors from https://github.com/MJPeyton/NU_theme:
+
+colors <- {
+  colors_list <- list()
+
+  .PUR_MAIN = '#4e2a84'
+  .PUR_90 = '#5b3b8c'
+  .PUR_80 = '#684c96'
+  .PUR_70 = '#765da0'
+  .PUR_60 = '#836eaa'
+  .PUR_50 = '#9380b6'
+  .PUR_40 = '#a495c3'
+  .PUR_30 = '#b6acd1'
+  .PUR_20 = '#ccc4df'
+  .PUR_10 = '#e4e0ee'
+  .PUR_160 = '#1d0235'
+  .PUR_150 = '#260841'
+  .PUR_140 = '#30104e'
+  .PUR_130 = '#38175a'
+  .PUR_120 = '#401f68'
+  .PUR_110 = '#482476'
+
+
+  colors_list$purple_scale <- c(.PUR_110, .PUR_80, .PUR_50, .PUR_20)
+  colors_list
+}
+
+palette_purple <- scales::manual_pal(rep_len(colors$purple_scale, 10))
+
+scale_fill_northwestern <- function(...) {
+  ggplot2::discrete_scale(aesthetics = 'fill',
+                          scale_name = 'northwestern',
+                          palette = palette_purple,
+                          ...)
+}
+
+
+#Make the data reactive!! 
+#Filtering responses that did not mark an affiliation (assuming a non-complete survey)
+reactive_data <- reactive({
+  dashdata %>%
+    # filter(genderId != "Decline to state") %>%
+    filter(!is.na(affiliation))
+  })
+```
+
+
+
+
+
+Overview {data-orientation=rows}
+==========================================================================
+
+Sidebar {.sidebar}
+----------------------------------------------------------------------------
+The 2019 Campus Climate Survey on Sexual Assault and Misconduct ran from April 10-24, 2019.<
+
+This survey collected information about student perspectives and experiences related to sexual misconduct, such as sexual harassment, sexual assault and other forms of sexual violence, as well as knowledge of resources available at Northwestern. <
+
+<b>CW:</b> This other pages of this dashboard display data related to stalking, intimate partner violence (IPV), and sexual assault.
+
+
+Row 
+---------------------------------------------------------------------------
+### Total survey responses
+```{r}
+totalResponses = dashdata %>% filter((affiliation != "")) %>% nrow()
+valueBox(value = totalResponses, caption = "Total survey responses in this dataset")
+```
+
+### Total undergraduate responses
+```{r}
+totalUGresponses = dashdata %>% filter(affiliation != "Graduate or professional") %>% nrow()
+valueBox(value = totalUGresponses, caption = "Total responses from <b>undergraduate students</b>")
+```
+
+### Total graduate/professional responses
+```{r}
+totalGPresponses =dashdata %>% filter(affiliation =="Graduate or professional") %>% nrow()
+valueBox(value = totalGPresponses, caption = "Total responses from <b>graduate workers</b> or <b>professional students</b>")
+```
+
+Row 
+----------------------------------------------------------------------------
+
+```{r}
+is.defined = function(x)!is.null(x)
+
+
+renderPlot({
+  
+  reactive_data() %>%
+  filter(!is.na (genderId)) %>% 
+  filter(genderId != "Decline to state") %>%
+
+  ggplot(aes(x = affiliation, fill = genderId)) +
+  
+  geom_bar(position = "stack") +
+
+  labs(title="Survey responses by gender identity and university affiliation",
+       caption="Source: Office of Equity AAU 2019 survey",
+       fill = "Gender identity",
+       xlab("affiliation"),
+       ylab("number of respondents")) +
+    theme_classic() +
+    coord_flip() +
+    scale_fill_northwestern()
+    
+  
+})
+
+```
+
+Stalking {data-orientation=rows}
+===================================== 
+Sidebar {.sidebar}
+------------------------------------------------------------
+
+```{r}
+
+
+#lol there's got to be a better way:
+
+
+radioButtons("variable_selection",
+             label = strong("Show data by:"),
+             choices = c(
+               "None selected" = "",
+               "Sexuality" = "sexuality",
+               "Housing type" = "housing",
+               "Disability status" = "disability"),
+              selected = character(0))
+```
+
+Row 
+----------------------------------------------------------------------------
+### Percentage of respondents who have been stalked
+```{r}
+
+#dashdata %>%
+#count(stalking == "Yes")
+
+#Can't hack it, so for now, manually computing and putting in the percentage :/
+
+valueBox(value = "6.54%", caption = "Percentage of respondents who have <b>experienced stalking at least than once</b> during their time at Northwestern")
+```
+
+### Stalking once total
+```{r}
+totalStalkingOnce = dashdata %>% filter((stalking == "Yes")) %>% nrow()
+valueBox(value = totalStalkingOnce, caption = "Total respondents who have <b>experienced stalking at least once</b> during their time at Northwestern")
+```
+
+### Stalking repeated total
+```{r}
+totalStalkingRepeat = dashdata %>% filter((stalkingRepeated == "Yes")) %>% nrow()
+valueBox(value = totalStalkingRepeat, caption = "Total respondents who have <b>experienced stalking more than once</b> during their time at Northwestern")
+```
+
+Row
+----------------------------------------------------------------------------
+
+```{r}
+
+renderPlot({
+  
+  reactive_data() %>%
+  filter(!is.na (genderId)) %>% 
+  filter(genderId != "Decline to state") %>%
+  filter(stalking == "Yes") %>%
+  ggplot(aes(x = genderId, fill = affiliation)) + 
+  geom_bar(position = "stack")  +
+  scale_fill_brewer(palette = "BuPu") +
+
+  # facet_wrap(~ get (input$variable_selection)) +
+    
+  labs(title="Stalking at NU",
+       subtitle = "NU Community members who have experienced stalking, by affiliation and gender",
+       caption="Source: Office of Equity AAU 2019 survey",
+       fill = "Affiliation",
+       x = "Gender identity",
+       y = "number of respondents") +
+    theme_classic() +
+    coord_flip() +
+    scale_fill_northwestern()
+
+})
+```
+
+
+Intimate Partner Violence {data-orientation=rows}
+===================================== 
+Sidebar {.sidebar}
+------------------------------------------------------------
+
+```{r}
+
+radioButtons("variable_selection",
+             label = strong("Show data by:"),
+             choices = c(
+               "None selected" = "",
+               "Sexuality" = "sexuality",
+               "Housing type" = "housing",
+               "Disability status" = "disability"),
+              selected = character(0))
+```
+
+Row
+----------------------------------------------------------------------------
+
+### Percentage of respondents who have experienced any type of IPV
+```{r}
+#Can't hack it, so manually computing and putting in the percentage :/
+
+#dashdata %>%
+  #count(IPVphysical == "Yes" | IPVcontrol == "Yes" | IPVphysical == "Yes")
+
+valueBox(value = "3.53%", caption = "Percentage of respondents who have <b>experienced stalking at least than once</b> during their time at Northwestern")
+```
+
+
+### IPV control & coercion total
+```{r}
+totalIPVcontrol = dashdata %>% filter((IPVcontrol == "Yes")) %>% nrow()
+valueBox(value = totalIPVcontrol, caption = "Total respondents who have <b>experienced intimate partner violence as control & coercion</b> during their time at Northwestern")
+```
+
+### IPV threats total
+```{r}
+totalIPVthreats = dashdata %>% filter((IPVthreat == "Yes")) %>% nrow()
+valueBox(value = totalIPVthreats, caption = "Total respondents who have <b>experienced threats of intimate partner violence</b> during their time at Northwestern")
+```
+
+### IPV physical total
+```{r}
+totalIPVphysical = dashdata %>% filter((IPVphysical == "Yes")) %>% nrow()
+valueBox(value = totalIPVphysical, caption = "Total respondents who have <b>physical intimate partner violence</b> during their time at Northwestern")
+```
+
+Row
+----------------------------------------------------------------------------
+
+```{r}
+renderPlot({
+  
+  reactive_data() %>%
+  filter(!is.na (genderId)) %>% 
+  filter(genderId != "Decline to state") %>%
+  filter(IPVcontrol == "Yes"| IPVthreat == "Yes" |IPVphysical == "Yes") %>%
+    
+  ggplot(aes(x = genderId, fill = affiliation)) + 
+  geom_bar(position = "stack")  +
+    
+  # facet_wrap(~ get (input$variable_selection)) +
+    
+  scale_fill_brewer(palette = "BuPu") +
+
+  labs(title="Intimate Partner Violence at NU",
+       subtitle = "NU Community members who have experienced a form of IPV (including coercion/control, threats, and physical violence), by affiliation and gender",
+       caption="Source: Office of Equity AAU 2019 survey",
+       fill = "Affiliation",
+       x = ("Gender identity"),
+       y = ("number of respondents")) +
+    theme_classic() +
+    coord_flip() +
+    scale_fill_northwestern()
+
+})
+
+```
+
+Sexual Assault {data-orientation=rows}
+===================================== 
+Sidebar {.sidebar}
+------------------------------------------------------------
+
+```{r}
+
+radioButtons("variable_selection",
+             label = strong("Show data by:"),
+             choices = c("None selected" = "",
+               "Sexuality" = "sexuality",
+               "Housing type" = "housing",
+               "Disability status" = "disability"),
+             selected = character(0))
+
+        
+```
+
+Row
+----------------------------------------------------------------------------
+
+### Percentage of respondents who have experienced any type of SV
+```{r}
+
+#Can't hack it, so manually computing and putting in the percentage :/
+#dashdata %>%
+#  count(SVassault == "Yes" | SVassaultEvaded == "Yes" | SVforce == "Yes")
+
+valueBox(value = "5.79%", caption = "Percentage of respondents who have <b>experienced at least one type of sexual assault</b> during their time at Northwestern")
+```
+
+### Sexual assault occurred total
+```{r}
+totalSVassault = dashdata %>% filter((SVassault == "Yes")) %>% nrow()
+valueBox(value = totalSVassault, caption = "Total respondents who have <b>experienced sexual assault</b> during their time at Northwestern")
+```
+
+### Sexual assault attempt total
+```{r}
+totalSVassaultEvaded = dashdata %>% filter((SVassaultEvaded == "Yes")) %>% nrow()
+valueBox(value = totalSVassaultEvaded, caption = "Total respondents who have <b>experienced an attempted sexual assault</b> during their time at Northwestern")
+```
+
+### Sexual assault forced/coerced total
+```{r}
+totalSVforce = dashdata %>% filter((SVforce == "Yes")) %>% nrow()
+valueBox(value = totalSVforce, caption = "Total respondents who have <b>experienced sexual assault by physical force</b> during their time at Northwestern")
+```
+
+Row
+----------------------------------------------------------------------------
+
+```{r}
+renderPlot({
+  
+  reactive_data() %>%
+  filter(!is.na (genderId)) %>% 
+  filter(genderId != "Decline to state") %>%
+  filter(SVassault == "Yes"| SVassaultEvaded == "Yes" | SVforce == "Yes") %>%
+    
+  ggplot(aes(x = genderId, fill = affiliation)) + 
+  geom_bar(position = "stack")  +
+  scale_fill_brewer(palette = "BuPu") +
+    
+  #facet_wrap(~ get (input$variable_selection)) +
+
+  labs(title="Sexual Assault at NU",
+       subtitle = "NU Community members who have experienced a form of sexual assault (including attempted assault), by affiliation and gender",
+       caption="Source: Office of Equity AAU 2019 survey",
+       fill = "Affiliation",
+       x= "Gender identity",
+       y = "number of respondents")+
+    theme_classic() +
+    coord_flip() +
+    scale_fill_northwestern()
+
+})
+```

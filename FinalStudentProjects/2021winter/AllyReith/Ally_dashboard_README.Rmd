@@ -1,0 +1,30 @@
+---
+title: "2019 AAU Campus Climate Survey Dashboard for NU Office of Equity"
+author: "Ally Reith"
+date: "2/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### About this dashboard:
+<i> It's a work in progress...</i> <br><br>
+This is a dashboard that shows data from NU's Office of Equity 2019 AAU Campus Climate Survey. As a member of the OE's student advisory board, I am working on a project that explores the prevalence of certain types of harrassment and assault within our NU community. In its current state, this dashboard only includes categorical data. But, I will later include some likert scale data related to questions about student perceptions of the Office of Equity, as well as knowledge of campus support resources.
+
+#### R packages required:
+The dashboard requires two R packages: <b>flexdashboard</b> and <b>shiny</b>. I chose to use R to vizualize this data because I primarily work in R, my colleagues in the Office of Equity are R users, and I wanted to take a first shot at making a reactive (w/ shiny) dashboard (w/ flexdashboard).
+
+#### What's coming next:
+Ideally, the user will be able to visualize what types of violence impact whom, based on categories of <b>sexuality, disability status, and housing type</b>
+<br>
+I've tried to implement a css style that fits with Northwestern's branding,  but... I'm still working on that. 
+
+#### To-do: <br>
+Order the bars by size(count)<br>
+Facet wrap by radio button selection<br>
+Text annotations<br>
+Link to survey page on OE website
+
+

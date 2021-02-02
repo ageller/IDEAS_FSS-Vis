@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<title>DEV</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-red.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body id="myPage">
+<script src="https://d3js.org/d3.v4.js"></script>
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+
+<!-- Navbar -->
+<div class="w3-top">
+ <div class="w3-bar w3-theme-d2 w3-left-align">
+  <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  <a href="index.html" class="w3-bar-item w3-button w3-gray"><i class="fa fa-home w3-margin-right"></i>Home</a>
+  <a href="nba.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">NBA Players</a>
+  <a href="#boxplot" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Halloween Candy</a>
+  <a href="#bar" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Social Media</a>
+  </div>
+ </div>
+
+<div class="w3-container w3-padding-64 w3-center" >
+<style>
+h3 {
+  color: black;
+}
+h6 {
+  color: red;
+}
+h7 {
+  color: red;
+}
+</style>
+<p>
+<h2>Top 6 NBA Players of the 2019-2020 Regular Season</h2>
+This Dataset looks at the top 6 players
+according an  <a href="https://www.lineups.com/articles/top-10-nba-players-in-the-2019-2020-season-kawhi-leonard-at-1/" target="_blank">article</a>
+ranking of top NBA players in 2019-2020.
+<p>Using the interactive data visuals you will explore the data to gain insights!</p>
+    <p>Instructions on how to use the features of the data visuals is in the color black.</p>
+    <h6>Questions and directions that help guide your data exploration are in the color red. </h6>
+    <p>Under the questions in red are response boxes to input answers.</p>
+</div>
+
+<div class="w3-container w3-padding-64 w3-center">
+<style>
+h3 {
+  color: black;
+}
+h6 {
+  color: red;
+}
+h7 {
+  color: red;
+}
+</style>
+<h3>Histogram</h3>
+<p>Using the up and down arrows adjust the bin widths on the histograms.</p>
+<p>You can also change the bin width by inputting a number in the text box.</p>
+
+<label># bins</label>
+<input type="number" min="1" max="100" step="30" value="20" id="nBin">
+<div id="my_dataviz"></div>
+
+<h6>1. Adjust the histogram to 10 bins. Write what you see</h6>
+    <h6>Adjust to 30 bins. Write what you see</h6>
+ <h7>Hint: was the shape different?</h7>
+    <p></p>
+<textarea id="w3review" name="w3review" rows="3" cols="60">
+  </textarea>
+<h6> 2. Play around with the bin widths. Which bin width best 'fits' the dataset?</h6>
+    <textarea id="w3review" name="w3review" rows="3" cols="60">
+  </textarea>
+<h6>3. Identify two different things you see on the histogram.</h6>
+   <h6>Come up with an explanation for each thing you identified.</h6>
+    <textarea id="w3review" name="w3review" rows="3" cols="60">
+  </textarea>
+</div>
+
+<script>
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 20, bottom: 30, left: 40},
+    width = 450 - margin.left - margin.right,
+    height = 380 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// get the data
+d3.csv("https://raw.githubusercontent.com/jacoyat08/data/main/datah.csv", function(data) {
+
+  // X axis: scale and draw:
+  var x = d3.scaleLinear()
+      .domain([0, 100])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.points })
+      .range([0, width]);
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // Y axis: initialization
+  var y = d3.scaleLinear()
+      .range([height, 0]);
+  var yAxis = svg.append("g")
+
+  // A function that builds the graph for a specific value of bin
+  function update(nBin) {
+
+    // set the parameters for the histogram
+    var histogram = d3.histogram()
+        .value(function(d) { return d.points; })   // I need to give the vector of value
+        .domain(x.domain())  // then the domain of the graphic
+        .thresholds(x.ticks(nBin)); // then the numbers of bins
+
+    // And apply this function to data to get the bins
+    var bins = histogram(data);
+
+    // Y axis: update now that we know the domain
+    y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+    yAxis
+        .transition()
+        .duration(1000)
+        .call(d3.axisLeft(y));
+
+    // Join the rect with the bins data
+    var u = svg.selectAll("rect")
+        .data(bins)
+
+    // Manage the existing bars and eventually the new ones:
+    u
+        .enter()
+        .append("rect") // Add a new rect for each new elements
+        .merge(u) // get the already existing elements as well
+        .transition() // and apply changes to all of them
+        .duration(1000)
+          .attr("x", 0)
+          .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+          .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+          .attr("height", function(d) { return height - y(d.length); })
+          .style("fill", "red")
+
+
+    // If less bar in the new histogram, I delete the ones not in use anymore
+    u
+        .exit()
+        .remove()
+
+    }
+
+
+  // Initialize with 20 bins
+  update(5)
+
+
+  // Listen to the button -> update if user change it
+  d3.select("#nBin").on("input", function() {
+    update(+this.value);
+  });
+
+});
+</script>
+
+
+
+
+
+<!-- Create a div where the graph will take place -->
+<div class="w3-container w3-padding-64 w3-center" >
+<style>
+h3 {
+  color: black;
+}
+h5 {
+  color: red;
+}
+h6 {
+  color: red;
+}
+</style>
+<h2>Box Plot</h2>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<h4>Instructions</h4>
+<p>Use your mouse hover over data points and box plots to learn about each individual player.</p>
+<p>Using the legend on the right of the box-plot click to add or remove players from the plot. </p>
+<div id='myDiv'></div>
+<h5>1. Remove any 4 players. With the remaining players identify the 5 number summary.</h5>
+<textarea id="w3review" name="w3review" rows="3" cols="60"></textarea>
+<h5> 2. Remove any 3 players. With the remaining players identify the mean.</h5>
+ <textarea id="w3review" name="w3review" rows="3" cols="60"></textarea>
+<h5>3.Identify three different things you see on the box plot.</h5>
+<h5>Come up with an explanation for each thing you identified.</h5>
+<h6>hint: look at the boxes length, number of data points, and/or whiskers.</h6>
+<textarea id="w3review" name="w3review" rows="3" cols="60"></textarea>
+</div>
+
+<script>
+var trace1 = {
+  y: [30,21,27,30,38,30,27,12,26,17,24,26,28,19,34,11,17,34,23,42,20,25,
+  26,35,19,24,18,24,36,30,43,32,39,36,33,31,31,22,14,29,30,28,31,25,24,19],
+  boxpoints: 'all',
+  jitter: 0.3,
+  pointpos: -1.8,
+  type: 'box',
+  name: 'Kawhi Leonard'
+};
+
+var trace2 = {
+  y: [18, 32,20,23,39,21,30,25,13,19,23,29,33,25,23,30,33,29,23,25,25,
+  20,31,32,25,28,32,25,28,32,20,21,23,21,13,31,17,21,31,35,31,19,31,15],
+  boxpoints: 'all',
+  jitter: 0.3,
+  pointpos: -1.8,
+  type: 'box',
+  name: 'LeBron James'
+};
+
+var trace3 = {
+  y: [30, 29,14,22,29,36,34,38,30,26,33,24,28,50,30,33,26,29,35,27,
+  30,21,33,27,36,17,32,31,32,38,21,37,45,32,39,23,24],
+  boxpoints: 'all',
+  jitter: 0.3,
+  pointpos: -1.8,
+  type: 'box',
+  name: 'Giannis Antetokounmpo'
+};
+
+var trace4 = {
+  y: [23, 23,26,9],
+  boxpoints: 'all',
+  jitter: 0.3,
+  pointpos: -1.8,
+  type: 'box',
+  name: 'Stephen Curry '
+};
+
+var trace5 = {
+  y: [19,29,40,59,36,29,44,36,42,39,47,44,49,36,27,37,32,43,60,50,
+  23,34,27,30,21,33,27,36,17,32,31,32,38,21,37,27,45,32,39,23,24,49,37,23,30,26,35,21,30,37],
+  boxpoints: 'all',
+  jitter: 0.3,
+  pointpos: -1.8,
+  type: 'box',
+  name: 'James Harden '
+};
+
+var trace6 = {
+  y: [25,21,29,40,31,25,15,26,27,24,17,14,34,33,22,19,41,26,27,25,
+  26,39,50,30,21,33,27,36,17,32,38,21,37,27,45,32,39,23,24,49,37,23,30,26,35,21,30],
+  boxpoints: 'all',
+  jitter: 0.3,
+  pointpos: -1.8,
+  type: 'box',
+  name: 'Anthony Davis '
+};
+var data = [trace1, trace2, trace3, trace4, trace5, trace6];
+
+var layout = {
+title:"Points Scored by Top 6 NBA Players of 2019-2020 Season"
+};
+
+Plotly.newPlot('myDiv', data, layout);
+</script>
+
+
+
+
+<p></p>
+<div class="w3-container w3-padding-64 w3-center" >
+<style>
+text {
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-anchor: right;
+  pointer-events: none;
+}
+.selection {
+  fill: red;
+  fill-opacity: 1;
+}
+body {
+  color: black;
+}
+h3 {
+  color: Black;
+}
+h5 {
+  color: red;
+}
+h6 {
+  color: red;
+}
+dl {
+  color: red;
+}
+</style>
+
+<h2>Bar Chart</h2>
+ <h4>Instructions</h4>
+<p>Use your mouse you will build your own bar chart by dragging the column to the desired value for each individual player.
+</p>
+<p>Every data visual needs a title to
+    accurately convey what the data visual is about and what point it makes.</p>
+<p>The text box above the bar chart is for you to input a title</p>
+
+<body>
+<label for="w3review">Title:</label>
+<textarea id="w3review" name="w3review" rows="1" cols="60">
+  </textarea>
+<div id='bar'></div>
+<h5> 1. Create a bar chart using the following data on the player years in NBA.
+<h6>Hint: add a title.</h6>
+<dl>
+  <dt>Kawhi Leonard, 10 years</dt>
+  <dt>LeBron James, 18 years</dt>
+  <dt>Giannis Antetokounmpo, 8 years</dt>
+  <dt>James Harden, 12 years</dt>
+  <dt>Anthony Davis, 9 years</dt>
+  <dt>Stephen Curry,  12 years</dt>
+</dl>
+
+<h5> 2. Identify two things you see on the bar chart </h5>
+ <h5>Come up with an explanation for each thing you identified.
+ </h5>
+    <textarea id="w3review" name="w3review" rows="3" cols="60">
+  </textarea>
+<h5> 3.Build a bar chart using values you observe in the box plot </h5>
+</body>
+</div>
+
+<script>
+
+ var   data = [
+        {value:19},
+        {value:5},
+        {value:13},
+        { value:17},
+        {value:19},
+        { value:33}
+    ];
+
+var widthd = 1300,
+    heightd = 300,
+    delim = 4;
+
+var scale = d3.scaleLinear()
+    .domain([0, 50])
+    .rangeRound([0, widthd]);
+
+var y = d3.scaleLinear()
+    .domain([0, data.length])
+    .rangeRound([0, heightd]);
+
+//svg element
+var chart2 = d3.select('#bar')
+  .append("svg")
+   .attr("width", widthd)
+   .attr("height", heightd)
+  .append('g');
+
+// Create the scale
+var x2 = d3.scaleBand()
+  .domain(['Kawhi Leonard', 'LeBron James', 'James Harden', 'Anthony Davis','Stephen Curry ', 'Giannis Antetokounmpo'])       // This is what is written on the Axis: from 0 to 100
+  .range([0, 325])
+  .padding([0.8])                          // Goes between 0 and 1. Default is 0
+
+// Draw the axis
+chart2
+  .append("g")
+  .attr("transform", "translate(240,-10)")      // This controls the vertical position of the Axis
+  .call(d3.axisLeft(x2));
+
+
+//add bars
+chart2
+  .append('rect')
+    .attr('x', x2('Giannis Antetokounmpo'))
+    .attr('y', 0)
+    .style('fill', 'white')
+    .attr('width', widthd)
+    .attr('height', heightd);
+
+
+// Moveable barChart
+
+var brush = d3.brushX()
+  .extent(function (d, i) {
+       return [[0,y(i)+delim/2 ],
+              [widthd, y(i)+ heightd/data.length -delim/2]]})
+  .on("brush", brushmove);
+
+
+var svgbrush = chart2
+  .selectAll('.brush')
+    .data(data)
+  .enter()
+    .append('g')
+      .attr('class', 'brush')
+      .attr("transform", "translate(250,0)")
+    .append('g')
+      .call(brush)
+      .call(brush.move, function (d){return [0, d.value].map(scale);});
+
+//numbers on bar//
+svgbrush
+  .append('text')
+    .attr('x', function (d){return scale(d.value)-25;})
+    .attr('y', function (d, i){return y(i) + y(0.5);})
+    .attr('dy', '.35em')
+    .attr('dx', 0)
+    .style('fill', 'white')
+    .text(function (d) {return d3.format('.2')(d.value);})
+
+
+function brushmove() {
+    if (!d3.event.sourceEvent) return; // Only transition after input.
+    if (!d3.event.selection) return; // Ignore empty selections.
+    if (d3.event.sourceEvent.type === "brush") return;
+
+    var d0 = d3.event.selection.map(scale.invert);
+    var d1 =[0, d0[1]];
+
+    var d = d3.select(this).select('.selection');;
+
+    d.datum().value= d0[1]; // Change the value of the original data
+
+    d3.select(this).call(d3.event.target.move, d1.map(scale));
+
+    svgbrush
+      .selectAll('text')
+        .attr('x', function (d){return scale(d.value)-25;})
+        .text(function (d) {return d3.format('.2')(d.value);});
+
+  }
+
+</script>
+
+
+<div class="w3-container w3-padding-64 w3-center" >
+<style>
+img{
+  max-width:180px;
+}
+input[type=file]{
+padding:10px;
+background:#2d2d2d;
+}
+
+text {
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-anchor: right;
+  pointer-events: none;
+}
+.selection {
+  fill: red;
+  fill-opacity: 1;
+}
+body {
+  color: black;
+}
+
+h6 {
+  color: red;
+}
+h7 {
+  color: red;
+}
+div.d {
+  text-align: justify;
+}
+</style>
+    <h2>Discovering a Data Story</h2>
+    <div class = 'd'>
+
+<p> You have used 3 different data visualization to explore the NBA's top 6 players of
+    2019-2020 season. Performing common explorations many people who work with data do on a daily basis.
+You will now perform the last task in data exploration, identifying a story using data visualizations.
+You have already done this some when summarizing the data visuals individually.
+    Now using all the visuals “discover a story” about the data.</p>
+    </div>
+
+    <h6>1. Using all 3 visualization describe an interesting find in the data.</h6>
+<h6>Come up with an explanation or story supporting what you found.</h6>
+<h7>Hint: There’s no need to tell a complex story. Simple relationships are still valuable to understand.
+ </h7>
+   <textarea id="w3review" name="w3review" rows="5" cols="60">
+  </textarea>
+
+
+<h6>2.Upload the visual that supports your explanation or data story.</h6>
+    <h7>hint: take a screen-shot and upload </h7>
+    <p></p>
+
+<input type='file' onchange="readURL(this);" />
+<img id="blah" src="http://placehold.it/300" alt="your image" />
+
+
+<p></p>
+<h6>3. Make a prediction based on what you found.</h6>
+<h6>Explain how your prediction is supported by the data.</h6>
+   <h6>What could be added to make your prediction stronger.</h6>
+ <h7>Hint:more data sets? different data visualizations? </h7>
+    <p></p>
+   <textarea id="w3review" name="w3review" rows="5" cols="60">
+  </textarea>
+</div>
+
+
+<script>
+     function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
