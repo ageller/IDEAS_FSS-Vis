@@ -1,4 +1,4 @@
-# Materials Science Machine Learning Results 
+# Materials Science Machine Learning Predictions 
 
 Andrew Lee | 02/01/2021 | IDEAS FSS-Vis Final Project
 
