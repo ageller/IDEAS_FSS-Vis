@@ -2,7 +2,7 @@
 
 KyleMiller | 02/01/2021 | IDEAS FSS-Vis Final Project
 
-[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2021winter/KyleMiller/index.html)
+[A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2021winter/KyleMiller/materials_data_explorer.html)
 
 ____________________________________________________________________
 
