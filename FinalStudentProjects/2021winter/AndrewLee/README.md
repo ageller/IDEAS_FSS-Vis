@@ -4,6 +4,8 @@ Andrew Lee | 02/01/2021 | IDEAS FSS-Vis Final Project
 
 [A live version is available here.](https://ageller.github.io/IDEAS_FSS-Vis/FinalStudentProjects/2021winter/AndrewLee/index.html)
 
+Note: this version contains "dummy data" but may be updated with the true data later.
+
 ____________________________________________________________________
 
 ## Scientific Background
