@@ -22,3 +22,6 @@
 [submodule "IntroToWebTechnology/IntroToHTMLCSSJS"]
 	path = IntroToWebTechnology/IntroToHTMLCSSJS
 	url = https://github.com/ageller/IntroToHTMLCSSJS
+[submodule "Glue/IntroToGlue"]
+	path = Glue/IntroToGlue
+	url = https://github.com/ageller/IntroToGlue
