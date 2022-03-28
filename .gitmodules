@@ -10,3 +10,6 @@
 [submodule "Unity/UnityGaiaHDRStarClusters"]
 	path = Unity/UnityGaiaHDRStarClusters
 	url = https://github.com/ageller/UnityGaiaHDRStarClusters
+[submodule "IntroToDataViz/IntroToDataVis"]
+	path = IntroToDataViz/IntroToDataVis
+	url = https://github.com/ageller/IntroToDataVis
