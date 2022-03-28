@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+.button_wrapper {
+	display:inline-block;
+}
+.button {
+	margin-right: 10px;
+	width:90px;
+	height:30px;
+	color:white;
+	background-color: steelblue;
+	align-items: center;
+	justify-content: center;
+	display:flex;
+}  
+.button:hover {
+	background-color: lightsteelblue;
+	cursor: pointer;
+}
+.button:active {
+	font-weight: normal;
+	color:black;
+	background-color:lemonchiffon;
+	cursor: pointer;
+}
+#loop {
+	font-weight: bold;
+}
+</style>
+
+<body>
+	<div class='button_wrapper'>
+		<div class='button'>
+			<span id='increase'>Increase</span>
+		</div>
+	</div>
+	<div class='button_wrapper'>
+		<div class='button'>
+			<span id='decrease'>Decrease</span>
+		</div>
+	</div>
+	<div class='button_wrapper'>
+		<div class='button'>
+			<span  id='loop'>Loop!</span>
+		</div>
+	</div>
+	<div>
+		How many times should your program loop?
+	</div>
+	<div id="frm1" action="/action_page.php">
+		Loop: 1 time<br>
+	</div>
+	<ul id="write_location">
+	</ul>
+</body>
+
+<script>
+	document.getElementById("decrease").addEventListener("click",function(e){
+		changeLoops()
+	})
+	document.getElementById("increase").addEventListener("click",function(e){
+		changeLoops(1)
+	})
+	document.getElementById("loop").addEventListener("click",writeList);
+
+	function writeToDOM(id,child_node) {
+		document.getElementById(id).appendChild(child_node);
+	}
+
+	function changeLoops(change){
+		var time = " time";
+		if (change) {
+			input_number++;
+			if (input_number>1){
+				time = " times";
+			}
+		} else {
+			input_number--
+		}
+		document.getElementById("frm1").innerHTML = "Loop: "+input_number+ time;
+	}
+
+	var input_number = 1;
+
+	function writeList(){
+
+		var my_node = document.getElementById("write_location");
+
+		while (my_node.firstChild) {
+		    my_node.removeChild(my_node.firstChild);
+		}
+		for (i = 0; i<input_number; i++) {
+			var node = document.createElement("LI");
+			var plural = "";
+			if (i > 0) {
+				plural = "s";
+			}
+			var textnode = document.createTextNode("We have counted " + (i+1) + " time" + plural);
+			node.appendChild(textnode);
+			writeToDOM("write_location",node);
+		}	
+	}
+
+</script>
