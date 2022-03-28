@@ -13,3 +13,6 @@
 [submodule "IntroToDataViz/IntroToDataVis"]
 	path = IntroToDataViz/IntroToDataVis
 	url = https://github.com/ageller/IntroToDataVis
+[submodule "Bokeh/IntroToBokeh"]
+	path = Bokeh/IntroToBokeh
+	url = https://github.com/ageller/IntroToBokeh
