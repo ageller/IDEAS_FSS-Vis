@@ -19,3 +19,6 @@
 [submodule "Plotly/IntroToPlotly"]
 	path = Plotly/IntroToPlotly
 	url = https://github.com/ageller/IntroToPlotly
+[submodule "IntroToWebTechnology/IntroToHTMLCSSJS"]
+	path = IntroToWebTechnology/IntroToHTMLCSSJS
+	url = https://github.com/ageller/IntroToHTMLCSSJS
