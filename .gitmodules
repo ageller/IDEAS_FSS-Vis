@@ -25,3 +25,6 @@
 [submodule "Glue/IntroToGlue"]
 	path = Glue/IntroToGlue
 	url = https://github.com/ageller/IntroToGlue
+[submodule "rshiny/COVIDshiny"]
+	path = rshiny/COVIDshiny
+	url = https://github.com/ageller/COVIDshiny
