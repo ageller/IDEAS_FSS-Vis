@@ -16,3 +16,6 @@
 [submodule "Bokeh/IntroToBokeh"]
 	path = Bokeh/IntroToBokeh
 	url = https://github.com/ageller/IntroToBokeh
+[submodule "Plotly/IntroToPlotly"]
+	path = Plotly/IntroToPlotly
+	url = https://github.com/ageller/IntroToPlotly
