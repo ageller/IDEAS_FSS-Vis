@@ -11,3 +11,5 @@ These data sets can be used to test and develop your visualizations, if you don'
 * congress_data.csv : contains 2-dimensional data representing the politics of the US congress over the years, taken from https://voteview.com/data .  This data set is used in our matplotlib examples and also the D3 examples.
 
 * tripcoll.csv : contains a 5-body gravitational scattering simulation, created using the code [FEWBODY](http://www.ascl.net/1208.011) and reformatted for ease of use.  
+
+* WHO-COVID-19-global-data.csv : COVID-19 data from the WHO.  The direct download link is [here](https://covid19.who.int/WHO-COVID-19-global-data.csv), and those data are updated regularly.  There are also other interesting data sets on the WHO COVID page [here](https://covid19.who.int/data). 
