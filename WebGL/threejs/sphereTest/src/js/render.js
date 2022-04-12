@@ -77,7 +77,7 @@ function init(){
 }
 
 //this creates the user interface (gui)
-//http://workshop.chromeexperiments.com/examples/gui
+//https://github.com/dataarts/dat.gui
 function createUI(){
 
 	params.gui = new dat.GUI();
