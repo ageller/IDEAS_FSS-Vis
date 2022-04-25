@@ -17,5 +17,5 @@ __pycache__
 # large files #
 ###############
 *.fits
-.vti
+*.vti
 *.vtr
