@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Protoplanetary Disks</title>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+  <body>
+    <h1> Protoplanetary Disk Parameters </h1>
+    <div>
+      <iframe src="bokehdiskplot.html" width="900" height="800" align="left">
+      </iframe>
+    </div>
+    <p>
+      Protoplanetary disks are the sites of active planet formation. 
+      Using high-resolution/sensitivity observations of these disks, we are able to better understand the initial physical and chemical 
+      conditions in which planets form. By obtaining statistics on a large sample of disks we are able to begin to link the current 
+      exoplanet demographics to their natal environments. In the last decade there has been a huge advance in the study of protoplanetary 
+      disks. With the Atacama Large Millimeter Array (ALMA) telescope coming online, highly detailed maps of these disks have been produced. With 
+      these exquisite maps, we have been able to measure their physical quantities, such as surface brightness and size. ALMA is able to 
+      perform snapshot surveys of entire molecular clouds, the home to these disks, in less than an hour (depending on the sensitivity of 
+      the observations). We now have data on numerous protoplanetary disks in multiple molecular clouds. This visualization attempts to 
+      organize ~900 of these disks, spanning 7 molecular clouds to start to understand any trends seen in the data.
+
+</p>
+   <!--    <h2>Dropdown Image</h2>
+    <p>Move the mouse over the image below to open the dropdown content.</p>
+    <div class="dropdown">
+      <img src="/images/J162309.2-241705.png"></img>-->
+      
+      <div>
+	<input type="button" value="Oph3" onClick="changeImage('a');">
+	<input type="button" value="DoAr25" onClick="changeImage('b');">
+	<input type="button" value="Elias24" onClick="changeImage('c');">
+	<input type="button" value="DoAr44" onClick="changeImage('d');">
+	<input type="button" value="WSB 82" onClick="changeImage('e');">
+	<input type="button" value="J16000236" onClick="changeImage('f');">
+	<input type="button" value="J16081497" onClick="changeImage('g');">
+	<input type="button" value="J16090141" onClick="changeImage('h');">
+	<input type="button" value="Sz129" onClick="changeImage('j');">
+	<img id="img" width="10px" height="400px"> 
+    </div>
+    <script src="clickthrough.js"></script>
+  </body>
+</html>

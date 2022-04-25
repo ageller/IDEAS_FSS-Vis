@@ -1,0 +1,62 @@
+html {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    overflow: scroll;
+}
+
+body {
+    color: black;
+    background-color: whitesmoke;
+}
+
+#description {
+    font-family: 'Franklin Gothic Book', 'Helvetica';
+    font-size: 16pt;
+    letter-spacing: normal;
+    text-align: justify;
+    line-height: 1.5;
+    word-spacing: 0.1em;
+    margin-left: 100px;
+    margin-right: 100px;
+    /* margin-top: 50px; */
+}
+#containers {
+    height: 800px;
+    position: relative;
+    display: flex;
+    margin: 100px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+#colormap_select {
+    font-family: 'Franklin Gothic Book', 'Helvetica';
+    font-size: 16pt;
+    margin-left: 100px;
+}
+#slice_select {
+    font-family: 'Franklin Gothic Book', 'Helvetica';
+    font-size: 16pt;
+    margin-left: 100px;
+    margin-top: 25px;
+}
+#container_left {
+    flex: 1;
+    height: 700px;
+    width: 700px;
+    margin-right: 25px;
+}
+
+#container_right {
+    flex: 1;
+    height: 700px;
+    width: 700px;
+    margin-left: 25px;  
+}
+
+#container_plotly {
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    margin-left: 100px;
+}

@@ -1,0 +1,70 @@
+<html>
+
+	<head>
+		<!-- title and other meta data go in the "head" portion -->
+		<title>Vortex Matter</title>
+
+		<!-- my style sheet -->
+		<link rel="stylesheet" type="text/css" href="Vortex.css" />
+<style>
+iframe{
+  height: 520px;
+  width: 540px;
+}
+</style>
+	</head>
+
+	<body>
+		<!-- all website content that will be visible to the user go in the body -->
+
+		<!-- here is the text that I will display -->
+		<h1> Visualization of Vortex Matter  </h1>
+		<h2> 3D Interactive Visualization of Vortices in Artificial Pinning site  </h2>
+		<h3> Abdulwahab Al Luhaibi </h3>
+		<p> In type -II superconductors, vortices penetrate the system in quantized form of fluxoid, &phi;<sub>0</sub>, when the applied magnetic field exceed the first critical field.  Here, we provide the results of simulating a system with a spherical pinning site in the middle of the material using Time Dependent Ginzburg Landau Equation (TDGL). The result is normalized order parameter, |&psi;|<sup>2</sup>, which can be mapped spatially that normalized by the coherence length, &xi;<sub>0</sub>. The three interactive figures are shown  |&psi;|<sup>2</sup>  at zero magnetic field,  &phi;<sub>0</sub> per area unit cell magnetic field, and at current density, J, exceeding the critical current density,  J<sub>c</sub>, at the time when vortices depin .  </p>
+
+	<label for="Vtype">Choose a system</label>
+
+</select>
+<select name="Vtype" id="mySelect" onchange="myFunction()">
+  <option value="ArtificialPin">Artificial Pin</option>
+  <option value="VortexPin">Vortex Pin</option>
+  <option value="VortexMove">Vortex Move</option>
+</select>
+
+		<!-- here are Figures I will display -->
+	<div>
+   
+		<div id="ArtificialPin" class= "plot" style="display:block" >
+			<iframe src="Pinning_Site.html" title="ArtificialPin" ></iframe>
+       
+		</div>
+
+		<div id="VortexPin" class= "plot" style="display:none">
+			<iframe src="Pinning_Vortex.html" title="VortexPin"></iframe>
+		
+		</div>
+
+		<div id="VortexMove" class= "plot" style="display:none">
+			<iframe src="Vortex_Move.html" title="VortexMove"  ></iframe>
+		
+		</div>
+
+	</div>
+  
+  <script>
+function myFunction() {
+  var x = document.getElementById("mySelect").value;
+  
+var divs = document.querySelectorAll('.plot');
+
+for (var i = 0; i < divs.length; ++i) {
+  divs[i].style.display = "none";
+}
+document.getElementById(x).style.display = "block";
+}
+</script>
+		
+	</body>
+
+</html>

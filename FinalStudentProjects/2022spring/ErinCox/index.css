@@ -1,0 +1,50 @@
+body {
+	margin:0;
+	font-family: Verdana;
+	text-align: left;
+	background-color:#fff2f2;
+}
+p {
+	text-align: justify;
+	font-size: 14px;
+	margin: 0px 20px 20px 30px;
+}
+h1 {
+	font-family: Georgia;
+	background-color: #fff2f2;
+	padding:10px;
+	margin:0;
+	align: 'center';
+	font-size: 32px;
+	color: 'black';
+	line-height: 60px;
+/*	border-bottom: 6px solid #f2936e;*/
+}
+h2 {
+	font-family: Georgia;
+	font-size: 26px;
+	margin:5px 0 0 10px;
+	padding:0;
+	color: #fff2f2;
+	font-style: italic;
+}
+h3 {
+	font-family: Georgia;
+	font-size: 20px;
+	margin:10px;
+	color: #285667;
+	padding:0;
+}
+img{
+	margin-left:20px;
+	width:30%;
+}
+#image{
+	margin:10px;
+}
+.imageCredit{
+	font-size: 11px;
+	color: #bd579e;
+	transform: rotate(-90deg);
+	transform-origin: left top;
+}
